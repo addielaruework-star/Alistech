@@ -180,7 +180,7 @@ export async function getProjects(): Promise<Project[]> {
  * Retrieves only published projects for dynamic website rendering.
  * Sorting is done client-side to avoid requiring a Firestore composite index.
  */
-export const getPublishedProjects = async () => {
+export const getPublishedProjects = async (): Promise<Project[]> => {
   try {
     const q = query(
       collection(db, "projects"),
@@ -191,7 +191,7 @@ export const getPublishedProjects = async () => {
 
     return querySnapshot.docs.map((doc) => ({
       id: doc.id,
-      ...doc.data(),
+      ...(doc.data() as Omit<Project, "id">),
     }));
   } catch (error) {
     console.error("Error fetching published projects:", error);
