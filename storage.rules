@@ -1,0 +1,13 @@
+rules_version = '2';
+
+// ── Firebase Storage Security Rules ──────────────────────────────────────────
+// Firebase Storage is NO LONGER USED by AlisTech.
+// All image assets are now stored on Cloudinary CDN (cloud: dwnj7c6ct).
+// All paths are locked to deny read and write as a security hardening measure.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

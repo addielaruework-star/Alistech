@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sora: 'Sora', sans-serif;
+    --font-inter: 'Inter', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #050508;
+    color: #ffffff;
+    font-family: var(--font-inter), sans-serif;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: rgba(37, 99, 235, 0.4);
+    color: #ffffff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050508;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2563EB;
+    border-radius: 3px;
+  }
+
+  /* ── Dark-theme form fields ─────────────────────────────────────── */
+  /* Force text colour so it's always visible regardless of Tailwind reset */
+  input,
+  textarea,
+  select {
+    color: #ffffff;
+    background-color: transparent;
+  }
+
+  /* Suppress WebKit autofill yellow / white background */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0 1000px rgba(15, 23, 42, 0.9) inset !important;
+    box-shadow: 0 0 0 1000px rgba(15, 23, 42, 0.9) inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: #3b82f6;
+  }
+
+  /* Native select option dropdown — dark background */
+  option {
+    background-color: #0f172a;
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-400 bg-clip-text text-transparent;
+  }
+
+  /* Glass card */
+  .glass-card {
+    background: rgba(13, 13, 24, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+  }
+  .glass-card-hover:hover {
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 0 30px rgba(37, 99, 235, 0.1);
+  }
+
+  /* Section container */
+  .section-container {
+    @apply max-w-7xl mx-auto px-6 lg:px-10;
+  }
+
+  /* Glow effect */
+  .blue-glow {
+    box-shadow: 0 0 60px rgba(37, 99, 235, 0.3);
+  }
+  .blue-glow-sm {
+    box-shadow: 0 0 30px rgba(37, 99, 235, 0.2);
+  }
+
+  /* Grid background */
+  .grid-bg {
+    background-image: 
+      linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Noise overlay */
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.4;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(37,99,235,0.15) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+}

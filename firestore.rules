@@ -1,0 +1,58 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Role helper ────────────────────────────────────────────────────────
+    // Reads the user's role from users/{uid} — single source of truth.
+    function isAdmin() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // ── users collection ───────────────────────────────────────────────────
+    // Only admins and the owner can read their own doc.
+    // Only existing admins can create/modify role documents.
+    match /users/{uid} {
+      allow read: if request.auth != null && (request.auth.uid == uid || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    // ── LEADS collection ───────────────────────────────────────────────────
+    // Public: anyone can CREATE a lead (contact form submissions only)
+    // Admin: full read/update/delete
+    match /leads/{leadId} {
+      allow create: if
+        request.resource.data.keys().hasAll(['name', 'email', 'message', 'createdAt', 'status']) &&
+        request.resource.data.status == 'new' &&
+        request.resource.data.name is string &&
+        request.resource.data.email is string &&
+        request.resource.data.message is string;
+
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ── PROJECTS collection ────────────────────────────────────────────────
+    // Public: can only read published projects
+    // Admin: full CRUD
+    match /projects/{projectId} {
+      allow read: if resource.data.published == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ── REVIEWS collection ─────────────────────────────────────────────────
+    // Public: can only read approved reviews
+    // Admin: full CRUD + approval workflow
+    match /reviews/{reviewId} {
+      allow read: if resource.data.approved == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ── Catch-all deny ─────────────────────────────────────────────────────
+    // Any collection not listed above is fully denied.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
