@@ -22,11 +22,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "AlisTech — Modern Digital Agency",
+    default: "AlisTech | Modern Digital Solutions",
     template: "%s | AlisTech",
   },
   description:
-    "AlisTech builds modern websites, platforms, and AI-powered tools for businesses worldwide. Fast delivery, clean code, real results.",
+    "AlisTech builds modern websites, startup MVPs, admin dashboards, business solutions, and digital platforms with fast deployment and professional design.",
   keywords: [
     "web development",
     "digital agency",

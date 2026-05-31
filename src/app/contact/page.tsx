@@ -12,32 +12,33 @@ import {
   ChevronDown,
   CheckCircle,
   ArrowRight,
+  Phone,
 } from "lucide-react";
-import { WHATSAPP_URL, WHO_WE_WORK_WITH } from "@/lib/constants";
+import { WHATSAPP_URL, WHO_WE_WORK_WITH, PHONE_NUMBER, EMAIL_ADDRESS, WHATSAPP_QR_URL } from "@/lib/constants";
 
 const CONTACT_INFO = [
   {
+    icon: Phone,
+    label: "Phone",
+    value: PHONE_NUMBER,
+    href: `tel:${PHONE_NUMBER.replace(/\s+/g, "")}`,
+  },
+  {
     icon: Mail,
     label: "Email",
-    value: "hello@alistech.dev",
-    href: "mailto:hello@alistech.dev",
+    value: EMAIL_ADDRESS,
+    href: `mailto:${EMAIL_ADDRESS}`,
   },
   {
     icon: MessageCircle,
     label: "WhatsApp",
-    value: "Chat with us directly",
+    value: "Direct Chat",
     href: WHATSAPP_URL,
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Remote · Global",
-    href: "#",
   },
   {
     icon: Clock,
     label: "Response Time",
-    value: "Usually within one business day",
+    value: "Usually responds within a few hours",
     href: "#",
   },
 ];
@@ -255,6 +256,24 @@ export default function ContactPage() {
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              {/* WhatsApp Direct Scan QR Code */}
+              <div className="rounded-xl p-4 border border-emerald-500/10 bg-emerald-500/[0.01] flex flex-col items-center gap-3 text-center">
+                <div className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">
+                  Scan to Chat on WhatsApp
+                </div>
+                <div className="relative p-2 bg-white rounded-lg flex items-center justify-center w-28 h-28">
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(WHATSAPP_QR_URL)}`}
+                    alt="WhatsApp QR Code"
+                    className="w-24 h-24"
+                    loading="lazy"
+                  />
+                </div>
+                <p className="text-[9.5px] text-[rgba(255,255,255,0.35)] leading-relaxed">
+                  Scan with your phone camera to start chatting instantly.
+                </p>
               </div>
             </div>
 

@@ -7,11 +7,12 @@ export const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
 ];
 
-// WhatsApp config — update with real number when ready
-export const WHATSAPP_NUMBER = ""; // e.g. "971501234567"
-export const WHATSAPP_URL = WHATSAPP_NUMBER
-  ? `https://wa.me/${WHATSAPP_NUMBER}`
-  : "#";
+// Contact details
+export const PHONE_NUMBER = "+91 7997007897";
+export const EMAIL_ADDRESS = "AlisTech2877@gmail.com";
+export const WHATSAPP_NUMBER = "917997007897";
+export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+export const WHATSAPP_QR_URL = "https://wa.me/qr/VFWFGVUGTMO3L1";
 
 // Core services
 export const CORE_SERVICES = [

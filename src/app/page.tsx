@@ -11,9 +11,9 @@ import FAQSection from "@/components/home/FAQSection";
 import CTASection from "@/components/home/CTASection";
 
 export const metadata: Metadata = {
-  title: "AlisTech — Modern Digital Agency",
+  title: "AlisTech | Modern Digital Solutions",
   description:
-    "AlisTech builds modern websites, platforms, and AI-powered tools for businesses worldwide. Fast delivery, clean code, real results.",
+    "AlisTech builds modern websites, startup MVPs, admin dashboards, business solutions, and digital platforms with fast deployment and professional design.",
 };
 
 export default function HomePage() {
