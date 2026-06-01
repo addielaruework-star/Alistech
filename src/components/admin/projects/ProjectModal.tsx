@@ -221,7 +221,7 @@ export default function ProjectModal({
 
       const projectData: Omit<Project, "id" | "createdAt" | "updatedAt"> = {
         title: title.trim(),
-        slug: slug.trim(),
+        slug: generateSlug(slug),
         category: category.trim(),
         clientType: clientType.trim(),
         shortDescription: shortDescription.trim(),

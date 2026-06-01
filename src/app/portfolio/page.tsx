@@ -2,13 +2,24 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { getPublishedProjects } from "@/lib/firestore";
 import { getCloudinaryUrl } from "@/lib/storage";
 import { type Project } from "@/types/project";
+import { generateSlug } from "@/lib/utils";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/home/CTASection";
 import { Briefcase } from "lucide-react";
+
+/** Returns a URL-safe path for a project card. Always sanitizes through generateSlug. */
+function projectHref(project: Project): string {
+  // Use stored slug if present, otherwise derive from title
+  const raw = project.slug?.trim() || project.title || "";
+  const safe = raw ? generateSlug(raw) : "";
+  // Final fallback: Firestore document ID (always URL-safe)
+  return safe ? `/projects/${safe}` : `/projects/${project.id}`;
+}
 
 export default function PortfolioPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -85,59 +96,64 @@ export default function PortfolioPage() {
               <AnimatePresence>
                 {projects.map((project, i) => {
                   return (
-                    <motion.article
+                    <Link
+                      href={projectHref(project)}
                       key={project.id || project.slug}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: i * 0.05 }}
-                      whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                      className="glass-card rounded-2xl overflow-hidden border border-white/6 hover:border-white/12 transition-all duration-300 group flex flex-col justify-between bg-white/[0.01] h-full shadow-xl"
+                      className="block h-full"
                     >
-                      <div>
-                        {/* Project Cover Image */}
-                        <div className="relative h-52 overflow-hidden bg-white/[0.02] border-b border-white/[0.05]">
-                          {project.coverImage ? (
-                            <Image
-                              src={getCloudinaryUrl(project.coverImage, { width: 600 })}
-                              alt={project.title}
-                              fill
-                              sizes="(max-width: 1024px) 100vw, 33vw"
-                              className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                              loading="lazy"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-white/10">
-                              <Briefcase className="w-8 h-8" />
-                            </div>
-                          )}
-                          {project.featured && (
-                            <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-blue-600/25 backdrop-blur-sm text-blue-300 text-[10px] font-semibold uppercase tracking-wider border border-blue-500/30">
-                              Featured Work
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Details */}
-                        <div className="p-5 flex flex-col gap-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[10px] uppercase font-bold tracking-widest text-white/30">{project.category}</span>
-                            {project.clientType && <span className="text-xs text-blue-400/70 font-semibold">{project.clientType}</span>}
+                      <motion.article
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: i * 0.05 }}
+                        whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                        className="glass-card rounded-2xl overflow-hidden border border-white/6 hover:border-white/12 transition-all duration-300 group flex flex-col justify-between bg-white/[0.01] h-full shadow-xl"
+                      >
+                        <div>
+                          {/* Project Cover Image */}
+                          <div className="relative h-52 overflow-hidden bg-white/[0.02] border-b border-white/[0.05]">
+                            {project.coverImage ? (
+                              <Image
+                                src={getCloudinaryUrl(project.coverImage, { width: 600 })}
+                                alt={project.title}
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 33vw"
+                                className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-white/10">
+                                <Briefcase className="w-8 h-8" />
+                              </div>
+                            )}
+                            {project.featured && (
+                              <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-blue-600/25 backdrop-blur-sm text-blue-300 text-[10px] font-semibold uppercase tracking-wider border border-blue-500/30">
+                                Featured Work
+                              </div>
+                            )}
                           </div>
-                          <h3 className="font-sora font-bold text-white text-lg group-hover:text-blue-300 transition-colors duration-200">{project.title}</h3>
-                          <p className="text-white/50 text-xs leading-relaxed line-clamp-3">{project.shortDescription}</p>
-                        </div>
-                      </div>
 
-                      {/* Tech stack */}
-                      <div className="p-5 pt-0 mt-auto">
-                        <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/[0.04] mt-2">
-                          {project.technologies.map((t) => (
-                            <span key={t} className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/4 text-white/40 border border-white/6">{t}</span>
-                          ))}
+                          {/* Details */}
+                          <div className="p-5 flex flex-col gap-3">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[10px] uppercase font-bold tracking-widest text-white/30">{project.category}</span>
+                              {project.clientType && <span className="text-xs text-blue-400/70 font-semibold">{project.clientType}</span>}
+                            </div>
+                            <h3 className="font-sora font-bold text-white text-lg group-hover:text-blue-300 transition-colors duration-200">{project.title}</h3>
+                            <p className="text-white/50 text-xs leading-relaxed line-clamp-3">{project.shortDescription}</p>
+                          </div>
                         </div>
-                      </div>
-                    </motion.article>
+
+                        {/* Tech stack */}
+                        <div className="p-5 pt-0 mt-auto">
+                          <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/[0.04] mt-2">
+                            {project.technologies.map((t) => (
+                              <span key={t} className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/4 text-white/40 border border-white/6">{t}</span>
+                            ))}
+                          </div>
+                        </div>
+                      </motion.article>
+                    </Link>
                   );
                 })}
               </AnimatePresence>

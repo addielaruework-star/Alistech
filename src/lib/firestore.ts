@@ -15,6 +15,7 @@ import {
 import { db } from "@/lib/firebase";
 import { type Project } from "@/types/project";
 import { type Review } from "@/types/review";
+import { generateSlug } from "@/lib/utils";
 
 /* ── Types ────────────────────────────────────────────────────────────────── */
 export type LeadStatus = "new" | "contacted" | "in-progress" | "closed";
@@ -231,6 +232,99 @@ export async function getProjectById(id: string): Promise<Project | null> {
     id: snap.id,
     ...(snap.data() as Omit<Project, "id">),
   };
+}
+
+/**
+ * Retrieves a single project by slug (URL param).
+ *
+ * Normalizes the incoming slug first (converts spaces → hyphens, strips special chars)
+ * so that even improperly stored slugs like "mohammed basharat portfolio" still match.
+ *
+ * Enforces where("published", "==", true) filters to comply with Firestore
+ * security rules for unauthenticated public readers.
+ *
+ * Lookup order:
+ *  1. Firestore where("slug", "==", normalizedSlug)   ← best case
+ *  2. Firestore where("slug", "==", rawSlug)          ← stored slug matched URL raw
+ *  3. getDoc("projects/" + normalizedSlug)            ← ID-based fallback
+ *  4. Scan all docs — compare normalized stored slug and title-derived slug
+ */
+export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  if (!slug || slug === "undefined") return null;
+
+  // Normalize: convert spaces→hyphens, strip specials — handles improperly stored slugs
+  const normalizedSlug = generateSlug(slug);
+
+  try {
+    // ── Tier 1a: exact match on normalized slug ───────────────────────────────
+    if (normalizedSlug) {
+      const q1 = query(
+        collection(db, "projects"),
+        where("published", "==", true),
+        where("slug", "==", normalizedSlug)
+      );
+      const s1 = await getDocs(q1);
+      if (!s1.empty) {
+        const d = s1.docs[0];
+        return { id: d.id, ...(d.data() as Omit<Project, "id">) };
+      }
+    }
+
+    // ── Tier 1b: exact match on raw slug (as received from URL) ──────────────
+    if (slug !== normalizedSlug) {
+      const q2 = query(
+        collection(db, "projects"),
+        where("published", "==", true),
+        where("slug", "==", slug)
+      );
+      const s2 = await getDocs(q2);
+      if (!s2.empty) {
+        const d = s2.docs[0];
+        return { id: d.id, ...(d.data() as Omit<Project, "id">) };
+      }
+    }
+
+    // ── Tier 2: Firestore document ID lookup ─────────────────────────────────
+    try {
+      const idSnap = await getDoc(doc(db, "projects", normalizedSlug || slug));
+      if (idSnap.exists()) {
+        const data = idSnap.data() as Omit<Project, "id">;
+        if (data.published === true) {
+          return { id: idSnap.id, ...data };
+        }
+      }
+    } catch {
+      // Invalid doc-ID format or permissions failure (not published) — safe to ignore
+    }
+
+    // ── Tier 3: full scan — normalize every stored slug and compare ───────────
+    // Handles legacy docs with no slug field, or slugs stored with spaces/specials.
+    // Query filter "published == true" is mandatory here so the public user has permission.
+    const allSnap = await getDocs(
+      query(collection(db, "projects"), where("published", "==", true))
+    );
+    for (const d of allSnap.docs) {
+      const data = d.data();
+
+      // Compare normalized stored slug
+      const storedNorm = generateSlug(data.slug ?? "");
+      if (storedNorm && storedNorm === normalizedSlug) {
+        return { id: d.id, ...(data as Omit<Project, "id">) };
+      }
+
+      // Compare title-derived slug (for docs with no slug field at all)
+      const titleSlug = generateSlug(data.title ?? "");
+      if (titleSlug && titleSlug === normalizedSlug) {
+        return { id: d.id, ...(data as Omit<Project, "id">) };
+      }
+    }
+
+    console.warn(`[getProjectBySlug] No match found for slug: "${slug}" (normalized: "${normalizedSlug}")`);
+    return null;
+  } catch (error) {
+    console.error("[getProjectBySlug] error:", error);
+    return null;
+  }
 }
 
 /* ───────────────────────────────────────────────────────────────────────────
