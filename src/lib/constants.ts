@@ -8,11 +8,18 @@ export const NAV_LINKS = [
 ];
 
 // Contact details
-export const PHONE_NUMBER = "+91 7997007897";
+export const PHONE_NUMBER = "+91 9603337862";
+export const PHONE_NUMBER_2 = "+91 7997007897";
 export const EMAIL_ADDRESS = "AlisTech2877@gmail.com";
-export const WHATSAPP_NUMBER = "917997007897";
+export const WHATSAPP_NUMBER = "919603337862";
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+export const WHATSAPP_NUMBER_2 = "917997007897";
+export const WHATSAPP_URL_2 = `https://wa.me/${WHATSAPP_NUMBER_2}`;
 export const WHATSAPP_QR_URL = "https://wa.me/qr/VFWFGVUGTMO3L1";
+
+// Social media
+export const INSTAGRAM_URL = "https://www.instagram.com/alis_techs?stkn=MTR2anY5YnRjYnMxZw==";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/alis-tech-152012441?utm_source=share_via&utm_content=profile&utm_medium=member_android";
 
 // Core services
 export const CORE_SERVICES = [

@@ -1,8 +1,8 @@
 "use client";
 
-import { Zap, Twitter, Instagram, Linkedin, Github, Mail, MapPin, Phone, MessageCircle } from "lucide-react";
+import { Zap, Instagram, Linkedin, Mail, Phone, MessageCircle } from "lucide-react";
 import Link from "next/link";
-import { NAV_LINKS, WHATSAPP_URL, PHONE_NUMBER, EMAIL_ADDRESS } from "@/lib/constants";
+import { NAV_LINKS, WHATSAPP_URL, WHATSAPP_URL_2, PHONE_NUMBER, PHONE_NUMBER_2, EMAIL_ADDRESS, INSTAGRAM_URL, LINKEDIN_URL } from "@/lib/constants";
 
 const SERVICES = [
   "Website Development",
@@ -13,10 +13,8 @@ const SERVICES = [
 ];
 
 const SOCIALS = [
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Github, href: "#", label: "GitHub" },
+  { icon: Instagram, href: INSTAGRAM_URL, label: "Instagram" },
+  { icon: Linkedin, href: LINKEDIN_URL, label: "LinkedIn" },
 ];
 
 export default function Footer() {
@@ -48,6 +46,8 @@ export default function Footer() {
                 <a
                   key={label}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   className="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-gray-500 hover:text-white hover:border-white/15 transition-all duration-200"
                 >
@@ -96,15 +96,27 @@ export default function Footer() {
             </h3>
             <ul className="flex flex-col gap-3">
               <li>
-                <a href={`tel:${PHONE_NUMBER.replace(/\s+/g, "")}`} className="flex items-center gap-2.5 text-gray-400 hover:text-white text-sm transition-colors group">
+                <a href={`tel:${PHONE_NUMBER.replace(/\s+/g, "")}`} suppressHydrationWarning className="flex items-center gap-2.5 text-gray-400 hover:text-white text-sm transition-colors group">
                   <Phone className="w-4 h-4 text-blue-400 flex-shrink-0" />
-                  {PHONE_NUMBER}
+                  <span suppressHydrationWarning>{PHONE_NUMBER}</span>
                 </a>
               </li>
               <li>
-                <a href={`mailto:${EMAIL_ADDRESS}`} className="flex items-center gap-2.5 text-gray-400 hover:text-white text-sm transition-colors group">
+                <a
+                  href={WHATSAPP_URL_2}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  suppressHydrationWarning
+                  className="flex items-center gap-2.5 text-gray-400 hover:text-emerald-400 text-sm transition-colors group"
+                >
+                  <MessageCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                  <span suppressHydrationWarning>{PHONE_NUMBER_2}</span>
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${EMAIL_ADDRESS}`} suppressHydrationWarning className="flex items-center gap-2.5 text-gray-400 hover:text-white text-sm transition-colors group">
                   <Mail className="w-4 h-4 text-blue-400 flex-shrink-0" />
-                  {EMAIL_ADDRESS}
+                  <span suppressHydrationWarning>{EMAIL_ADDRESS}</span>
                 </a>
               </li>
               <li className="mt-1">

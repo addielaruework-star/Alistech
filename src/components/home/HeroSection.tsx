@@ -76,18 +76,21 @@ export default function HeroSection() {
             {/* Clickable Direct Contacts below text */}
             <motion.div
               variants={itemVariants}
+              suppressHydrationWarning
               className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-gray-300 bg-white/[0.02] border border-white/[0.05] px-5 py-2.5 rounded-full backdrop-blur-md max-w-fit mx-auto mt-2 hover:border-blue-500/20 transition-all duration-300"
             >
               <a
                 href={`tel:${PHONE_NUMBER.replace(/\s+/g, "")}`}
+                suppressHydrationWarning
                 className="flex items-center gap-2 hover:text-blue-400 transition-colors"
               >
                 <span>📞</span>
-                <span className="font-semibold">{PHONE_NUMBER}</span>
+                <span suppressHydrationWarning className="font-semibold">{PHONE_NUMBER}</span>
               </a>
               <span className="text-white/10 hidden sm:inline">|</span>
               <a
                 href={`mailto:${EMAIL_ADDRESS}`}
+                suppressHydrationWarning
                 className="flex items-center gap-2 hover:text-blue-400 transition-colors"
               >
                 <span>✉️</span>

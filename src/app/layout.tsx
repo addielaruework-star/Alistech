@@ -63,8 +63,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const isAdmin = pathname.startsWith("/admin");
 
   return (
-    <html lang="en" className={`${sora.variable} ${inter.variable}`}>
-      <body className="font-inter antialiased bg-bg-primary text-white overflow-x-hidden">
+    <html lang="en" suppressHydrationWarning className={`${sora.variable} ${inter.variable}`}>
+      <body suppressHydrationWarning className="font-inter antialiased bg-bg-primary text-white overflow-x-hidden">
         {!isAdmin && <Navbar />}
         <main>{children}</main>
         {!isAdmin && <Footer />}
