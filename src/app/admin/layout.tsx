@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { AuthProvider, useAuth } from "@/lib/auth-context";
 import Link from "next/link";
-import { LayoutDashboard, Inbox, LogOut, Zap, Menu, X, Briefcase, Star, Settings } from "lucide-react";
+import { LayoutDashboard, Inbox, LogOut, Zap, Menu, X, Briefcase, Star, Settings, Layers } from "lucide-react";
 
 /* ── Sidebar links ────────────────────────────────────────────────────────── */
 const NAV = [
@@ -12,6 +12,7 @@ const NAV = [
   { label: "Leads", href: "/admin/leads", icon: Inbox },
   { label: "Projects", href: "/admin/projects", icon: Briefcase },
   { label: "Reviews", href: "/admin/reviews", icon: Star },
+  { label: "Site Content", href: "/admin/site-content", icon: Layers },
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
