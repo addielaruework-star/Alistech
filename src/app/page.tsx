@@ -7,7 +7,7 @@ import TechStackSection from "@/components/home/TechStackSection";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import ProcessSection from "@/components/home/ProcessSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
-import FAQSection from "@/components/home/FAQSection";
+import DynamicFAQSection from "@/components/home/DynamicFAQSection";
 import CTASection from "@/components/home/CTASection";
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ export default function HomePage() {
       <WhyChooseUs />
       <ProcessSection />
       <TestimonialsSection />
-      <FAQSection />
+      <DynamicFAQSection />
       <CTASection />
     </>
   );
