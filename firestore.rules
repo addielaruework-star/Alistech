@@ -49,6 +49,22 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    // ── SITE CONTENT collections ───────────────────────────────────────────
+    // Public: read-only access to published site content
+    // Admin: full read/write for live content, drafts, and version history
+    match /siteContent/{section} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /siteContentDrafts/{section} {
+      allow read, write: if isAdmin();
+    }
+
+    match /siteContentHistory/{versionId} {
+      allow read, write: if isAdmin();
+    }
+
     // ── Catch-all deny ─────────────────────────────────────────────────────
     // Any collection not listed above is fully denied.
     match /{document=**} {
