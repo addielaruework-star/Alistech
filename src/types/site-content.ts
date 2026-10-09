@@ -48,25 +48,29 @@ export type FieldType =
   | "boolean"
   | "card-list";
 
+export interface SubFieldDefinition {
+  key: string;
+  label: string;
+  type: "text" | "textarea" | "image" | "link";
+  maxLength?: number;
+  placeholder?: string;
+  description?: string;
+}
+
 export interface FieldDefinition {
   key: string;
   label: string;
   type: FieldType;
   description?: string;
   placeholder?: string;
-  itemSchema?: {
-    fields: {
-      key: string;
-      label: string;
-      type: "text" | "textarea" | "image" | "link";
-      placeholder?: string;
-    }[];
-  };
+  maxLength?: number;
+  subFields?: SubFieldDefinition[];
 }
 
 export interface SectionSchema {
   sectionKey: string;
   title: string;
   description: string;
+  defaults: any;
   fields: FieldDefinition[];
 }

@@ -3,12 +3,12 @@ import {
   doc,
   getDoc,
   setDoc,
-  addDoc,
   collection,
   query,
   where,
   getDocs,
   serverTimestamp,
+  writeBatch,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { type SiteContentHistoryEntry } from "@/types/site-content";
@@ -118,8 +118,8 @@ export async function saveDraftContent<T>(
 }
 
 /**
- * Publishes content live:
- * 1. Commits to live `siteContent/{section}`
+ * Publishes content live using a single atomic writeBatch:
+ * 1. Commits live content to `siteContent/{section}`
  * 2. Archives an immutable snapshot in `siteContentHistory`
  * 3. Keeps `siteContentDrafts/{section}` in sync
  */
@@ -128,40 +128,44 @@ export async function publishContent<T>(
   content: T,
   userEmail?: string
 ): Promise<void> {
+  const batch = writeBatch(db);
   const liveRef = doc(db, "siteContent", section);
   const draftRef = doc(db, "siteContentDrafts", section);
+  const historyRef = doc(collection(db, "siteContentHistory"));
 
-  // 1. Write live document
-  await setDoc(
+  const now = serverTimestamp();
+  const author = userEmail ?? "admin";
+
+  batch.set(
     liveRef,
     {
       section,
       content,
-      publishedAt: serverTimestamp(),
-      publishedBy: userEmail ?? "admin",
+      publishedAt: now,
+      publishedBy: author,
     },
     { merge: true }
   );
 
-  // 2. Archive to version history
-  await addDoc(collection(db, "siteContentHistory"), {
+  batch.set(historyRef, {
     section,
     content,
-    publishedAt: serverTimestamp(),
-    publishedBy: userEmail ?? "admin",
+    publishedAt: now,
+    publishedBy: author,
   });
 
-  // 3. Sync draft
-  await setDoc(
+  batch.set(
     draftRef,
     {
       section,
       content,
-      updatedAt: serverTimestamp(),
-      updatedBy: userEmail ?? "admin",
+      updatedAt: now,
+      updatedBy: author,
     },
     { merge: true }
   );
+
+  await batch.commit();
 }
 
 /**
