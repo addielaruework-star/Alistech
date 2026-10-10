@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 /** Routes that were built for the dark theme and must keep it. */
-const DARK_PREFIXES = ["/portfolio", "/projects", "/admin", "/login"];
+const DARK_PREFIXES = ["/admin", "/login"];
 
 /** Routes where public Navbar / Footer / WhatsApp should be hidden. */
 const ADMIN_PREFIXES = ["/admin"];
