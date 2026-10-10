@@ -45,7 +45,10 @@ export default function WhyChooseUs() {
                 className="relative card-v2 p-5 transition-all duration-300 group hover:border-[#334155] overflow-hidden"
               >
                 {/* Watermark number */}
-                <div className="absolute top-3 right-4 font-sora font-extrabold text-5xl text-[#0f172a]/5 leading-none select-none">
+                <div
+                  aria-hidden="true"
+                  className="absolute top-3 right-4 font-sora font-extrabold text-5xl text-[#0f172a]/5 leading-none select-none pointer-events-none"
+                >
                   {String(i + 1).padStart(2, "0")}
                 </div>
 

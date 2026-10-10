@@ -162,7 +162,7 @@ export default function Footer() {
           <p className="text-[#b2bdcc]">
             © 2026 AlisTech. All rights reserved.
           </p>
-          <p className="text-[#64748b]">
+          <p className="text-[#b2bdcc]">
             Flexible pricing for startups and growing businesses.
           </p>
         </div>

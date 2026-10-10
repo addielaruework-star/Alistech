@@ -153,7 +153,7 @@ export default function Navbar() {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all duration-300 cursor-pointer whitespace-nowrap px-6 py-3 text-base bg-[#84cc16] hover:bg-[#65a30d] text-white shadow-md border border-[#84cc16]/30"
+                  className="w-full inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all duration-300 cursor-pointer whitespace-nowrap px-6 py-3 text-base bg-[#84cc16] hover:bg-[#65a30d] text-[#1a2e05] shadow-md border border-[#84cc16]/30"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >

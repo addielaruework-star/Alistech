@@ -154,7 +154,7 @@ export default function CoursesSection() {
                   Summarise this fee policy for parents in three lines.
                 </div>
                 <div className="mt-3 p-4 rounded-2xl bg-gradient-to-br from-[#bef264] to-[#84cc16] text-[#1a2e05] text-sm font-medium leading-relaxed shadow-sm">
-                  <small className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#1a2e05]/75 mb-1">
+                  <small className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#1a2e05] mb-1">
                     Assistant
                   </small>
                   Fees are paid every quarter. Late payments may have a small fine. Brothers and

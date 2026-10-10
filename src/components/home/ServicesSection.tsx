@@ -80,9 +80,22 @@ export default function ServicesSection() {
                       <p className="text-[#475569] text-sm leading-relaxed">{service.description}</p>
                     </div>
                   </div>
-                  <span className="inline-flex w-fit items-center px-3 py-1 rounded-full text-xs font-semibold bg-[#ecfccb] text-[#3f6212] border border-[#bef264]">
-                    {service.tag}
-                  </span>
+                  <div className="flex items-center justify-between gap-2 mt-2">
+                    <span className="inline-flex w-fit items-center px-3 py-1 rounded-full text-xs font-semibold bg-[#ecfccb] text-[#3f6212] border border-[#bef264]">
+                      {service.tag}
+                    </span>
+                    <a
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-[#3f6212] hover:text-[#1a2e05] hover:underline"
+                      href={`https://wa.me/919603337862?text=${encodeURIComponent(
+                        `Hi AlisTech, I want to know about: ${service.title}`
+                      )}`}
+                      target="_blank"
+                      rel="noopener"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Ask about this service <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
                 </motion.div>
               );
             })}

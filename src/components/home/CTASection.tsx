@@ -56,7 +56,7 @@ export default function CTASection() {
             </motion.a>
           </div>
 
-          <p className="text-[#64748b] text-xs mt-3">
+          <p className="text-[#475569] text-xs mt-3">
             Flexible pricing for startups and growing businesses. No obligation.
           </p>
         </motion.div>

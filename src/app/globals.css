@@ -59,6 +59,15 @@
     overflow-x: hidden;
   }
 
+  /* Hide public chrome on admin routes (set by BodyScopeProvider client component) */
+  body[data-admin] nav,
+  body[data-admin] footer,
+  body[data-admin] > a[href*="whatsapp"],
+  body[data-admin] > a[aria-label*="WhatsApp"] {
+    display: none !important;
+  }
+
+
   :focus-visible {
     outline: 3px solid var(--label);
     outline-offset: 3px;
@@ -233,6 +242,17 @@
   .flip.open .in {
     transform: rotateY(180deg);
   }
+  /* When flipped: front must not catch pointer events; back must */
+  .flip:hover .front,
+  .flip:focus-visible .front,
+  .flip.open .front {
+    pointer-events: none;
+  }
+  .flip:hover .back,
+  .flip:focus-visible .back,
+  .flip.open .back {
+    pointer-events: auto;
+  }
   .face {
     position: relative;
     grid-area: 1 / 1;
@@ -245,8 +265,11 @@
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     overflow: hidden;
+    /* Default: front is interactive, back is not */
+    pointer-events: none;
   }
   .front {
+    pointer-events: auto;
     background: var(--surface);
     border: 1px solid var(--line);
     box-shadow: var(--shadow);
@@ -386,6 +409,260 @@
     30%, 100% { background: var(--bg-2); border-color: var(--line); }
   }
 }
+
+/* ── DARK SCOPE: restore original dark theme ── */
+[data-scope="dark"],
+body[data-scope="dark"] {
+  --bg: #050508;
+  --bg-2: #0a0a12;
+  --surface: #0d0d18;
+  --ink: #ffffff;
+  --mute: #94a3b8;
+  --line: rgba(255, 255, 255, 0.07);
+
+  --acc2: #2563eb;
+  --on-acc2: #ffffff;
+  --acc2-soft: rgba(37, 99, 235, 0.15);
+  --acc3-soft: rgba(6, 182, 212, 0.15);
+
+  --g1: #3b82f6;
+  --g2: #2563eb;
+  --on-grad: #ffffff;
+  --gt1: #3b82f6;
+  --gt2: #06b6d4;
+  --label: #94a3b8;
+
+  --dark: #050508;
+  --dark-2: #0a0a12;
+  --on-dark: #ffffff;
+  --mute-dark: #94a3b8;
+
+  --glow: 37, 99, 235;
+  --grad: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  --grad-text: linear-gradient(to right, #3b82f6, #06b6d4, #60a5fa);
+  --shadow: 0 1px 40px rgba(0, 0, 0, 0.5);
+
+  color-scheme: dark;
+  background-color: #050508;
+  color: #ffffff;
+}
+
+body[data-scope="dark"] ::-webkit-scrollbar-track {
+  background: #050508;
+}
+body[data-scope="dark"] ::-webkit-scrollbar-thumb {
+  background: #2563EB;
+}
+body[data-scope="dark"] ::selection {
+  background-color: rgba(37, 99, 235, 0.4);
+  color: #ffffff;
+}
+body[data-scope="dark"] input,
+body[data-scope="dark"] textarea,
+body[data-scope="dark"] select {
+  color: #ffffff !important;
+  background-color: transparent;
+}
+body[data-scope="dark"] input:-webkit-autofill,
+body[data-scope="dark"] input:-webkit-autofill:hover,
+body[data-scope="dark"] input:-webkit-autofill:focus,
+body[data-scope="dark"] textarea:-webkit-autofill,
+body[data-scope="dark"] textarea:-webkit-autofill:hover,
+body[data-scope="dark"] textarea:-webkit-autofill:focus,
+body[data-scope="dark"] select:-webkit-autofill,
+body[data-scope="dark"] select:-webkit-autofill:hover,
+body[data-scope="dark"] select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(15, 23, 42, 0.9) inset !important;
+  box-shadow: 0 0 0 1000px rgba(15, 23, 42, 0.9) inset !important;
+  caret-color: #3b82f6;
+}
+body[data-scope="dark"] option {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+/* Dark scope: override token-driven utilities */
+body[data-scope="dark"] .bg-bg-primary { background-color: #050508 !important; }
+body[data-scope="dark"] .bg-bg-secondary { background-color: #0a0a12 !important; }
+body[data-scope="dark"] .bg-bg-card { background-color: #0d0d18 !important; }
+body[data-scope="dark"] .text-ink { color: #ffffff !important; }
+body[data-scope="dark"] .text-mute { color: #94a3b8 !important; }
+body[data-scope="dark"] .border-border-default { border-color: rgba(255, 255, 255, 0.07) !important; }
+
+/* Dark scope: glass-card & card-v2 restore original dark styling */
+body[data-scope="dark"] .glass-card,
+body[data-scope="dark"] .card-v2 {
+  background: rgba(13, 13, 24, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: none;
+}
+body[data-scope="dark"] .glass-card-hover:hover,
+body[data-scope="dark"] .card-v2:hover {
+  border-color: rgba(37, 99, 235, 0.4) !important;
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.1) !important;
+}
+
+/* Restore and enforce high contrast for all text inside dark scope (>= 4.5:1) */
+body[data-scope="dark"] h1,
+body[data-scope="dark"] h2,
+body[data-scope="dark"] h3,
+body[data-scope="dark"] h4,
+body[data-scope="dark"] [class*="text-[#0f172a]"] {
+  color: #ffffff !important;
+}
+body[data-scope="dark"] [class*="text-[#475569]"] {
+  color: #94a3b8 !important;
+}
+body[data-scope="dark"] [class*="text-[#64748b]"] {
+  color: #94a3b8 !important;
+}
+body[data-scope="dark"] [class*="text-[#3f6212]"] {
+  color: #bef264 !important;
+}
+body[data-scope="dark"] [class*="text-white/10"],
+body[data-scope="dark"] [class*="text-white/15"],
+body[data-scope="dark"] [class*="text-white/20"],
+body[data-scope="dark"] [class*="text-white/25"],
+body[data-scope="dark"] [class*="text-white/30"],
+body[data-scope="dark"] [class*="text-white/35"],
+body[data-scope="dark"] [class*="text-white/40"],
+body[data-scope="dark"] [class*="text-white/45"] {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+body[data-scope="dark"] [class*="text-white/50"],
+body[data-scope="dark"] [class*="text-white/60"],
+body[data-scope="dark"] [class*="text-white/70"],
+body[data-scope="dark"] [class*="text-white/80"] {
+  color: #ffffff !important;
+}
+body[data-scope="dark"] [class*="text-blue-400/70"] {
+  color: #93c5fd !important;
+}
+.text-blue-400\/70 {
+  color: #1d4ed8 !important;
+}
+p[class*="text-[#94a3b8]"] {
+  color: #475569 !important;
+}
+body[data-scope="dark"] p[class*="text-[#94a3b8]"] {
+  color: #94a3b8 !important;
+}
+body[data-scope="dark"] [class*="text-gray-400"] {
+  color: #94a3b8 !important;
+}
+body[data-scope="dark"] [class*="text-gray-500"] {
+  color: #94a3b8 !important;
+}
+body[data-scope="dark"] [class*="text-gray-600"] {
+  color: #94a3b8 !important;
+}
+body[data-scope="dark"] .card-v2 p {
+  color: #94a3b8 !important;
+}
+
+/* Eyebrow badge on dark scope - restore main blue styling */
+body[data-scope="dark"] span.inline-flex[class*="tracking-wider"] {
+  background-color: rgba(37, 99, 235, 0.1) !important;
+  border-color: rgba(37, 99, 235, 0.3) !important;
+  color: #60a5fa !important;
+}
+body[data-scope="dark"] span.inline-flex[class*="tracking-wider"] span[class*="rounded-full"] {
+  background-color: #60a5fa !important;
+}
+
+/* Button & CTA restorations under dark scope */
+body[data-scope="dark"] a[class*="from-[#bef264]"],
+body[data-scope="dark"] button[class*="from-[#bef264]"],
+body[data-scope="dark"] a.btn-primary,
+body[data-scope="dark"] button.btn-primary {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border-radius: 0.75rem !important; /* rounded-xl */
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.4) !important;
+}
+body[data-scope="dark"] a[class*="from-[#bef264]"]:hover,
+body[data-scope="dark"] button[class*="from-[#bef264]"]:hover {
+  background: #3b82f6 !important;
+  box-shadow: 0 0 50px rgba(37, 99, 235, 0.6) !important;
+}
+body[data-scope="dark"] a[class*="bg-[#0f172a]"],
+body[data-scope="dark"] button[class*="bg-[#0f172a]"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  border-radius: 0.75rem !important; /* rounded-xl */
+}
+body[data-scope="dark"] a[class*="bg-[#0f172a]"]:hover,
+body[data-scope="dark"] button[class*="bg-[#0f172a]"]:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(37, 99, 235, 0.5) !important;
+}
+body[data-scope="dark"] section a[href*="wa.me"][class*="px-8"] {
+  background: #047857 !important; /* emerald-700 for >= 4.5:1 contrast */
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3) !important;
+  border-radius: 0.75rem !important;
+  color: #ffffff !important;
+}
+body[data-scope="dark"] section a[href*="wa.me"][class*="px-8"]:hover {
+  background: #065f46 !important; /* emerald-800 */
+}
+
+/* Navbar styling under dark scope */
+body[data-scope="dark"] header a span.font-sora {
+  color: #ffffff !important;
+}
+body[data-scope="dark"] header nav a {
+  color: #94a3b8 !important;
+}
+body[data-scope="dark"] header nav a:hover,
+body[data-scope="dark"] header nav a[class*="text-[#0f172a]"] {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+body[data-scope="dark"] header[class*="bg-white/92"] {
+  background-color: rgba(5, 5, 8, 0.9) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.07) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4) !important;
+}
+body[data-scope="dark"] header button[aria-label="Toggle menu"] {
+  color: #ffffff !important;
+}
+
+/* Dark scope: gradient-text restores old blue gradient */
+body[data-scope="dark"] .gradient-text,
+body[data-scope="dark"] .grad-text {
+  background: linear-gradient(to right, #3b82f6, #22d3ee, #60a5fa) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+/* Dark scope: grid-bg restores old blue tint */
+body[data-scope="dark"] .grid-bg {
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px) !important;
+  background-size: 60px 60px !important;
+}
+/* Dark scope: glow restores old blue glow */
+body[data-scope="dark"] .blue-glow,
+body[data-scope="dark"] .lime-glow {
+  box-shadow: 0 0 60px rgba(37, 99, 235, 0.3) !important;
+}
+body[data-scope="dark"] .blue-glow-sm,
+body[data-scope="dark"] .lime-glow-sm {
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.2) !important;
+}
+/* Dark scope: shimmer restores old blue shimmer */
+body[data-scope="dark"] .shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(37,99,235,0.15) 50%, transparent 100%) !important;
+  background-size: 200% 100% !important;
+}
+
 
 @layer utilities {
   .text-balance {

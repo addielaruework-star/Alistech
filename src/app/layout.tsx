@@ -4,7 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
-import { headers } from "next/headers";
+import BodyScopeProvider from "@/components/layout/BodyScopeProvider";
+import { Toaster } from "sonner";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -54,21 +55,20 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-import { Toaster } from "sonner";
-
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  /* Detect admin routes — skip public Navbar/Footer/WhatsApp */
-  const headersList = await headers();
-  const pathname = headersList.get("x-next-pathname") || "";
-  const isAdmin = pathname.startsWith("/admin");
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${sora.variable} ${inter.variable}`}>
-      <body suppressHydrationWarning className="font-inter antialiased bg-bg-primary text-ink overflow-x-hidden">
-        {!isAdmin && <Navbar />}
+      <body
+        suppressHydrationWarning
+        className="font-inter antialiased bg-bg-primary text-ink overflow-x-hidden"
+      >
+        {/* Sets data-scope="dark" and data-admin on body based on pathname (client-only) */}
+        <BodyScopeProvider />
+        {/* Navbar/Footer/WhatsApp are hidden on admin routes via CSS [data-admin] selector */}
+        <Navbar />
         <main>{children}</main>
-        {!isAdmin && <Footer />}
-        {!isAdmin && <WhatsAppButton />}
+        <Footer />
+        <WhatsAppButton />
         <Toaster richColors position="top-right" theme="light" />
       </body>
     </html>
