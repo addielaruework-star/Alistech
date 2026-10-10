@@ -12,12 +12,8 @@ export default function CTASection() {
       <div className="absolute inset-0 grid-bg opacity-100" />
 
       <div className="section-container relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-2xl mx-auto flex flex-col items-center text-center gap-7"
+        <div
+          className="rv max-w-2xl mx-auto flex flex-col items-center text-center gap-7"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#dde4ec] bg-white text-[#3f6212] text-xs font-semibold tracking-wider uppercase shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-[#84cc16] animate-pulse" />
@@ -59,7 +55,7 @@ export default function CTASection() {
           <p className="text-[#475569] text-xs mt-3">
             Flexible pricing for startups and growing businesses. No obligation.
           </p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

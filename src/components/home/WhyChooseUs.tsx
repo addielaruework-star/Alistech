@@ -30,19 +30,15 @@ export default function WhyChooseUs() {
           className="mb-14"
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 perspective-grid">
           {WHY_CHOOSE_US.map((item, i) => {
             const Icon = ICON_MAP[item.icon] ?? Zap;
             const isSlate = i % 2 === 1;
             return (
-              <motion.div
+              <div
                 key={item.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: i * 0.07 }}
-                whileHover={{ y: -3, transition: { duration: 0.18 } }}
-                className="relative card-v2 p-5 transition-all duration-300 group hover:border-[#334155] overflow-hidden"
+                className="rv tilt relative card-v2 p-5 transition-all duration-300 group hover:border-[#334155] overflow-hidden"
+                style={{ ['--rv-delay' as string]: `${(i % 4) * 80}ms` }}
               >
                 {/* Watermark number */}
                 <div
@@ -63,7 +59,7 @@ export default function WhyChooseUs() {
                     <p className="text-[#475569] text-sm leading-relaxed">{item.description}</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>

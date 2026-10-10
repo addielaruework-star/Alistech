@@ -67,19 +67,15 @@ export default function ServicesSection() {
           <h3 className="text-xs font-semibold text-[#3f6212] uppercase tracking-widest mb-6">
             Core Services
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 perspective-grid">
             {CORE_SERVICES.map((service, i) => {
               const Icon = ICON_MAP[service.icon] ?? Globe;
               const isSlate = i % 2 === 1;
               return (
-                <motion.div
+                <div
                   key={service.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.05 }}
-                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                  className="card-v2 p-5 flex flex-col gap-4 group hover:border-[#334155] transition-all duration-300"
+                  className="rv tilt card-v2 p-5 flex flex-col gap-4 group hover:border-[#334155] transition-all duration-300"
+                  style={{ ['--rv-delay' as string]: `${(i % 4) * 80}ms` }}
                 >
                   {/* Number + Icon row */}
                   <div className="flex items-center justify-between">
@@ -126,7 +122,7 @@ export default function ServicesSection() {
                   >
                     Ask about this service <span aria-hidden="true">↗</span>
                   </a>
-                </motion.div>
+                </div>
               );
             })}
           </div>
@@ -137,19 +133,15 @@ export default function ServicesSection() {
           <h3 className="text-xs font-semibold text-[#475569] uppercase tracking-widest mb-6">
             Additional Support
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 perspective-grid">
             {ADDITIONAL_SERVICES.map((service, i) => {
               const Icon = ICON_MAP[service.icon] ?? Rocket;
               const isSlate = (i + 1) % 2 === 1;
               return (
-                <motion.div
+                <div
                   key={service.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.06 }}
-                  whileHover={{ y: -3 }}
-                  className="card-v2 p-5 flex flex-col gap-3 hover:border-[#334155] transition-all duration-300"
+                  className="rv tilt card-v2 p-5 flex flex-col gap-3 hover:border-[#334155] transition-all duration-300"
+                  style={{ ['--rv-delay' as string]: `${(i % 4) * 80}ms` }}
                 >
                   <div className={`gem ${isSlate ? "teal" : ""}`} aria-hidden="true">
                     <Icon />
@@ -158,7 +150,7 @@ export default function ServicesSection() {
                     <div className="font-semibold text-[#0f172a] text-sm mb-1">{service.title}</div>
                     <div className="text-[#475569] text-xs leading-relaxed">{service.description}</div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>

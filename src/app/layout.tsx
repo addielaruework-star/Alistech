@@ -5,7 +5,9 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import BodyScopeProvider from "@/components/layout/BodyScopeProvider";
+import MotionProvider from "@/components/motion/MotionProvider";
 import { Toaster } from "sonner";
+
 
 const sora = Sora({
   subsets: ["latin"],
@@ -64,6 +66,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         {/* Sets data-scope="dark" and data-admin on body based on pathname (client-only) */}
         <BodyScopeProvider />
+        {/* Scroll-reveal (IntersectionObserver) + pointer tilt — client-only */}
+        <MotionProvider />
         {/* Navbar/Footer/WhatsApp are hidden on admin routes via CSS [data-admin] selector */}
         <Navbar />
         <main>{children}</main>

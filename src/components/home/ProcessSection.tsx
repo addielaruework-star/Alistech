@@ -39,13 +39,10 @@ export default function ProcessSection() {
             const Icon = ICONS[step.icon as IconKey] ?? Search;
             const isSlate = i % 2 === 1;
             return (
-              <motion.div
+              <div
                 key={step.number}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.52, delay: i * 0.12 }}
-                className="group relative flex flex-col gap-4 z-10"
+                className="rv group relative flex flex-col gap-4 z-10"
+                style={{ ['--rv-delay' as string]: `${(i % 4) * 80}ms` }}
               >
                 {/* Step icon badge (.gem, 54px) alternating lime and slate */}
                 <div className="relative flex items-center">
@@ -59,7 +56,7 @@ export default function ProcessSection() {
                 </div>
 
                 {/* Card with new style */}
-                <div className="card-v2 p-5 flex-1 transition-all duration-300 group-hover:border-[#334155]">
+                <div className="tilt card-v2 p-5 flex-1 transition-all duration-300 group-hover:border-[#334155]">
                   <h3 className="font-sora font-bold text-[#0f172a] text-base mb-2">
                     {step.title}
                   </h3>
@@ -67,7 +64,7 @@ export default function ProcessSection() {
                     {step.description}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>

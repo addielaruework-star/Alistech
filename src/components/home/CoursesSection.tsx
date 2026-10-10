@@ -90,7 +90,9 @@ export default function CoursesSection() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {COURSES.map((course, i) => (
-              <CourseFlipCard key={course.id} course={course} index={i} />
+              <div key={course.id} className="rv" style={{ ['--rv-delay' as string]: `${(i % 4) * 80}ms` }}>
+                <CourseFlipCard course={course} index={i} />
+              </div>
             ))}
           </div>
         </div>
@@ -147,22 +149,27 @@ export default function CoursesSection() {
 
             {/* Right Column: Example Card */}
             <div className="lg:col-span-5">
-              <div className="bg-white text-[#0f172a] rounded-[28px] p-6 shadow-[0_22px_44px_-24px_rgba(132,204,22,0.35),0_2px_6px_rgba(0,0,0,0.05)] border border-[#dde4ec]">
+              <div className="tilt bg-white text-[#0f172a] rounded-[28px] p-6 shadow-[0_22px_44px_-24px_rgba(132,204,22,0.35),0_2px_6px_rgba(0,0,0,0.05)] border border-[#dde4ec]">
                 <span className="font-mono text-xs font-semibold tracking-wider uppercase text-[#475569] block mb-4">
                   Example
                 </span>
-                <div className="p-4 rounded-2xl bg-[#eef2f6] border border-[#dde4ec] text-sm text-[#0f172a] leading-relaxed">
+                <div className="chat-pop p-4 rounded-2xl bg-[#eef2f6] border border-[#dde4ec] text-sm text-[#0f172a] leading-relaxed">
                   <small className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#475569] mb-1">
                     You ask
                   </small>
                   Summarise this fee policy for parents in three lines.
                 </div>
-                <div className="mt-3 p-4 rounded-2xl bg-gradient-to-br from-[#bef264] to-[#84cc16] text-[#1a2e05] text-sm font-medium leading-relaxed shadow-sm">
+                <div className="chat-pop mt-3 p-4 rounded-2xl bg-gradient-to-br from-[#bef264] to-[#84cc16] text-[#1a2e05] text-sm font-medium leading-relaxed shadow-sm">
                   <small className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#1a2e05] mb-1">
                     Assistant
                   </small>
                   Fees are paid every quarter. Late payments may have a small fine. Brothers and
                   sisters can get a discount.
+                  <div className="flex items-center gap-1.5 mt-2.5">
+                    <span className="typing-dot" />
+                    <span className="typing-dot" />
+                    <span className="typing-dot" />
+                  </div>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {["Prompts", "APIs", "RAG", "Chatbots"].map((chip) => (
@@ -186,7 +193,7 @@ export default function CoursesSection() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Column: Example Agent Run */}
             <div className="lg:col-span-5 order-2 lg:order-1">
-              <div className="bg-white rounded-[28px] p-6 shadow-[0_22px_44px_-24px_rgba(132,204,22,0.35),0_2px_6px_rgba(0,0,0,0.05)] border border-[#dde4ec]">
+              <div className="tilt bg-white rounded-[28px] p-6 shadow-[0_22px_44px_-24px_rgba(132,204,22,0.35),0_2px_6px_rgba(0,0,0,0.05)] border border-[#dde4ec]">
                 <span className="font-mono text-xs font-semibold tracking-wider uppercase text-[#475569] block mb-4">
                   Example agent run
                 </span>

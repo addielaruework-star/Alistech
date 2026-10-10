@@ -137,13 +137,10 @@ export default function TestimonialsSection() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {reviews.slice(0, 6).map((review, i) => (
-              <motion.div
+              <div
                 key={review.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="card-v2 p-6 flex flex-col gap-4 hover:border-[#334155] transition-all duration-300"
+                className="rv card-v2 p-6 flex flex-col gap-4 hover:border-[#334155] transition-all duration-300"
+                style={{ ['--rv-delay' as string]: `${(i % 4) * 80}ms` }}
               >
                 <Stars rating={review.rating} />
                 <div className="relative flex-1">
@@ -167,7 +164,7 @@ export default function TestimonialsSection() {
                     </p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         )}

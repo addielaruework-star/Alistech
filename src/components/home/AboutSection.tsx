@@ -41,41 +41,34 @@ export default function AboutSection() {
             </div>
 
             {/* Built With Purpose — card style from reference, no icon */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="mt-2 card-v2 p-5 relative overflow-hidden"
+            <div
+              className="rv mt-2 card-v2 p-5 relative overflow-hidden"
             >
               <h3 className="font-sora font-bold text-[#0f172a] text-base mb-2">Built With Purpose</h3>
               <p className="text-[#475569] text-sm leading-relaxed">
                 Founded by a small team of developers and designers focused on building modern digital
                 experiences that help businesses grow online.
               </p>
-            </motion.div>
+            </div>
           </div>
 
           {/* Right — engineering pillars */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 perspective-grid">
             {VALUE_CARDS.map(({ icon, title, description }, i) => {
               const Icon = ICON_MAP[icon] ?? Code2;
               const isSlate = i % 2 === 1;
               return (
-                <motion.div
+                <div
                   key={title}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="card-v2 p-5 flex flex-col gap-3 hover:border-[#334155] transition-all duration-300"
+                  className="rv tilt card-v2 p-5 flex flex-col gap-3 hover:border-[#334155] transition-all duration-300"
+                  style={{ ['--rv-delay' as string]: `${(i % 4) * 80}ms` }}
                 >
                   <div className={`gem ${isSlate ? "teal" : ""}`} aria-hidden="true">
                     <Icon />
                   </div>
                   <div className="font-sora font-semibold text-[#0f172a] text-sm">{title}</div>
                   <p className="text-[#475569] text-xs leading-relaxed">{description}</p>
-                </motion.div>
+                </div>
               );
             })}
           </div>

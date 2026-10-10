@@ -28,17 +28,10 @@ export default function FAQSection() {
           {FAQ_ITEMS.map((item, i) => {
             const isOpen = openIndex === i;
             return (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.07 }}
-                className="rounded-2xl border transition-colors duration-200 overflow-hidden shadow-sm"
-                style={{
-                  borderColor: isOpen ? "#334155" : "#dde4ec",
-                  background: isOpen ? "#ffffff" : "#ffffff",
-                }}
+                className="rv rounded-2xl border transition-colors duration-200 overflow-hidden shadow-sm"
+                style={{ ['--rv-delay' as string]: `${(i % 4) * 80}ms`, borderColor: isOpen ? "#334155" : "#dde4ec", background: isOpen ? "#ffffff" : "#ffffff" }}
               >
                 {/* Question row */}
                 <button
@@ -78,7 +71,7 @@ export default function FAQSection() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
             );
           })}
         </div>

@@ -29,13 +29,9 @@ export default function SectionHeading({
   const parts = highlight ? fullTitle.split("__HIGHLIGHT__") : [title];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
+    <div
       className={cn(
-        "flex flex-col gap-4",
+        "rv flex flex-col gap-4",
         align === "center" ? "items-center text-center" : "items-start text-left",
         className
       )}
@@ -77,6 +73,6 @@ export default function SectionHeading({
           {subtitle}
         </p>
       )}
-    </motion.div>
+    </div>
   );
 }
