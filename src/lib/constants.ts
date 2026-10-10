@@ -22,46 +22,163 @@ export const WHATSAPP_QR_URL = "https://wa.me/qr/VFWFGVUGTMO3L1";
 export const INSTAGRAM_URL = "https://www.instagram.com/alis_techs?stkn=MTR2anY5YnRjYnMxZw==";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/alis-tech-152012441?utm_source=share_via&utm_content=profile&utm_medium=member_android";
 
-// Core services
-export const CORE_SERVICES = [
+// Services section sub-line (PDF)
+export const SERVICES_SUBTITLE =
+  "Websites, apps, AI and automation — simple solutions for everyday business problems.";
+
+// Core services — 12 items from the PDF (exact wording)
+export interface CoreService {
+  number: string;
+  icon: string;
+  title: string;
+  description: string;
+  howItHelps: [string, string, string];
+}
+
+export const CORE_SERVICES: CoreService[] = [
   {
+    number: "01",
     icon: "Globe",
-    title: "Website Development",
-    description:
-      "Fast, SEO-friendly websites built with modern frameworks. From landing pages to full business websites that work across all devices.",
-    tag: "Core",
+    title: "Website",
+    description: "Business website, online store, portfolio, landing page",
+    howItHelps: [
+      "Customers find you on Google",
+      "Your business looks trusted and professional",
+      "Get enquiries 24/7, even when you're closed",
+    ],
   },
   {
-    icon: "Briefcase",
-    title: "Portfolio Development",
-    description:
-      "Clean, focused portfolio websites that present your work professionally and help you attract the right clients.",
-    tag: "Core",
+    number: "02",
+    icon: "Smartphone",
+    title: "Mobile App",
+    description: "Android & iPhone apps for shopping, booking, delivery",
+    howItHelps: [
+      "Customers order or book in one tap",
+      "Your brand stays on their phone",
+      "Send offers straight to customers",
+    ],
   },
+  {
+    number: "03",
+    icon: "LayoutDashboard",
+    title: "Business Software",
+    description: "Customers, staff, stock, bookings, billing & orders",
+    howItHelps: [
+      "No more registers and messy Excel sheets",
+      "Check stock, sales and staff anytime",
+      "Fewer billing mistakes",
+    ],
+  },
+  {
+    number: "04",
+    icon: "Bot",
+    title: "AI Solutions",
+    description: "Chatbots, AI support, assistant, chat with your PDFs",
+    howItHelps: [
+      "Customers get instant answers, 24/7",
+      "Find any info in your files in seconds",
+      "Staff stop answering the same questions",
+    ],
+  },
+  {
+    number: "05",
+    icon: "MessageCircle",
+    title: "WhatsApp Automation",
+    description: "Auto-replies, reminders, bookings, order updates",
+    howItHelps: [
+      "Never miss a customer message",
+      "Fewer missed appointments with reminders",
+      "More sales from on-time follow-ups",
+    ],
+  },
+  {
+    number: "06",
+    icon: "Zap",
+    title: "Business Automation",
+    description: "Repetitive tasks, reports, leads, emails & messages",
+    howItHelps: [
+      "Save hours of manual work every week",
+      "No lead gets forgotten",
+      "Your tools share data automatically",
+    ],
+  },
+  {
+    number: "07",
+    icon: "BarChart2",
+    title: "Data & Reports",
+    description: "Sales reports, dashboards, analysis, forecasting",
+    howItHelps: [
+      "See your whole business at a glance",
+      "Know what sells and what doesn't",
+      "Plan stock and sales in advance",
+    ],
+  },
+  {
+    number: "08",
+    icon: "BookOpen",
+    title: "Online Course Platform",
+    description: "For coaching centres: videos, tests, student login",
+    howItHelps: [
+      "Teach students beyond your classroom",
+      "Earn more from recorded courses",
+      "Track every student's progress",
+    ],
+  },
+  {
+    number: "09",
+    icon: "FileText",
+    title: "Document Processing",
+    description: "Read bills, invoices & forms automatically (OCR)",
+    howItHelps: [
+      "No more typing data by hand",
+      "Fewer errors, faster work",
+      "Data goes straight into Excel or your software",
+    ],
+  },
+  {
+    number: "10",
+    icon: "Database",
+    title: "Data Collection",
+    description: "Prices, product lists & leads from public websites",
+    howItHelps: [
+      "Track competitor prices easily",
+      "Get fresh leads without manual searching",
+      "Data delivered ready in Excel",
+    ],
+  },
+  {
+    number: "11",
+    icon: "CreditCard",
+    title: "Payment Integration",
+    description: "UPI, cards & Razorpay on your site or app",
+    howItHelps: [
+      "Get paid online, instantly",
+      "Customers pay the way they prefer",
+      "Every payment recorded automatically",
+    ],
+  },
+  {
+    number: "12",
+    icon: "Wrench",
+    title: "Custom Solutions",
+    description: "Software or AI built for your specific idea or problem",
+    howItHelps: [
+      "Built around how you already work",
+      "Solves what ready-made apps can't",
+      "From idea to working product",
+    ],
+  },
+];
+
+// Additional / support services — 6 items (not in PDF; kept as-is)
+export const ADDITIONAL_SERVICES = [
   {
     icon: "LayoutDashboard",
     title: "CMS & Admin Systems",
     description:
       "Custom dashboards and content management systems that give your team control over your digital content without complexity.",
-    tag: "Core",
+    tag: "Support",
   },
-  {
-    icon: "Bot",
-    title: "AI & Automation",
-    description:
-      "Smart integrations, AI chatbots, and automation workflows that save time and help your business run more efficiently.",
-    tag: "Core",
-  },
-  {
-    icon: "AppWindow",
-    title: "Platform Development",
-    description:
-      "Web applications and SaaS platforms built with scalable architecture, designed to grow as your user base grows.",
-    tag: "Core",
-  },
-];
-
-export const ADDITIONAL_SERVICES = [
   {
     icon: "Server",
     title: "Hosting Setup",
@@ -252,6 +369,7 @@ export interface CourseItem {
   id: string;
   name: string;
   number: string;
+  hint: string;
   svgInner: string;
 }
 
@@ -260,48 +378,56 @@ export const COURSES: CourseItem[] = [
     id: "python",
     number: "01",
     name: "Python Programming",
+    hint: "Start coding from zero",
     svgInner: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>',
   },
   {
     id: "data-science",
     number: "02",
     name: "Data Science & Analytics",
+    hint: "Turn data into decisions",
     svgInner: '<path d="M4 4v16h16"/><path d="M7.5 15l3.5-4 3 3 5-6"/>',
   },
   {
     id: "machine-learning",
     number: "03",
     name: "Machine Learning",
+    hint: "Build models that predict",
     svgInner: '<circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="17" r="2"/><path d="M8 7h8M7 9l4 6M17 9l-4 6"/>',
   },
   {
     id: "deep-learning",
     number: "04",
     name: "Deep Learning",
+    hint: "Neural networks for images and text",
     svgInner: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
   },
   {
     id: "genai",
     number: "05",
     name: "Generative AI & LLMs",
+    hint: "Build ChatGPT-style AI apps",
     svgInner: '<path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/>',
   },
   {
     id: "agentic-ai",
     number: "06",
     name: "AI Agents & Automation",
+    hint: "Make AI do tasks for you",
     svgInner: '<rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9.5 13.5h.01M14.5 13.5h.01"/>',
   },
   {
     id: "computer-vision",
     number: "07",
     name: "Computer Vision",
+    hint: "Teach computers to see",
     svgInner: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
   },
   {
     id: "nlp",
     number: "08",
     name: "Natural Language Processing",
+    hint: "AI that understands language",
     svgInner: '<path d="M4 6h16M4 12h10M4 18h14"/>',
   },
 ];

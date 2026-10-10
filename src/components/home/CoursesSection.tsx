@@ -40,7 +40,7 @@ function CourseFlipCard({
           </div>
           <div>
             <h3 className="font-sora font-bold text-xl text-[#0f172a]">{course.name}</h3>
-            <div className="hint">Interested? →</div>
+            <div className="hint">{course.hint}</div>
           </div>
         </div>
 
@@ -80,9 +80,13 @@ export default function CoursesSection() {
             eyebrow="Courses"
             title="Learn trending "
             highlight="tech skills"
-            subtitle="8 courses in programming, data and AI."
-            className="mb-14"
+            subtitle="For students, freshers and working professionals."
+            className="mb-10"
           />
+
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#475569] mb-6">
+            Courses we teach
+          </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {COURSES.map((course, i) => (
