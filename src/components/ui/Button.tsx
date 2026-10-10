@@ -19,14 +19,15 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-300 cursor-pointer whitespace-nowrap";
+    "inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all duration-300 cursor-pointer whitespace-nowrap";
 
   const variants = {
     primary:
-      "bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_30px_rgba(37,99,235,0.4)] hover:shadow-[0_0_50px_rgba(37,99,235,0.6)]",
+      "bg-gradient-to-r from-[#bef264] to-[#84cc16] text-[#1a2e05] shadow-[0_12px_28px_-12px_rgba(132,204,22,0.7)] hover:shadow-[0_16px_32px_-12px_rgba(132,204,22,0.85)]",
     secondary:
-      "bg-white/5 hover:bg-white/10 border border-white/10 hover:border-blue-500/50 text-white",
-    ghost: "text-blue-400 hover:text-blue-300 underline-offset-4 hover:underline",
+      "bg-[#0f172a] hover:bg-[#1e293b] text-white border border-transparent",
+    ghost:
+      "bg-white border border-[#dde4ec] hover:border-[#0f172a] text-[#0f172a]",
   };
 
   const sizes = {

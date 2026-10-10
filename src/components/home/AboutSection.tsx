@@ -6,17 +6,19 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import { Code2, Bot, Zap, ShieldCheck } from "lucide-react";
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
-  Code2, Bot, Zap, ShieldCheck,
+  Code2,
+  Bot,
+  Zap,
+  ShieldCheck,
 };
 
 export default function AboutSection() {
   return (
     <section className="relative py-20 bg-bg-primary overflow-hidden">
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-blue-600/5 blur-[100px] pointer-events-none" />
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-[#bef264]/20 blur-[100px] pointer-events-none" />
 
       <div className="section-container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
-
           {/* Left — text */}
           <div className="flex flex-col gap-7">
             <SectionHeading
@@ -26,7 +28,7 @@ export default function AboutSection() {
               align="left"
             />
 
-            <div className="flex flex-col gap-4 text-gray-400 text-base leading-relaxed">
+            <div className="flex flex-col gap-4 text-[#475569] text-base leading-relaxed">
               <p>
                 AlisTech is a remote-first software and AI development studio. We work with startups,
                 local businesses, and founders who need a reliable technical team to build and ship
@@ -38,18 +40,16 @@ export default function AboutSection() {
               </p>
             </div>
 
-            {/* Built With Purpose — no icon, clean text block */}
+            {/* Built With Purpose — card style from reference, no icon */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="mt-2 rounded-2xl p-6 border border-blue-500/15 bg-blue-600/5 relative overflow-hidden"
+              className="mt-2 card-v2 p-5 relative overflow-hidden"
             >
-              {/* Subtle glow accent */}
-              <div className="absolute top-0 left-0 w-32 h-px bg-gradient-to-r from-blue-500/50 to-transparent" />
-              <h3 className="font-sora font-bold text-white text-base mb-2">Built With Purpose</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">
+              <h3 className="font-sora font-bold text-[#0f172a] text-base mb-2">Built With Purpose</h3>
+              <p className="text-[#475569] text-sm leading-relaxed">
                 Founded by a small team of developers and designers focused on building modern digital
                 experiences that help businesses grow online.
               </p>
@@ -57,9 +57,10 @@ export default function AboutSection() {
           </div>
 
           {/* Right — engineering pillars */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {VALUE_CARDS.map(({ icon, title, description }, i) => {
               const Icon = ICON_MAP[icon] ?? Code2;
+              const isSlate = i % 2 === 1;
               return (
                 <motion.div
                   key={title}
@@ -67,13 +68,13 @@ export default function AboutSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="glass-card rounded-xl p-5 flex flex-col gap-3 border border-white/5 hover:border-blue-500/18 transition-all duration-300"
+                  className="card-v2 p-5 flex flex-col gap-3 hover:border-[#334155] transition-all duration-300"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-blue-600/10 border border-blue-500/18 flex items-center justify-center">
-                    <Icon className="w-3.5 h-3.5 text-blue-400" />
+                  <div className={`gem ${isSlate ? "teal" : ""}`} aria-hidden="true">
+                    <Icon />
                   </div>
-                  <div className="font-sora font-semibold text-white text-sm">{title}</div>
-                  <p className="text-gray-500 text-xs leading-relaxed">{description}</p>
+                  <div className="font-sora font-semibold text-[#0f172a] text-sm">{title}</div>
+                  <p className="text-[#475569] text-xs leading-relaxed">{description}</p>
                 </motion.div>
               );
             })}

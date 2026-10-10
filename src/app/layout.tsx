@@ -64,12 +64,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" suppressHydrationWarning className={`${sora.variable} ${inter.variable}`}>
-      <body suppressHydrationWarning className="font-inter antialiased bg-bg-primary text-white overflow-x-hidden">
+      <body suppressHydrationWarning className="font-inter antialiased bg-bg-primary text-ink overflow-x-hidden">
         {!isAdmin && <Navbar />}
         <main>{children}</main>
         {!isAdmin && <Footer />}
         {!isAdmin && <WhatsAppButton />}
-        <Toaster richColors position="top-right" theme="dark" />
+        <Toaster richColors position="top-right" theme="light" />
       </body>
     </html>
   );

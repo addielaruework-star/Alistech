@@ -31,7 +31,9 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   return (
     <>
@@ -42,18 +44,18 @@ export default function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? "py-3 bg-bg-primary/80 backdrop-blur-xl border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.4)]"
+            ? "py-3 bg-white/92 backdrop-blur-xl border-b border-[#dde4ec] shadow-[0_10px_30px_-15px_rgba(15,23,42,0.1)]"
             : "py-5 bg-transparent"
         )}
       >
         <div className="section-container flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.45)] group-hover:shadow-[0_0_28px_rgba(37,99,235,0.7)] transition-all duration-300">
-              <Zap className="w-4 h-4 text-white" fill="white" />
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#bef264] to-[#84cc16] flex items-center justify-center shadow-[0_0_20px_rgba(132,204,22,0.45)] group-hover:shadow-[0_0_28px_rgba(132,204,22,0.7)] transition-all duration-300">
+              <Zap className="w-4 h-4 text-[#1a2e05]" fill="#1a2e05" />
             </div>
-            <span className="font-sora font-bold text-xl text-white">
-              Alis<span className="text-blue-400">Tech</span>
+            <span className="font-sora font-bold text-xl text-[#0f172a]">
+              Alis<span className="gradient-text font-extrabold">Tech</span>
             </span>
           </Link>
 
@@ -66,10 +68,10 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "text-white bg-white/8"
-                      : "text-gray-400 hover:text-white hover:bg-white/5"
+                      ? "text-[#0f172a] bg-[#eef2f6]"
+                      : "text-[#475569] hover:text-[#0f172a] hover:bg-[#eef2f6]/70"
                   )}
                 >
                   {link.label}
@@ -80,14 +82,14 @@ export default function Navbar() {
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-2.5">
-            <Button variant="primary" size="sm" href="/contact">
+            <Button variant="secondary" size="sm" href="/contact">
               Start a Project →
             </Button>
             <motion.a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 font-semibold rounded-xl transition-all duration-300 cursor-pointer whitespace-nowrap px-4 py-2 text-sm bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 hover:border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.1)]"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold rounded-full transition-all duration-300 cursor-pointer whitespace-nowrap px-4 py-2 text-sm bg-[#ecfccb] hover:bg-[#bef264] text-[#1a2e05] border border-[#84cc16]/30 shadow-sm"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -98,7 +100,7 @@ export default function Navbar() {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden text-white p-2 rounded-lg hover:bg-white/5 transition-colors"
+            className="md:hidden text-[#0f172a] p-2 rounded-lg hover:bg-[#eef2f6] transition-colors"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
@@ -115,7 +117,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 pt-20 bg-bg-primary/95 backdrop-blur-xl md:hidden"
+            className="fixed inset-0 z-40 pt-20 bg-white/95 backdrop-blur-xl md:hidden"
           >
             <nav className="section-container flex flex-col gap-2 pt-8">
               {NAV_LINKS.map((link, i) => (
@@ -130,8 +132,8 @@ export default function Navbar() {
                     className={cn(
                       "block px-5 py-4 rounded-xl text-lg font-medium border transition-all",
                       pathname === link.href
-                        ? "text-white border-blue-500/30 bg-blue-500/10"
-                        : "text-gray-300 border-transparent hover:border-white/10 hover:bg-white/5"
+                        ? "text-[#0f172a] border-[#84cc16]/40 bg-[#ecfccb]"
+                        : "text-[#475569] border-transparent hover:border-[#dde4ec] hover:bg-[#eef2f6]"
                     )}
                   >
                     {link.label}
@@ -144,14 +146,14 @@ export default function Navbar() {
                 transition={{ delay: 0.35 }}
                 className="flex flex-col gap-3 mt-4"
               >
-                <Button variant="primary" size="lg" href="/contact" className="w-full">
+                <Button variant="secondary" size="lg" href="/contact" className="w-full">
                   Start a Project →
                 </Button>
                 <motion.a
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-300 cursor-pointer whitespace-nowrap px-6 py-3 text-base bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.3)] border border-emerald-500/30"
+                  className="w-full inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all duration-300 cursor-pointer whitespace-nowrap px-6 py-3 text-base bg-[#84cc16] hover:bg-[#65a30d] text-white shadow-md border border-[#84cc16]/30"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >

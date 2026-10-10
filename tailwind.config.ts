@@ -14,31 +14,56 @@ const config: Config = {
       },
       colors: {
         bg: {
-          primary: "#050508",
-          secondary: "#0a0a12",
-          card: "#0d0d18",
+          primary: "var(--bg)",
+          secondary: "var(--bg-2)",
+          card: "var(--surface)",
+        },
+        surface: "var(--surface)",
+        ink: "var(--ink)",
+        mute: "var(--mute)",
+        line: "var(--line)",
+        acc2: {
+          DEFAULT: "var(--acc2)",
+          soft: "var(--acc2-soft)",
+          on: "var(--on-acc2)",
+        },
+        acc3: {
+          soft: "var(--acc3-soft)",
+        },
+        label: "var(--label)",
+        dark: {
+          DEFAULT: "var(--dark)",
+          2: "var(--dark-2)",
+          on: "var(--on-dark)",
+          mute: "var(--mute-dark)",
         },
         accent: {
-          blue: "#2563EB",
-          "blue-light": "#3B82F6",
-          cyan: "#06B6D4",
+          lime: "#84cc16",
+          "lime-light": "#bef264",
+          slate: "#334155",
+          blue: "#334155",
+          "blue-light": "#84cc16",
+          cyan: "#4d7c0f",
         },
         border: {
-          DEFAULT: "rgba(255,255,255,0.07)",
-          hover: "rgba(37,99,235,0.4)",
+          DEFAULT: "var(--line)",
+          hover: "var(--acc2)",
         },
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "lime-glow":
+          "radial-gradient(ellipse at center, rgba(132,204,22,0.18) 0%, transparent 70%)",
         "blue-glow":
-          "radial-gradient(ellipse at center, rgba(37,99,235,0.15) 0%, transparent 70%)",
+          "radial-gradient(ellipse at center, rgba(132,204,22,0.18) 0%, transparent 70%)",
         "hero-grid":
-          "linear-gradient(rgba(37,99,235,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.05) 1px, transparent 1px)",
+          "linear-gradient(rgba(15,23,42,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.04) 1px, transparent 1px)",
       },
       boxShadow: {
-        "glow-blue": "0 0 40px rgba(37,99,235,0.25)",
-        "glow-blue-sm": "0 0 20px rgba(37,99,235,0.15)",
-        card: "0 1px 40px rgba(0,0,0,0.5)",
+        "glow-lime": "0 0 40px rgba(132,204,22,0.25)",
+        "glow-blue": "0 0 40px rgba(132,204,22,0.25)",
+        "glow-blue-sm": "0 0 20px rgba(132,204,22,0.15)",
+        card: "0 22px 44px -24px rgba(132,204,22,0.35), 0 2px 6px rgba(0,0,0,0.05)",
       },
       animation: {
         "fade-in-up": "fadeInUp 0.6s ease forwards",

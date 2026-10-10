@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { Globe, Bot, Zap, Target } from "lucide-react";
 import Button from "@/components/ui/Button";
-
 import { PHONE_NUMBER, EMAIL_ADDRESS, WHATSAPP_URL } from "@/lib/constants";
 
 const containerVariants = {
@@ -46,7 +45,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 grid-bg opacity-100" />
 
       {/* Subtle ambient lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full bg-blue-600/5 blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-[#bef264]/20 blur-[150px] pointer-events-none" />
 
       <div className="section-container relative z-10 pt-32 pb-20">
         <div className="flex flex-col items-center text-center gap-8 max-w-4xl mx-auto">
@@ -59,7 +58,7 @@ export default function HeroSection() {
           >
             <motion.h1
               variants={itemVariants}
-              className="font-sora font-extrabold text-5xl sm:text-6xl md:text-7xl text-white leading-[1.06] tracking-tight text-balance"
+              className="font-sora font-extrabold text-5xl sm:text-6xl md:text-7xl text-[#0f172a] leading-[1.06] tracking-tight text-balance"
             >
               Build Digital Products{" "}
               <span className="gradient-text">That Help Businesses Grow</span>
@@ -67,7 +66,7 @@ export default function HeroSection() {
 
             <motion.p
               variants={itemVariants}
-              className="text-gray-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
+              className="text-[#475569] text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
             >
               We design and engineer websites, platforms, and AI-powered tools for startups and growing businesses.
               Clean code. Thoughtful design. Delivered on time.
@@ -77,24 +76,24 @@ export default function HeroSection() {
             <motion.div
               variants={itemVariants}
               suppressHydrationWarning
-              className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-gray-300 bg-white/[0.02] border border-white/[0.05] px-5 py-2.5 rounded-full backdrop-blur-md max-w-fit mx-auto mt-2 hover:border-blue-500/20 transition-all duration-300"
+              className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-[#475569] bg-white border border-[#dde4ec] px-5 py-2.5 rounded-full shadow-sm max-w-fit mx-auto mt-2 hover:border-[#334155] transition-all duration-300"
             >
               <a
                 href={`tel:${PHONE_NUMBER.replace(/\s+/g, "")}`}
                 suppressHydrationWarning
-                className="flex items-center gap-2 hover:text-blue-400 transition-colors"
+                className="flex items-center gap-2 hover:text-[#0f172a] transition-colors"
               >
                 <span>📞</span>
-                <span suppressHydrationWarning className="font-semibold">{PHONE_NUMBER}</span>
+                <span suppressHydrationWarning className="font-semibold text-[#0f172a]">{PHONE_NUMBER}</span>
               </a>
-              <span className="text-white/10 hidden sm:inline">|</span>
+              <span className="text-[#dde4ec] hidden sm:inline">|</span>
               <a
                 href={`mailto:${EMAIL_ADDRESS}`}
                 suppressHydrationWarning
-                className="flex items-center gap-2 hover:text-blue-400 transition-colors"
+                className="flex items-center gap-2 hover:text-[#0f172a] transition-colors"
               >
                 <span>✉️</span>
-                <span className="font-semibold underline underline-offset-4">{EMAIL_ADDRESS}</span>
+                <span className="font-semibold underline underline-offset-4 text-[#0f172a]">{EMAIL_ADDRESS}</span>
               </a>
             </motion.div>
           </motion.div>
@@ -113,7 +112,7 @@ export default function HeroSection() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-300 cursor-pointer whitespace-nowrap px-8 py-4 text-lg bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 hover:border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.05)]"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all duration-300 cursor-pointer whitespace-nowrap px-8 py-4 text-base bg-[#0f172a] hover:bg-[#1e293b] text-white shadow-md"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -145,15 +144,15 @@ export default function HeroSection() {
             ].map((badge) => (
               <span
                 key={badge}
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-blue-500/5 text-blue-300 border border-blue-500/10 shadow-[0_2px_10px_rgba(37,99,235,0.03)]"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white text-[#3f6212] border border-[#dde4ec] shadow-sm"
               >
-                <span className="text-emerald-400 font-bold text-xs">✓</span>
+                <span className="text-[#84cc16] font-bold text-xs">✓</span>
                 {badge}
               </span>
             ))}
           </motion.div>
 
-          {/* New Capabilities Grid (Agency Capability Showcase) */}
+          {/* Four Focus Cards */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -162,29 +161,25 @@ export default function HeroSection() {
           >
             {CAPABILITIES.map((cap, i) => {
               const Icon = cap.icon;
+              const isSlate = i % 2 === 1;
               return (
                 <motion.div
                   key={cap.title}
                   whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                  className="relative group rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-md p-6 hover:border-blue-500/20 transition-all duration-300 overflow-hidden"
+                  className="card-v2 p-5 flex items-start gap-4 transition-all duration-300 group hover:border-[#334155]"
                 >
-                  {/* Subtle inner hover glow */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-blue-600/[0.03] to-transparent rounded-2xl pointer-events-none" />
+                  {/* Glossy Icon Badge (.gem, 54px) alternating lime and slate */}
+                  <div className={`gem ${isSlate ? "teal" : ""}`} aria-hidden="true">
+                    <Icon />
+                  </div>
 
-                  <div className="flex items-start gap-4">
-                    {/* Minimal Icon Container */}
-                    <div className="w-10 h-10 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600/15 group-hover:border-blue-500/30 transition-all duration-300">
-                      <Icon className="w-4 h-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-                    </div>
-
-                    <div className="flex flex-col gap-1.5">
-                      <h3 className="font-sora font-semibold text-white text-base tracking-wide">
-                        {cap.title}
-                      </h3>
-                      <p className="text-gray-400 text-sm leading-relaxed">
-                        {cap.description}
-                      </p>
-                    </div>
+                  <div className="flex flex-col gap-1.5">
+                    <h3 className="font-sora font-semibold text-[#0f172a] text-base tracking-wide">
+                      {cap.title}
+                    </h3>
+                    <p className="text-[#475569] text-sm leading-relaxed">
+                      {cap.description}
+                    </p>
                   </div>
                 </motion.div>
               );

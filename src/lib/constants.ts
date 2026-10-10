@@ -2,6 +2,7 @@
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
+  { href: "/#courses", label: "Courses" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -244,5 +245,92 @@ export const WHO_WE_WORK_WITH = [
   "Tech Companies & SaaS Startups",
   "Educational Institutions",
   "Local Businesses & Agencies",
+];
+
+// Typed courses data for Courses section (#courses)
+export interface CourseItem {
+  id: string;
+  name: string;
+  number: string;
+  svgInner: string;
+}
+
+export const COURSES: CourseItem[] = [
+  {
+    id: "python",
+    number: "01",
+    name: "Python Programming",
+    svgInner: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>',
+  },
+  {
+    id: "data-science",
+    number: "02",
+    name: "Data Science & Analytics",
+    svgInner: '<path d="M4 4v16h16"/><path d="M7.5 15l3.5-4 3 3 5-6"/>',
+  },
+  {
+    id: "machine-learning",
+    number: "03",
+    name: "Machine Learning",
+    svgInner: '<circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="17" r="2"/><path d="M8 7h8M7 9l4 6M17 9l-4 6"/>',
+  },
+  {
+    id: "deep-learning",
+    number: "04",
+    name: "Deep Learning",
+    svgInner: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
+  },
+  {
+    id: "genai",
+    number: "05",
+    name: "Generative AI & LLMs",
+    svgInner: '<path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/>',
+  },
+  {
+    id: "agentic-ai",
+    number: "06",
+    name: "AI Agents & Automation",
+    svgInner: '<rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9.5 13.5h.01M14.5 13.5h.01"/>',
+  },
+  {
+    id: "computer-vision",
+    number: "07",
+    name: "Computer Vision",
+    svgInner: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  },
+  {
+    id: "nlp",
+    number: "08",
+    name: "Natural Language Processing",
+    svgInner: '<path d="M4 6h16M4 12h10M4 18h14"/>',
+  },
+];
+
+// GenAI course topics (Draft copy - confirm with AlisTech owner before launch)
+export const GENAI_TOPICS = [
+  "Prompt engineering",
+  "Working with LLM APIs",
+  "Chat with your own documents (RAG)",
+  "Building chatbots and assistants",
+  "Checking and improving AI answers",
+  "A final project you can show",
+];
+
+// Agentic AI course topics (Draft copy - confirm with AlisTech owner before launch)
+export const AGENTIC_TOPICS = [
+  "How AI agents plan and decide",
+  "Connecting tools and APIs",
+  "Multi-step workflows",
+  "Automating WhatsApp, email and sheets",
+  "Safety and human approval",
+  "A final project you can show",
+];
+
+// Agentic AI sample run steps
+export const AGENTIC_STEPS = [
+  { step: 1, title: "Goal", description: "Follow up with every new enquiry." },
+  { step: 2, title: "Plan", description: "Check the sheet, then write a message for each person." },
+  { step: 3, title: "Act", description: "Send on WhatsApp and update the sheet." },
+  { step: 4, title: "Report", description: "Show you the list and ask before anything important." },
 ];
 
