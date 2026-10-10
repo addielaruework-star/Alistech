@@ -13,7 +13,7 @@ import {
   ArrowRight,
   Phone,
 } from "lucide-react";
-import { WHATSAPP_URL, WHO_WE_WORK_WITH, PHONE_NUMBER, EMAIL_ADDRESS, WHATSAPP_QR_URL } from "@/lib/constants";
+import { WHATSAPP_URL, WHO_WE_WORK_WITH, PHONE_NUMBER, EMAIL_ADDRESS } from "@/lib/constants";
 
 const CONTACT_INFO = [
   {
@@ -254,25 +254,6 @@ export default function ContactPage() {
                     </li>
                   ))}
                 </ul>
-              </div>
-
-              {/* WhatsApp Direct Scan QR Code */}
-              <div className="rounded-2xl p-5 border border-[#dde4ec] bg-white shadow-sm flex flex-col items-center gap-3 text-center">
-                <div className="text-[10px] font-bold text-[#3f6212] uppercase tracking-wider">
-                  Scan to Chat on WhatsApp
-                </div>
-                <div className="relative p-2 bg-white rounded-xl border border-[#dde4ec] flex items-center justify-center w-28 h-28 shadow-sm">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(WHATSAPP_QR_URL)}`}
-                    alt="WhatsApp QR Code"
-                    className="w-24 h-24"
-                    loading="lazy"
-                  />
-                </div>
-                <p className="text-[11px] text-[#64748b] leading-relaxed">
-                  Scan with your phone camera to start chatting instantly.
-                </p>
               </div>
             </div>
 
