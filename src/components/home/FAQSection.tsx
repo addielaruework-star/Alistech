@@ -13,10 +13,7 @@ export default function FAQSection() {
 
   return (
     <section className="relative py-24 bg-bg-secondary overflow-hidden">
-      {/* Top separator */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/6 to-transparent" />
-      {/* Ambient glow */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-blue-600/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#dde4ec] to-transparent" />
 
       <div className="section-container relative z-10">
         <SectionHeading
@@ -27,49 +24,30 @@ export default function FAQSection() {
           className="mb-12"
         />
 
-        <div className="max-w-2xl mx-auto flex flex-col gap-2.5">
+        <div className="max-w-2xl mx-auto flex flex-col gap-3">
           {FAQ_ITEMS.map((item, i) => {
             const isOpen = openIndex === i;
             return (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.07 }}
-                className="rounded-xl border overflow-hidden transition-colors duration-200"
-                style={{
-                  borderColor: isOpen
-                    ? "rgba(37,99,235,0.30)"
-                    : "rgba(255,255,255,0.06)",
-                  background: isOpen
-                    ? "linear-gradient(135deg, rgba(37,99,235,0.06) 0%, rgba(255,255,255,0.025) 100%)"
-                    : "rgba(255,255,255,0.025)",
-                }}
+                className="rv rounded-2xl border transition-colors duration-200 overflow-hidden shadow-sm"
+                style={{ ['--rv-delay' as string]: `${(i % 4) * 80}ms`, borderColor: isOpen ? "#334155" : "#dde4ec", background: isOpen ? "#ffffff" : "#ffffff" }}
               >
                 {/* Question row */}
                 <button
                   onClick={() => toggle(i)}
-                  className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left group"
+                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left group"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-sora font-semibold text-sm text-white group-hover:text-blue-100 transition-colors duration-150 leading-snug">
+                  <span className="font-sora font-semibold text-base text-[#0f172a] group-hover:text-[#334155] transition-colors duration-150 leading-snug">
                     {item.question}
                   </span>
                   <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.22, ease: "easeInOut" }}
-                    className="flex-shrink-0 w-5 h-5 rounded-full border border-[rgba(255,255,255,0.10)] flex items-center justify-center"
-                    style={{
-                      background: isOpen
-                        ? "rgba(37,99,235,0.20)"
-                        : "rgba(255,255,255,0.04)",
-                      borderColor: isOpen
-                        ? "rgba(37,99,235,0.35)"
-                        : "rgba(255,255,255,0.10)",
-                    }}
+                    className="flex-shrink-0 w-6 h-6 rounded-full border border-[#dde4ec] flex items-center justify-center bg-[#eef2f6]"
                   >
-                    <ChevronDown className="w-3 h-3 text-[rgba(255,255,255,0.55)]" />
+                    <ChevronDown className="w-3.5 h-3.5 text-[#334155]" />
                   </motion.div>
                 </button>
 
@@ -84,16 +62,16 @@ export default function FAQSection() {
                       transition={{ duration: 0.26, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 pb-4 pt-0">
-                        <div className="h-px bg-gradient-to-r from-blue-500/20 via-white/5 to-transparent mb-4" />
-                        <p className="text-[rgba(255,255,255,0.50)] text-sm leading-relaxed">
+                      <div className="px-6 pb-5 pt-0">
+                        <div className="h-px bg-[#dde4ec] mb-4" />
+                        <p className="text-[#475569] text-sm leading-relaxed">
                           {item.answer}
                         </p>
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
             );
           })}
         </div>
@@ -104,12 +82,12 @@ export default function FAQSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center text-[rgba(255,255,255,0.28)] text-xs mt-10"
+          className="text-center text-[#64748b] text-xs mt-10"
         >
           Still have questions?{" "}
           <a
             href="/contact"
-            className="text-blue-400 hover:text-blue-300 transition-colors duration-150 underline underline-offset-2 decoration-blue-500/30"
+            className="text-[#3f6212] font-semibold hover:underline transition-colors duration-150"
           >
             Reach out directly
           </a>{" "}
@@ -117,8 +95,7 @@ export default function FAQSection() {
         </motion.p>
       </div>
 
-      {/* Bottom separator */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/6 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#dde4ec] to-transparent" />
     </section>
   );
 }

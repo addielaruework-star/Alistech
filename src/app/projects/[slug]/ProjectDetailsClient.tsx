@@ -133,37 +133,35 @@ export default function ProjectDetailsClient({ slug }: ProjectDetailsClientProps
   /* ── Loading Skeleton State ─────────────────────────────────────────────── */
   if (loading) {
     return (
-      <div className="min-h-screen bg-bg-primary pt-32 pb-24 text-white overflow-hidden relative">
-        <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
+      <div className="min-h-screen bg-bg-primary pt-32 pb-24 text-[#0f172a] overflow-hidden relative">
         <div className="section-container relative z-10">
           {/* Back btn skeleton */}
-          <div className="w-32 h-10 bg-white/5 rounded-xl animate-pulse mb-8" />
+          <div className="w-32 h-10 bg-[#f1f5f9] rounded-xl border border-[#dde4ec] animate-pulse mb-8" />
 
           {/* Hero Banner skeleton */}
-          <div className="w-full h-[360px] md:h-[450px] bg-white/[0.02] rounded-3xl border border-white/5 p-6 md:p-10 flex flex-col justify-end gap-4 mb-12 overflow-hidden relative">
-            <div className="absolute inset-0 shimmer pointer-events-none" />
-            <div className="w-24 h-6 bg-white/5 rounded-full animate-pulse" />
-            <div className="w-2/3 h-12 bg-white/5 rounded-xl animate-pulse" />
-            <div className="w-1/2 h-6 bg-white/5 rounded animate-pulse" />
+          <div className="w-full h-[360px] md:h-[450px] bg-white rounded-[28px] border border-[#dde4ec] p-6 md:p-10 flex flex-col justify-end gap-4 mb-12 overflow-hidden relative shadow-sm">
+            <div className="w-24 h-6 bg-[#f1f5f9] rounded-full animate-pulse" />
+            <div className="w-2/3 h-12 bg-[#f1f5f9] rounded-xl animate-pulse" />
+            <div className="w-1/2 h-6 bg-[#f1f5f9] rounded animate-pulse" />
           </div>
 
           {/* Core Info Grid skeleton */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
             <div className="lg:col-span-8 space-y-6">
-              <div className="w-1/3 h-7 bg-white/5 rounded animate-pulse" />
-              <div className="w-full h-4 bg-white/5 rounded animate-pulse" />
-              <div className="w-full h-4 bg-white/5 rounded animate-pulse" />
-              <div className="w-5/6 h-4 bg-white/5 rounded animate-pulse" />
-              <div className="w-full h-32 bg-white/[0.015] border border-white/5 rounded-2xl animate-pulse" />
+              <div className="w-1/3 h-7 bg-[#f1f5f9] rounded animate-pulse" />
+              <div className="w-full h-4 bg-[#f1f5f9] rounded animate-pulse" />
+              <div className="w-full h-4 bg-[#f1f5f9] rounded animate-pulse" />
+              <div className="w-5/6 h-4 bg-[#f1f5f9] rounded animate-pulse" />
+              <div className="w-full h-32 bg-white border border-[#dde4ec] rounded-2xl animate-pulse" />
             </div>
             <div className="lg:col-span-4">
-              <div className="glass-card rounded-2xl border border-white/5 p-6 space-y-6">
-                <div className="w-1/2 h-6 bg-white/5 rounded animate-pulse" />
-                <hr className="border-white/5" />
+              <div className="card-v2 rounded-[22px] border border-[#dde4ec] bg-white p-6 space-y-6 shadow-sm">
+                <div className="w-1/2 h-6 bg-[#f1f5f9] rounded animate-pulse" />
+                <hr className="border-[#e2e8f0]" />
                 {Array.from({ length: 4 }).map((_, i) => (
                   <div key={i} className="flex justify-between">
-                    <div className="w-16 h-4 bg-white/5 rounded animate-pulse" />
-                    <div className="w-24 h-4 bg-white/5 rounded animate-pulse" />
+                    <div className="w-16 h-4 bg-[#f1f5f9] rounded animate-pulse" />
+                    <div className="w-24 h-4 bg-[#f1f5f9] rounded animate-pulse" />
                   </div>
                 ))}
               </div>
@@ -177,29 +175,27 @@ export default function ProjectDetailsClient({ slug }: ProjectDetailsClientProps
   /* ── Project Not Found State ────────────────────────────────────────────── */
   if (!project) {
     return (
-      <div className="min-h-screen bg-bg-primary pt-32 pb-24 text-white overflow-hidden relative flex items-center justify-center">
-        <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none" />
+      <div className="min-h-screen bg-bg-primary pt-32 pb-24 text-[#0f172a] overflow-hidden relative flex items-center justify-center">
         <div className="section-container relative z-10 text-center max-w-xl">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="glass-card rounded-3xl border border-white/10 p-10 md:p-12 shadow-2xl relative"
+            className="card-v2 rounded-[28px] border border-[#dde4ec] bg-white p-10 md:p-12 shadow-sm relative"
           >
-            <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-blue-600/10 rounded-2xl border border-blue-500/20 backdrop-blur-md flex items-center justify-center shadow-lg">
-              <X className="w-10 h-10 text-blue-500" />
+            <div className="w-16 h-16 bg-[#ecfccb] rounded-2xl border border-[#bef264] flex items-center justify-center mx-auto mb-5 text-[#3f6212]">
+              <X className="w-8 h-8" />
             </div>
-            <h2 className="font-sora font-bold text-2xl md:text-3xl text-white mt-6 mb-4">
+            <h2 className="font-sora font-bold text-2xl md:text-3xl text-[#0f172a] mb-4">
               Project Not Found
             </h2>
-            <p className="text-white/50 text-sm leading-relaxed mb-8">
+            <p className="text-[#475569] text-sm leading-relaxed mb-8">
               We searched high and low, but the dynamic case study for this project could not be loaded. 
               The project may have been moved, archived, or draft toggles are active in the administration panel.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button variant="primary" href="/portfolio" className="w-full sm:w-auto">
-                <ArrowLeft className="w-4 h-4" /> Go to Portfolio
+                <ArrowLeft className="w-4 h-4" /> Go to Our Work
               </Button>
               <Button variant="secondary" href="/" className="w-full sm:w-auto">
                 Back to Home
@@ -221,43 +217,58 @@ export default function ProjectDetailsClient({ slug }: ProjectDetailsClientProps
 
   return (
     <>
-      <div className="min-h-screen bg-bg-primary pt-32 pb-24 text-white relative">
-        {/* Background Grid & ambient light */}
-        <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none z-0" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-gradient-to-b from-blue-600/10 to-transparent blur-[120px] pointer-events-none z-0" />
-
-        {/* Ambient background blurred cover image */}
-        {project.coverImage && (
-          <div className="absolute top-0 left-0 right-0 h-[60vh] overflow-hidden pointer-events-none opacity-20 z-0">
-            <Image
-              src={getCloudinaryUrl(project.coverImage, { width: 1200 })}
-              alt="ambient"
-              fill
-              className="object-cover blur-[80px] scale-110"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#050508]/10 via-[#050508]/80 to-bg-primary" />
-          </div>
-        )}
-
+      <div className="min-h-screen bg-bg-primary pt-32 pb-24 text-[#0f172a] relative">
         <div className="section-container relative z-10">
           {/* Breadcrumbs & Navigation */}
           <div className="mb-8">
             <Link
               href="/portfolio"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/6 hover:bg-white/10 hover:border-blue-500/30 text-white/70 hover:text-white transition-all duration-300 backdrop-blur-md"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-[#dde4ec] hover:border-[#334155] text-[#475569] hover:text-[#0f172a] transition-all duration-300 shadow-sm text-sm font-medium"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Back to Showcase</span>
+              <span>Back to Our Work</span>
             </Link>
           </div>
 
-          {/* Hero Banner Showcase card */}
+          {/* Title, Badges & Short Description */}
+          <div className="space-y-4 mb-8">
+            <div className="flex flex-wrap gap-2.5 items-center">
+              <span className="px-3 py-1 rounded-full bg-white text-[#0f172a] text-[10px] font-bold uppercase tracking-widest border border-[#dde4ec] shadow-sm">
+                {project.category}
+              </span>
+              {project.featured && (
+                <span className="px-3 py-1 rounded-full bg-[#ecfccb] text-[#3f6212] text-[10px] font-bold uppercase tracking-widest border border-[#bef264] flex items-center gap-1 shadow-sm">
+                  <Sparkles className="w-3 h-3" /> Featured Work
+                </span>
+              )}
+              {project.published ? (
+                <span className="px-3 py-1 rounded-full bg-white text-[#0f172a] text-[10px] font-bold uppercase tracking-widest border border-[#dde4ec] flex items-center gap-1.5 shadow-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#84cc16]" /> Live Product
+                </span>
+              ) : (
+                <span className="px-3 py-1 rounded-full bg-white text-[#475569] text-[10px] font-bold uppercase tracking-widest border border-[#dde4ec] shadow-sm">
+                  Draft Case
+                </span>
+              )}
+            </div>
+
+            <h1 className="font-sora font-extrabold text-3xl md:text-5xl lg:text-6xl text-[#0f172a] tracking-tight leading-tight max-w-4xl">
+              {project.title}
+            </h1>
+
+            {project.shortDescription && (
+              <p className="text-[#475569] text-base md:text-lg max-w-3xl leading-relaxed">
+                {project.shortDescription}
+              </p>
+            )}
+          </div>
+
+          {/* Hero Banner Showcase Card: Screenshot in light card */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="w-full relative rounded-3xl border border-white/[0.08] overflow-hidden bg-white/[0.01] aspect-[21/9] min-h-[350px] shadow-2xl mb-12"
+            className="w-full relative rounded-[22px] border border-[#dde4ec] overflow-hidden bg-white aspect-[21/9] min-h-[350px] shadow-sm mb-12"
           >
             {project.coverImage ? (
               <Image
@@ -268,46 +279,10 @@ export default function ProjectDetailsClient({ slug }: ProjectDetailsClientProps
                 priority
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-white/[0.02]">
-                <Clock className="w-16 h-16 text-white/10" />
+              <div className="w-full h-full flex items-center justify-center bg-[#f8fafc]">
+                <Clock className="w-16 h-16 text-[#94a3b8]" />
               </div>
             )}
-            
-            {/* Dark/Gradient overlay for typography contrast */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-6 md:p-12" />
-
-            {/* Typography Overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 space-y-4">
-              <div className="flex flex-wrap gap-2.5 items-center">
-                <span className="px-3 py-1 rounded-full bg-blue-600/30 border border-blue-500/40 text-blue-300 text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm shadow-md">
-                  {project.category}
-                </span>
-                {project.featured && (
-                  <span className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm flex items-center gap-1 shadow-md">
-                    <Sparkles className="w-3 h-3" /> Featured Work
-                  </span>
-                )}
-                {project.published ? (
-                  <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm flex items-center gap-1 shadow-md">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> Live Product
-                  </span>
-                ) : (
-                  <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white/60 text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm">
-                    Draft Case
-                  </span>
-                )}
-              </div>
-
-              <h1 className="font-sora font-extrabold text-3xl md:text-5xl lg:text-6xl text-white tracking-tight leading-tight max-w-4xl drop-shadow-lg">
-                {project.title}
-              </h1>
-
-              {project.shortDescription && (
-                <p className="text-white/80 text-sm md:text-lg max-w-3xl leading-relaxed drop-shadow">
-                  {project.shortDescription}
-                </p>
-              )}
-            </div>
           </motion.div>
 
           {/* Core Case Study Column Workspace */}
@@ -321,19 +296,19 @@ export default function ProjectDetailsClient({ slug }: ProjectDetailsClientProps
               className="lg:col-span-8 space-y-8"
             >
               <div>
-                <h2 className="font-sora font-extrabold text-xl md:text-2xl text-white mb-6 flex items-center gap-2.5">
-                  <span className="w-1.5 h-6 bg-blue-600 rounded-full" />
+                <h2 className="font-sora font-extrabold text-xl md:text-2xl text-[#0f172a] mb-6 flex items-center gap-2.5">
+                  <span className="w-1.5 h-6 bg-[#84cc16] rounded-full" />
                   Project Case Study
                 </h2>
                 
                 {project.fullDescription ? (
-                  <div className="space-y-6 text-white/70 text-sm md:text-base leading-relaxed font-normal">
+                  <div className="space-y-6 text-[#475569] text-sm md:text-base leading-relaxed font-normal">
                     {project.fullDescription.split("\n").map((para, i) => {
                       if (!para.trim()) return null;
                       return (
                         <p 
                           key={i} 
-                          className={i === 0 ? "text-white/95 text-base md:text-lg leading-relaxed font-medium mb-8" : ""}
+                          className={i === 0 ? "text-[#0f172a] text-base md:text-lg leading-relaxed font-medium mb-8" : ""}
                         >
                           {para}
                         </p>
@@ -341,22 +316,21 @@ export default function ProjectDetailsClient({ slug }: ProjectDetailsClientProps
                     })}
                   </div>
                 ) : (
-                  <div className="p-8 rounded-2xl bg-white/[0.015] border border-dashed border-white/10 text-center">
-                    <p className="text-white/40 text-sm">No extended case study details have been structured for this project yet.</p>
+                  <div className="p-8 rounded-[22px] bg-white border border-dashed border-[#dde4ec] text-center shadow-sm">
+                    <p className="text-[#475569] text-sm">No extended case study details have been structured for this project yet.</p>
                   </div>
                 )}
               </div>
 
               {/* Start Project CTA Banner inside case study */}
-              <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-blue-600/[0.08] to-cyan-500/[0.02] border border-blue-500/20 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+              <div className="card-v2 p-6 md:p-8 rounded-[22px] bg-white border border-[#dde4ec] relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm">
                 <div className="space-y-2 relative z-10 max-w-md">
-                  <h3 className="font-sora font-bold text-white text-lg">Interested in a similar solution?</h3>
-                  <p className="text-white/60 text-xs leading-relaxed">
+                  <h3 className="font-sora font-bold text-[#0f172a] text-lg">Interested in a similar solution?</h3>
+                  <p className="text-[#475569] text-xs leading-relaxed">
                     We can build custom admin dashboards, responsive platforms, and SEO optimization models tailored specifically to your business framework. Let&apos;s build it together.
                   </p>
                 </div>
-                <Button variant="primary" size="md" href={contactWhatsAppUrl} className="relative z-10 shrink-0 w-full md:w-auto shadow-md">
+                <Button variant="primary" size="md" href={contactWhatsAppUrl} className="relative z-10 shrink-0 w-full md:w-auto shadow-sm">
                   <MessageCircle className="w-5 h-5 shrink-0" />
                   <span>Start Project Showcase</span>
                 </Button>
@@ -370,51 +344,51 @@ export default function ProjectDetailsClient({ slug }: ProjectDetailsClientProps
               transition={{ duration: 0.5, delay: 0.25 }}
               className="lg:col-span-4"
             >
-              <div className="glass-card rounded-2xl border border-white/[0.08] p-6 lg:p-7 space-y-6 sticky top-28 shadow-xl">
+              <div className="card-v2 rounded-[22px] border border-[#dde4ec] bg-white p-6 lg:p-7 space-y-6 sticky top-28 shadow-sm">
                 <div>
-                  <h3 className="font-sora font-bold text-white text-md">Project Specifications</h3>
-                  <p className="text-[10px] text-white/30 uppercase font-semibold tracking-widest mt-1">Tech Stack & Scope Details</p>
+                  <h3 className="font-sora font-bold text-[#0f172a] text-md">Project Specifications</h3>
+                  <p className="text-[10px] text-[#475569] uppercase font-semibold tracking-widest mt-1">Tech Stack & Scope Details</p>
                 </div>
 
-                <hr className="border-white/[0.06]" />
+                <hr className="border-[#e2e8f0]" />
 
                 {/* Scope Rows */}
                 <div className="space-y-4 text-xs md:text-sm">
                   {project.clientType && (
-                    <div className="flex items-center justify-between py-1 border-b border-white/[0.03]">
-                      <span className="text-white/40 flex items-center gap-2"><User className="w-4 h-4 text-blue-400" /> Client Segment</span>
-                      <span className="text-white/90 font-medium text-right">{project.clientType}</span>
+                    <div className="flex items-center justify-between py-1 border-b border-[#f1f5f9]">
+                      <span className="text-[#475569] flex items-center gap-2"><User className="w-4 h-4 text-[#3f6212]" /> Client Segment</span>
+                      <span className="text-[#0f172a] font-medium text-right">{project.clientType}</span>
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between py-1 border-b border-white/[0.03]">
-                    <span className="text-white/40 flex items-center gap-2"><Folder className="w-4 h-4 text-blue-400" /> Category</span>
-                    <span className="text-white/90 font-medium text-right">{project.category}</span>
+                  <div className="flex items-center justify-between py-1 border-b border-[#f1f5f9]">
+                    <span className="text-[#475569] flex items-center gap-2"><Folder className="w-4 h-4 text-[#3f6212]" /> Category</span>
+                    <span className="text-[#0f172a] font-medium text-right">{project.category}</span>
                   </div>
 
-                  <div className="flex items-center justify-between py-1 border-b border-white/[0.03]">
-                    <span className="text-white/40 flex items-center gap-2"><Calendar className="w-4 h-4 text-blue-400" /> Timeline Date</span>
-                    <span className="text-white/90 font-medium text-right">{formattedTimeline}</span>
+                  <div className="flex items-center justify-between py-1 border-b border-[#f1f5f9]">
+                    <span className="text-[#475569] flex items-center gap-2"><Calendar className="w-4 h-4 text-[#3f6212]" /> Timeline Date</span>
+                    <span className="text-[#0f172a] font-medium text-right">{formattedTimeline}</span>
                   </div>
 
                   <div className="flex items-center justify-between py-1">
-                    <span className="text-white/40 flex items-center gap-2"><Sparkles className="w-4 h-4 text-blue-400" /> Build Status</span>
-                    <span className="text-emerald-400 font-semibold flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Active & Verified
+                    <span className="text-[#475569] flex items-center gap-2"><Sparkles className="w-4 h-4 text-[#3f6212]" /> Build Status</span>
+                    <span className="text-[#3f6212] font-semibold flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#84cc16]" /> Active & Verified
                     </span>
                   </div>
                 </div>
 
                 {/* Tech Stack list */}
                 <div className="space-y-3 pt-2">
-                  <span className="text-[10.5px] uppercase font-bold tracking-widest text-white/30 flex items-center gap-1.5">
-                    <Code2 className="w-4 h-4 text-blue-400" /> Technologies Integrated
+                  <span className="text-[10.5px] uppercase font-bold tracking-widest text-[#475569] flex items-center gap-1.5">
+                    <Code2 className="w-4 h-4 text-[#3f6212]" /> Technologies Integrated
                   </span>
                   <div className="flex flex-wrap gap-2 pt-1">
                     {project.technologies.map((t) => (
                       <span
                         key={t}
-                        className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/5 border border-white/6 text-white/70 hover:border-blue-500/25 hover:text-white transition-colors cursor-default"
+                        className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-[#f1f5f9] border border-[#e2e8f0] text-[#0f172a] hover:border-[#334155] transition-colors cursor-default"
                       >
                         {t}
                       </span>
@@ -422,14 +396,14 @@ export default function ProjectDetailsClient({ slug }: ProjectDetailsClientProps
                   </div>
                 </div>
 
-                <hr className="border-white/[0.06]" />
+                <hr className="border-[#e2e8f0]" />
 
                 {/* Action CTA Buttons */}
                 <div className="space-y-3 pt-2">
                   <Button variant="primary" size="md" href={contactWhatsAppUrl} className="w-full gap-2">
                     <MessageCircle className="w-4 h-4" /> Start Similar Project
                   </Button>
-                  <Button variant="secondary" size="md" onClick={handleShare} className="w-full gap-2 border border-white/8 hover:border-white/15">
+                  <Button variant="secondary" size="md" onClick={handleShare} className="w-full gap-2 border border-[#dde4ec] hover:border-[#334155]">
                     <Share2 className="w-4 h-4" /> Share Case Study
                   </Button>
                 </div>
@@ -444,11 +418,11 @@ export default function ProjectDetailsClient({ slug }: ProjectDetailsClientProps
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="pt-12 border-t border-white/[0.06]"
+              className="pt-12 border-t border-[#e2e8f0]"
             >
               <div className="mb-10 text-center md:text-left">
-                <h2 className="font-sora font-extrabold text-2xl md:text-3xl text-white">Project Mockups & Gallery</h2>
-                <p className="text-white/40 text-xs md:text-sm mt-1.5">
+                <h2 className="font-sora font-extrabold text-2xl md:text-3xl text-[#0f172a]">Project Mockups & Gallery</h2>
+                <p className="text-[#475569] text-xs md:text-sm mt-1.5">
                   High-fidelity responsive captures and functional mockups saved directly from production environments.
                 </p>
               </div>
@@ -465,7 +439,7 @@ export default function ProjectDetailsClient({ slug }: ProjectDetailsClientProps
                       transition={{ duration: 0.45, delay: index * 0.05 }}
                       whileHover={{ y: -6, transition: { duration: 0.2 } }}
                       onClick={() => setActiveImageIndex(index)}
-                      className="glass-card rounded-2xl overflow-hidden border border-white/[0.06] hover:border-blue-500/40 hover:shadow-[0_0_30px_rgba(37,99,235,0.15)] transition-all duration-300 cursor-pointer group aspect-[16/10] bg-white/[0.015] relative shadow-lg"
+                      className="card-v2 rounded-[22px] overflow-hidden border border-[#dde4ec] hover:border-[#334155] hover:shadow-md transition-all duration-300 cursor-pointer group aspect-[16/10] bg-white relative shadow-sm"
                     >
                       <Image
                         src={getCloudinaryUrl(image, { width: 800 })}
@@ -488,7 +462,7 @@ export default function ProjectDetailsClient({ slug }: ProjectDetailsClientProps
                       </div>
 
                       {/* Display image number badge */}
-                      <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/65 backdrop-blur-sm text-[10px] text-white/55 font-medium tracking-wide shadow">
+                      <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/75 backdrop-blur-sm text-[10px] text-white font-medium tracking-wide shadow">
                         Mockup #{index + 1}
                       </div>
                     </motion.div>
