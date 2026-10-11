@@ -43,11 +43,24 @@ const CONTACT_INFO = [
 ];
 
 const PROJECT_TYPES = [
-  "Website Development",
-  "Portfolio Website",
-  "CMS / Admin System",
-  "AI & Automation",
-  "Platform / SaaS",
+  "Website",
+  "Mobile App",
+  "Business Software",
+  "AI Solutions",
+  "WhatsApp Automation",
+  "Business Automation",
+  "Data & Reports",
+  "Online Course Platform",
+  "Document Processing",
+  "Data Collection",
+  "Payment Integration",
+  "Custom Solutions",
+  "CMS & Admin Systems",
+  "Hosting Setup",
+  "Domain Setup",
+  "Maintenance",
+  "SEO Basics",
+  "Deployment Support",
   "Other",
 ];
 

@@ -49,7 +49,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -57,7 +57,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
+                    "px-3.5 py-2 rounded-full text-sm font-medium transition-all duration-200",
                     isActive
                       ? "text-[#0f172a] bg-[#eef2f6]"
                       : "text-[#475569] hover:text-[#0f172a] hover:bg-[#eef2f6]/70"
@@ -70,7 +70,7 @@ export default function Navbar() {
           </nav>
 
           {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden lg:flex items-center">
             <Button variant="secondary" size="sm" href="/contact">
               Start a Project →
             </Button>
@@ -78,7 +78,7 @@ export default function Navbar() {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden text-[#0f172a] p-2 rounded-lg hover:bg-[#eef2f6] transition-colors"
+            className="lg:hidden text-[#0f172a] p-2 rounded-lg hover:bg-[#eef2f6] transition-colors"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
@@ -95,7 +95,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 pt-20 bg-white/95 backdrop-blur-xl md:hidden"
+            className="fixed inset-0 z-40 pt-20 bg-white/95 backdrop-blur-xl lg:hidden"
           >
             <nav className="section-container flex flex-col gap-2 pt-8">
               {NAV_LINKS.map((link, i) => (

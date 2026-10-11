@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
@@ -30,6 +29,7 @@ export default function SectionHeading({
 
   return (
     <div
+      suppressHydrationWarning
       className={cn(
         "rv flex flex-col gap-4",
         align === "center" ? "items-center text-center" : "items-start text-left",

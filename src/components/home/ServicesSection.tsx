@@ -109,19 +109,6 @@ export default function ServicesSection() {
                       ))}
                     </ul>
                   </div>
-
-                  {/* Ask link */}
-                  <a
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#3f6212] hover:text-[#1a2e05] hover:underline mt-auto"
-                    href={`https://wa.me/919603337862?text=${encodeURIComponent(
-                      `Hi AlisTech, I want to know about: ${service.title}`
-                    )}`}
-                    target="_blank"
-                    rel="noopener"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    Ask about this service <span aria-hidden="true">↗</span>
-                  </a>
                 </div>
               );
             })}

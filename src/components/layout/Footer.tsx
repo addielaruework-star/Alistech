@@ -14,11 +14,11 @@ import {
 } from "@/lib/constants";
 
 const SERVICES = [
-  "Website Development",
-  "Portfolio Development",
-  "CMS & Admin Systems",
-  "AI & Automation",
-  "Platform Development",
+  "Website",
+  "Mobile App",
+  "Business Software",
+  "AI Solutions",
+  "WhatsApp Automation",
 ];
 
 const SOCIALS = [

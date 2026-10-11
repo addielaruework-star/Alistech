@@ -44,19 +44,22 @@ export default function MotionProvider() {
       { threshold: 0.15 }
     );
 
-    // Observe all current and future .rv nodes via MutationObserver
+    // Defer observer setup to avoid mutating DOM before React finishes hydration
+    let mo: MutationObserver | null = null;
     const observe = () => {
       document.querySelectorAll(".rv:not(.in-view)").forEach((el) => io.observe(el));
     };
 
-    observe();
-
-    const mo = new MutationObserver(observe);
-    mo.observe(document.body, { childList: true, subtree: true });
+    const rafId = requestAnimationFrame(() => {
+      observe();
+      mo = new MutationObserver(observe);
+      mo.observe(document.body, { childList: true, subtree: true });
+    });
 
     return () => {
+      cancelAnimationFrame(rafId);
       io.disconnect();
-      mo.disconnect();
+      if (mo) mo.disconnect();
       html.classList.remove("js-rv");
     };
   }, []);
