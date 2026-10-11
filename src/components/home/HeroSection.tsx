@@ -5,16 +5,6 @@ import { Globe, Bot, Zap, Target } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { PHONE_NUMBER, EMAIL_ADDRESS } from "@/lib/constants";
 
-const containerVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};
-
 const CAPABILITIES = [
   {
     icon: Globe,
@@ -38,9 +28,19 @@ const CAPABILITIES = [
   },
 ];
 
+/**
+ * HeroSection — no Framer Motion initial:"hidden" on first-paint elements.
+ * Using whileInView ensures the server-rendered HTML is the "visible" state;
+ * animations only play after the browser hydrates. This eliminates the
+ * "Text content does not match server-rendered HTML" hydration error caused
+ * by mismatched opacity/transform on first render.
+ */
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg-primary">
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg-primary"
+    >
       {/* Subtle grid background */}
       <div className="absolute inset-0 grid-bg opacity-100" />
 
@@ -49,32 +49,20 @@ export default function HeroSection() {
 
       <div className="section-container relative z-10 pt-32 pb-20">
         <div className="flex flex-col items-center text-center gap-8 max-w-4xl mx-auto">
-          {/* Headline */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="show"
-            className="flex flex-col gap-4"
-          >
-            <motion.h1
-              variants={itemVariants}
-              className="font-sora font-extrabold text-5xl sm:text-6xl md:text-7xl text-[#0f172a] leading-[1.06] tracking-tight text-balance"
-            >
+          {/* Headline — no initial hidden, uses CSS animation for first paint */}
+          <div className="flex flex-col gap-4 animate-hero-in">
+            <h1 className="font-sora font-extrabold text-5xl sm:text-6xl md:text-7xl text-[#0f172a] leading-[1.06] tracking-tight text-balance">
               Build Digital Products{" "}
               <span className="gradient-text">That Help Businesses Grow</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              variants={itemVariants}
-              className="text-[#475569] text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
-            >
-              We design and engineer websites, platforms, and AI-powered tools for startups and growing businesses.
-              Clean code. Thoughtful design. Delivered on time.
-            </motion.p>
+            <p className="text-[#475569] text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+              We design and engineer websites, platforms, and AI-powered tools for startups and
+              growing businesses. Clean code. Thoughtful design. Delivered on time.
+            </p>
 
-            {/* Clickable Direct Contacts below text */}
-            <motion.div
-              variants={itemVariants}
+            {/* Contact strip */}
+            <div
               suppressHydrationWarning
               className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-[#475569] bg-white border border-[#dde4ec] px-5 py-2.5 rounded-full shadow-sm max-w-fit mx-auto mt-2 hover:border-[#334155] transition-all duration-300"
             >
@@ -84,7 +72,9 @@ export default function HeroSection() {
                 className="flex items-center gap-2 hover:text-[#0f172a] transition-colors"
               >
                 <span>📞</span>
-                <span suppressHydrationWarning className="font-semibold text-[#0f172a]">{PHONE_NUMBER}</span>
+                <span suppressHydrationWarning className="font-semibold text-[#0f172a]">
+                  {PHONE_NUMBER}
+                </span>
               </a>
               <span className="text-[#dde4ec] hidden sm:inline">|</span>
               <a
@@ -93,30 +83,22 @@ export default function HeroSection() {
                 className="flex items-center gap-2 hover:text-[#0f172a] transition-colors"
               >
                 <span>✉️</span>
-                <span className="font-semibold underline underline-offset-4 text-[#0f172a]">{EMAIL_ADDRESS}</span>
+                <span className="font-semibold underline underline-offset-4 text-[#0f172a]">
+                  {EMAIL_ADDRESS}
+                </span>
               </a>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.4 }}
-            className="flex items-center justify-center w-full sm:w-auto"
-          >
+          {/* CTA */}
+          <div className="flex items-center justify-center w-full sm:w-auto animate-hero-cta">
             <Button variant="primary" size="lg" href="/contact" className="w-auto px-8">
               Start Your Project
             </Button>
-          </motion.div>
+          </div>
 
           {/* Trust Badges */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="flex flex-wrap items-center justify-center gap-2 max-w-2xl mt-1"
-          >
+          <div className="flex flex-wrap items-center justify-center gap-2 max-w-2xl mt-1 animate-hero-badges">
             {[
               "Mobile Responsive",
               "Modern UI/UX",
@@ -133,15 +115,10 @@ export default function HeroSection() {
                 {badge}
               </span>
             ))}
-          </motion.div>
+          </div>
 
-          {/* Four Focus Cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-4xl mt-12 text-left"
-          >
+          {/* Four Focus Cards — use whileInView so server HTML is already visible */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-4xl mt-12 text-left">
             {CAPABILITIES.map((cap, i) => {
               const Icon = cap.icon;
               const isSlate = i % 2 === 1;
@@ -151,23 +128,19 @@ export default function HeroSection() {
                   whileHover={{ y: -3, transition: { duration: 0.2 } }}
                   className="card-v2 p-5 flex items-start gap-4 transition-all duration-300 group hover:border-[#334155]"
                 >
-                  {/* Glossy Icon Badge (.gem, 54px) alternating lime and slate */}
                   <div className={`gem ${isSlate ? "teal" : ""}`} aria-hidden="true">
                     <Icon />
                   </div>
-
                   <div className="flex flex-col gap-1.5">
                     <h3 className="font-sora font-semibold text-[#0f172a] text-base tracking-wide">
                       {cap.title}
                     </h3>
-                    <p className="text-[#475569] text-sm leading-relaxed">
-                      {cap.description}
-                    </p>
+                    <p className="text-[#475569] text-sm leading-relaxed">{cap.description}</p>
                   </div>
                 </motion.div>
               );
             })}
-          </motion.div>
+          </div>
         </div>
       </div>
 

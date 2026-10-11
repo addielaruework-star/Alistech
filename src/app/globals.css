@@ -623,13 +623,15 @@ body[data-scope="dark"] header nav a[class*="text-[#0f172a]"] {
   color: #ffffff !important;
   background-color: rgba(255, 255, 255, 0.08) !important;
 }
-body[data-scope="dark"] header[class*="bg-white/92"] {
-  background-color: rgba(5, 5, 8, 0.9) !important;
-  border-bottom-color: rgba(255, 255, 255, 0.07) !important;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4) !important;
+/* Header always keeps solid light surface across all sections */
+body[data-scope="dark"] header {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: #dde4ec !important;
 }
-body[data-scope="dark"] header button[aria-label="Toggle menu"] {
-  color: #ffffff !important;
+body[data-scope="dark"] header button[aria-label="Toggle menu"],
+body[data-scope="dark"] header button[aria-label="Open menu"],
+body[data-scope="dark"] header button[aria-label="Close menu"] {
+  color: #0f172a !important;
 }
 
 /* Dark scope: gradient-text restores old blue gradient */
@@ -809,3 +811,40 @@ html.js-rv .rv.in-view {
     transform: none !important;
   }
 }
+
+/* ── Navbar slide-in (CSS-only, avoids Framer Motion hydration mismatch) ── */
+@keyframes nav-slide-in {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+.animate-nav-in {
+  animation: nav-slide-in 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+/* Disable the entrance animation when reduced motion is preferred */
+@media (prefers-reduced-motion: reduce) {
+  .animate-nav-in {
+    animation: none;
+  }
+}
+
+/* ── Hero section CSS entrance animations (avoids Framer Motion hydration mismatch) ── */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-hero-in {
+  animation: hero-fade-up 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.05s both;
+}
+.animate-hero-cta {
+  animation: hero-fade-up 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.35s both;
+}
+.animate-hero-badges {
+  animation: hero-fade-up 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.45s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-in,
+  .animate-hero-cta,
+  .animate-hero-badges { animation: none; }
+}
+
+

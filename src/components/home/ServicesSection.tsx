@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import {
   Globe,
   Smartphone,
@@ -21,6 +21,20 @@ import {
 } from "lucide-react";
 import { CORE_SERVICES, ADDITIONAL_SERVICES, SERVICES_SUBTITLE } from "@/lib/constants";
 import SectionHeading from "@/components/ui/SectionHeading";
+
+// Lazy-load the 3D ring so it doesn't add to above-the-fold JS
+const ServiceRing = dynamic(() => import("./ServiceRing"), {
+  ssr: false,
+  loading: () => (
+    <div
+      style={{ height: "clamp(350px, 40vw, 450px)" }}
+      className="flex items-center justify-center text-[#94a3b8] text-sm"
+      aria-hidden="true"
+    >
+      Loading…
+    </div>
+  ),
+});
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Globe,
@@ -59,10 +73,18 @@ export default function ServicesSection() {
           title="Services That "
           highlight="Scale"
           subtitle={SERVICES_SUBTITLE}
-          className="mb-16"
+          className="mb-10"
         />
 
-        {/* Core services — 12 cards */}
+        {/* 3D Service Ring — decorative, above the cards */}
+        <div className="mb-14">
+          <p className="text-center text-xs text-[#94a3b8] mb-4 uppercase tracking-widest font-semibold select-none">
+            Drag to explore · 12 services
+          </p>
+          <ServiceRing />
+        </div>
+
+        {/* Core services — 12 cards (real content, accessible) */}
         <div className="mb-8">
           <h3 className="text-xs font-semibold text-[#3f6212] uppercase tracking-widest mb-6">
             Core Services
@@ -75,7 +97,7 @@ export default function ServicesSection() {
                 <div
                   key={service.title}
                   className="rv tilt card-v2 p-5 flex flex-col gap-4 group hover:border-[#334155] transition-all duration-300"
-                  style={{ ['--rv-delay' as string]: `${(i % 4) * 80}ms` }}
+                  style={{ ["--rv-delay" as string]: `${(i % 4) * 80}ms` }}
                 >
                   {/* Number + Icon row */}
                   <div className="flex items-center justify-between">
@@ -128,7 +150,7 @@ export default function ServicesSection() {
                 <div
                   key={service.title}
                   className="rv tilt card-v2 p-5 flex flex-col gap-3 hover:border-[#334155] transition-all duration-300"
-                  style={{ ['--rv-delay' as string]: `${(i % 4) * 80}ms` }}
+                  style={{ ["--rv-delay" as string]: `${(i % 4) * 80}ms` }}
                 >
                   <div className={`gem ${isSlate ? "teal" : ""}`} aria-hidden="true">
                     <Icon />

@@ -13,5 +13,10 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
+  /**
+   * Run only on admin routes (BodyScopeProvider needs x-next-pathname
+   * to detect /admin paths server-side; public pages don't need this header).
+   * Keeping it off public routes reduces middleware overhead on every page load.
+   */
+  matcher: ["/admin/:path*"],
 };
