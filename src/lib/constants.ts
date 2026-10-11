@@ -1,7 +1,7 @@
 // Navigation links
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
+  { href: "/#services", label: "Services" },
   { href: "/#courses", label: "Courses" },
   { href: "/portfolio", label: "Our Work" },
   { href: "/about", label: "About" },
@@ -218,22 +218,22 @@ export const VALUE_CARDS = [
   {
     icon: "Code2",
     title: "Engineering First",
-    description: "Every product is built with clean architecture, maintainable code, and long-term scalability in mind.",
+    description: "Every product is built with clean code and a clear structure, so it is easy to maintain and extend.",
   },
   {
     icon: "Bot",
     title: "AI-Ready",
-    description: "We build systems that can integrate intelligence — from automations to full AI-powered workflows.",
+    description: "We add AI where it saves you time: chatbots, document reading, automation and smart reports.",
   },
   {
     icon: "Zap",
     title: "Shipped on Time",
-    description: "Clear scope, clear milestones. We communicate openly and deliver what we commit to.",
+    description: "Clear scope and clear milestones. We tell you what to expect and keep you updated.",
   },
   {
     icon: "ShieldCheck",
     title: "Built to Last",
-    description: "No shortcuts. No technical debt. Projects are built to be maintained and extended easily.",
+    description: "No shortcuts and no technical debt. We also help with hosting, maintenance and fixes after launch.",
   },
 ];
 

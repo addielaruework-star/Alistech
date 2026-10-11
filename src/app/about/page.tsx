@@ -35,7 +35,7 @@ export default function AboutPage() {
             eyebrow="About Us"
             title="A Small Team That Cares About "
             highlight="Good Work"
-            subtitle="We build websites, platforms, and digital tools — with a focus on quality, clarity, and long-term value."
+            subtitle="Based in Charminar, Hyderabad, we build websites, apps, AI tools and automation for businesses, and we teach the same skills to students and professionals."
           />
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-bg-primary to-transparent" />
@@ -48,25 +48,20 @@ export default function AboutPage() {
             <div className="flex flex-col gap-5 text-[#475569] text-base leading-relaxed">
               <h2 className="font-sora font-bold text-[#0f172a] text-3xl">Our Story</h2>
               <p>
-                AlisTech started with a straightforward goal: help businesses build a proper
-                digital presence without the bloated agency overhead and inflated promises.
+                AlisTech started with a simple goal: help businesses get a proper digital presence without agency overhead and big promises.
               </p>
               <p>
-                We&apos;re a remote-first team of developers and designers who care about the
-                details — clean code, thoughtful design, and honest communication throughout
-                every project.
+                We are a small team of developers and designers. We care about the details: clean code, thoughtful design and honest communication on every project.
               </p>
               <p>
-                We work with startups, local businesses, personal brands, and growing companies
-                who want a reliable team to build and maintain their digital products.
+                Today we build websites, mobile apps, business software, AI solutions, WhatsApp and business automation, reports and dashboards, and online payments. We also teach Python, data science, machine learning, generative AI and AI agents.
               </p>
 
               {/* Built With Purpose block */}
               <div className="mt-2 card-v2 p-5">
                 <h3 className="font-sora font-bold text-[#0f172a] text-lg mb-1.5">Built With Purpose</h3>
                 <p className="text-[#475569] text-sm leading-relaxed">
-                  Founded by a small team of developers and designers focused on building modern
-                  digital experiences that help businesses grow online.
+                  We are a small team that builds modern digital products to help businesses grow online. Not sure what you need? Share your business problem with us and we will suggest the right solution. Call or WhatsApp 9603337862.
                 </p>
               </div>
             </div>

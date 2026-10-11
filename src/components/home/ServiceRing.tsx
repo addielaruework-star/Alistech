@@ -21,12 +21,12 @@ const ICON_PATHS: Record<string, string> = {
 
 /**
  * ServiceRing — 3D rotating ring of the 12 core services.
- * Uses requestAnimationFrame, IntersectionObserver, and passive scroll listener.
- * Pauses when tab is hidden. No external libraries.
+ * Real content on home: server-rendered list items, aria-label on stage.
+ * Uses requestAnimationFrame only while visible. Pauses when tab is hidden.
  */
 export default function ServiceRing() {
   const stageRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLUListElement>(null);
   const state = useRef({
     angle: -18,
     velocity: 0,
@@ -46,7 +46,7 @@ export default function ServiceRing() {
     ring.style.transform = `translateZ(-${state.current.R}px) rotateY(${-state.current.angle}deg)`;
   }, []);
 
-  // Compute radius and set tile transforms
+  // Compute radius and set tile transforms with exact compact height (256px desktop, 232px mobile)
   const layout = useCallback(() => {
     const stage = stageRef.current;
     const ring = ringRef.current;
@@ -54,12 +54,17 @@ export default function ServiceRing() {
 
     const cw = stage.clientWidth;
     const tileW = cw < 560 ? 176 : 236;
+    const tileH = cw < 560 ? 232 : 256;
     const R = Math.round((tileW / 2) / Math.tan(Math.PI / 12) * 1.2);
     state.current.R = R;
 
-    const tiles = ring.querySelectorAll<HTMLDivElement>(".sring-tile");
+    const tiles = ring.querySelectorAll<HTMLElement>(".sring-tile");
     tiles.forEach((tile, i) => {
       tile.style.transform = `rotateY(${i * 30}deg) translateZ(${R}px)`;
+      tile.style.width = `${tileW}px`;
+      tile.style.height = `${tileH}px`;
+      tile.style.marginLeft = `${-tileW / 2}px`;
+      tile.style.marginTop = `${-tileH / 2}px`;
     });
     applyTransform();
   }, [applyTransform]);
@@ -178,12 +183,11 @@ export default function ServiceRing() {
     <div
       ref={stageRef}
       aria-label="Our 12 services. Drag to turn."
-      aria-hidden="false"
       role="region"
       className="sring-stage"
       style={{
         position: "relative",
-        height: "clamp(350px, 40vw, 450px)",
+        height: "clamp(320px, 36vw, 380px)",
         perspective: "1500px",
         perspectiveOrigin: "50% 40%",
         cursor: "grab",
@@ -192,9 +196,8 @@ export default function ServiceRing() {
         overflow: "hidden",
       }}
     >
-      <div
+      <ul
         ref={ringRef}
-        aria-hidden="true"
         style={{
           position: "absolute",
           left: "50%",
@@ -203,96 +206,144 @@ export default function ServiceRing() {
           height: 0,
           transformStyle: "preserve-3d",
           willChange: "transform",
+          listStyle: "none",
+          padding: 0,
+          margin: 0,
         }}
       >
         {CORE_SERVICES.map((svc, i) => {
           const pathD = ICON_PATHS[svc.icon] || "";
+          const isSlate = i % 2 === 1;
           return (
-            <div
+            <li
               key={svc.number}
               className="sring-tile"
-              aria-hidden="true"
+              tabIndex={-1}
               style={{
                 position: "absolute",
                 width: "clamp(176px, 20vw, 236px)",
-                height: "clamp(260px, 30vw, 316px)",
+                height: "clamp(232px, 25vw, 256px)",
                 marginLeft: "calc(clamp(176px, 20vw, 236px) / -2)",
-                marginTop: "calc(clamp(260px, 30vw, 316px) / -2)",
+                marginTop: "calc(clamp(232px, 25vw, 256px) / -2)",
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
-                background: "#fff",
+                WebkitFontSmoothing: "antialiased",
+                MozOsxFontSmoothing: "grayscale",
+                transformStyle: "preserve-3d",
+                background: "#ffffff",
                 border: "1px solid #dde4ec",
                 borderRadius: "22px",
                 padding: "20px",
                 boxShadow: "0 8px 32px -12px rgba(15,23,42,0.12), 0 2px 8px rgba(15,23,42,0.05)",
                 display: "flex",
                 flexDirection: "column",
-                gap: "12px",
+                justifyContent: "space-between",
                 overflow: "hidden",
               }}
             >
               {/* Pale lime bottom glow */}
-              <div style={{
-                position: "absolute",
-                inset: "auto -20% -40% -20%",
-                height: "60%",
-                background: "radial-gradient(closest-side, rgba(132,204,22,0.18), transparent)",
-                pointerEvents: "none",
-              }} />
+              <div
+                style={{
+                  position: "absolute",
+                  inset: "auto -20% -40% -20%",
+                  height: "50%",
+                  background: isSlate
+                    ? "radial-gradient(closest-side, rgba(77,124,15,0.14), transparent)"
+                    : "radial-gradient(closest-side, rgba(132,204,22,0.18), transparent)",
+                  pointerEvents: "none",
+                }}
+              />
 
-              {/* Number */}
-              <span style={{
-                fontFamily: "var(--font-inter)",
-                fontSize: "13px",
-                fontWeight: 700,
-                color: "#3f6212",
-                letterSpacing: "0.04em",
-              }}>
-                {svc.number}
-              </span>
+              {/* Top row: Number + Icon badge */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-inter)",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    color: isSlate ? "#365314" : "#3f6212",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  {svc.number}
+                </span>
 
-              {/* Icon badge */}
-              <div style={{
-                width: 44,
-                height: 44,
-                borderRadius: 13,
-                background: "linear-gradient(135deg, #bef264 0%, #84cc16 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: "0 8px 18px -8px rgba(132,204,22,0.55)",
-                flexShrink: 0,
-              }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-                  stroke="#1a2e05" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-                  <path d={pathD} />
-                </svg>
+                <div
+                  style={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: 14,
+                    background: isSlate
+                      ? "linear-gradient(135deg, #4d7c0f 0%, #365314 100%)"
+                      : "linear-gradient(135deg, #bef264 0%, #84cc16 100%)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: isSlate
+                      ? "inset 0 2px 0 rgba(255,255,255,0.45), 0 8px 18px -8px rgba(54,83,20,0.55)"
+                      : "inset 0 2px 0 rgba(255,255,255,0.65), 0 8px 18px -8px rgba(132,204,22,0.55)",
+                    flexShrink: 0,
+                  }}
+                >
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke={isSlate ? "#ffffff" : "#1a2e05"}
+                    strokeWidth="1.9"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d={pathD} />
+                  </svg>
+                </div>
               </div>
 
-              {/* Title + description */}
-              <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6, position: "relative", zIndex: 1 }}>
-                <div style={{
-                  fontFamily: "var(--font-sora)",
-                  fontSize: "clamp(14px, 1.4vw, 17px)",
-                  fontWeight: 700,
-                  color: "#0f172a",
-                  lineHeight: 1.2,
-                }}>
+              {/* Bottom block: Title + Description */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "6px",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: "var(--font-sora)",
+                    fontSize: "clamp(14px, 1.4vw, 17px)",
+                    fontWeight: 700,
+                    color: "#0f172a",
+                    lineHeight: 1.25,
+                  }}
+                >
                   {svc.title}
                 </div>
-                <div style={{
-                  fontFamily: "var(--font-inter)",
-                  fontSize: "clamp(11px, 1vw, 13px)",
-                  color: "#475569",
-                  lineHeight: 1.45,
-                }}>
+                <div
+                  style={{
+                    fontFamily: "var(--font-inter)",
+                    fontSize: "clamp(11px, 1.05vw, 12.5px)",
+                    color: "#475569",
+                    lineHeight: 1.42,
+                  }}
+                >
                   {svc.description}
                 </div>
               </div>
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </div>
   );
 }

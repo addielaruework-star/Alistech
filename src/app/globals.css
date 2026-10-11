@@ -216,12 +216,12 @@
   }
   .gem.teal,
   .gem.slate {
-    background: var(--acc2);
-    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.55), inset 0 -8px 14px rgba(0, 0, 0, 0.15), 0 12px 22px -10px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, #4d7c0f 0%, #365314 100%);
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.55), inset 0 -8px 14px rgba(0, 0, 0, 0.15), 0 12px 22px -10px rgba(54, 83, 20, 0.45);
   }
   .gem.teal svg,
   .gem.slate svg {
-    stroke: var(--on-acc2);
+    stroke: #ffffff;
   }
 
   /* Flip cards */

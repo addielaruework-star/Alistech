@@ -1,6 +1,7 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import ServiceRing from "./ServiceRing";
+import Button from "@/components/ui/Button";
 import {
   Globe,
   Smartphone,
@@ -19,22 +20,8 @@ import {
   ShieldCheck,
   Rocket,
 } from "lucide-react";
-import { CORE_SERVICES, ADDITIONAL_SERVICES, SERVICES_SUBTITLE } from "@/lib/constants";
+import { ADDITIONAL_SERVICES, SERVICES_SUBTITLE } from "@/lib/constants";
 import SectionHeading from "@/components/ui/SectionHeading";
-
-// Lazy-load the 3D ring so it doesn't add to above-the-fold JS
-const ServiceRing = dynamic(() => import("./ServiceRing"), {
-  ssr: false,
-  loading: () => (
-    <div
-      style={{ height: "clamp(350px, 40vw, 450px)" }}
-      className="flex items-center justify-center text-[#94a3b8] text-sm"
-      aria-hidden="true"
-    >
-      Loading…
-    </div>
-  ),
-});
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Globe,
@@ -76,64 +63,16 @@ export default function ServicesSection() {
           className="mb-10"
         />
 
-        {/* 3D Service Ring — decorative, above the cards */}
-        <div className="mb-14">
+        {/* 3D Service Ring — primary interactive showcase */}
+        <div className="mb-6">
           <p className="text-center text-xs text-[#94a3b8] mb-4 uppercase tracking-widest font-semibold select-none">
             Drag to explore · 12 services
           </p>
           <ServiceRing />
-        </div>
-
-        {/* Core services — 12 cards (real content, accessible) */}
-        <div className="mb-8">
-          <h3 className="text-xs font-semibold text-[#3f6212] uppercase tracking-widest mb-6">
-            Core Services
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 perspective-grid">
-            {CORE_SERVICES.map((service, i) => {
-              const Icon = ICON_MAP[service.icon] ?? Globe;
-              const isSlate = i % 2 === 1;
-              return (
-                <div
-                  key={service.title}
-                  className="rv tilt card-v2 p-5 flex flex-col gap-4 group hover:border-[#334155] transition-all duration-300"
-                  style={{ ["--rv-delay" as string]: `${(i % 4) * 80}ms` }}
-                >
-                  {/* Number + Icon row */}
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono font-bold text-xs text-[#3f6212]">
-                      {service.number}
-                    </span>
-                    <div className={`gem ${isSlate ? "teal" : ""}`} aria-hidden="true">
-                      <Icon />
-                    </div>
-                  </div>
-
-                  {/* Title + description */}
-                  <div>
-                    <h4 className="font-sora font-bold text-[#0f172a] text-lg mb-1">
-                      {service.title}
-                    </h4>
-                    <p className="text-[#475569] text-sm leading-relaxed">{service.description}</p>
-                  </div>
-
-                  {/* How it helps you */}
-                  <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-widest text-[#475569] mb-2">
-                      How it helps you
-                    </p>
-                    <ul className="flex flex-col gap-1.5">
-                      {service.howItHelps.map((line) => (
-                        <li key={line} className="flex items-start gap-2 text-xs text-[#0f172a]">
-                          <span className="mt-0.5 w-1.5 h-1.5 rounded-full bg-[#84cc16] flex-shrink-0" />
-                          {line}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="mt-8 flex justify-center">
+            <Button variant="secondary" href="/services">
+              View all services →
+            </Button>
           </div>
         </div>
 
