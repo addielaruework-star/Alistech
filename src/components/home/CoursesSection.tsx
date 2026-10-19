@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { COURSES, GENAI_TOPICS, AGENTIC_TOPICS, AGENTIC_STEPS } from "@/lib/constants";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -94,6 +95,17 @@ export default function CoursesSection() {
                 <CourseFlipCard course={course} index={i} />
               </div>
             ))}
+          </div>
+
+          {/* Route to dedicated Courses page */}
+          <div className="mt-12 text-center">
+            <Link
+              href="/courses"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm bg-white border border-[#dde4ec] text-[#0f172a] hover:border-[#7CFF4F] hover:bg-[#f8fafc] shadow-sm transition-all duration-200 group"
+            >
+              <span>Explore All Courses &amp; Details</span>
+              <span className="text-[#2d6a0a] group-hover:translate-x-0.5 transition-transform font-bold">→</span>
+            </Link>
           </div>
         </div>
       </section>
@@ -246,12 +258,12 @@ export default function CoursesSection() {
                 >
                   Ask about this course <span aria-hidden="true">↗</span>
                 </a>
-                <a
+                <Link
                   className="inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-semibold text-sm bg-white border border-[#dde4ec] text-[#0f172a] hover:border-[#0f172a] transition-all"
-                  href="#courses"
+                  href="/courses"
                 >
                   All courses
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -4,7 +4,19 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { AuthProvider, useAuth } from "@/lib/auth-context";
 import Link from "next/link";
-import { LayoutDashboard, Inbox, LogOut, Zap, Menu, X, Briefcase, Star, Settings } from "lucide-react";
+import Image from "next/image";
+import {
+  LayoutDashboard,
+  Inbox,
+  LogOut,
+  Menu,
+  X,
+  Briefcase,
+  Star,
+  Settings,
+  ShieldAlert,
+  ExternalLink,
+} from "lucide-react";
 
 /* ── Sidebar links ────────────────────────────────────────────────────────── */
 const NAV = [
@@ -15,6 +27,39 @@ const NAV = [
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
+/* ── Logo mark component ──────────────────────────────────────────────────── */
+function LogoMark({ size = 32 }: { size?: number }) {
+  return (
+    <div
+      className="rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center border border-[#e2e8f0] bg-white shadow-2xs"
+      style={{ width: size, height: size }}
+    >
+      <Image
+        src="/alistech-official-logo.jpg"
+        alt="AlisTech Logo"
+        width={size}
+        height={size}
+        className="object-contain w-full h-full"
+        priority
+      />
+    </div>
+  );
+}
+
+/* ── Wordmark component ───────────────────────────────────────────────────── */
+function Wordmark() {
+  return (
+    <div className="flex items-center gap-2">
+      <span className="font-sora font-bold text-base text-[#0f172a] tracking-tight">
+        Alis<span className="gradient-text font-extrabold">Tech</span>
+      </span>
+      <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#0f172a]/5 text-[#0f172a] border border-[#0f172a]/10">
+        CMS
+      </span>
+    </div>
+  );
+}
+
 /* ── Inner shell (needs auth context) ─────────────────────────────────────── */
 function AdminShell({ children }: { children: React.ReactNode }) {
   const { user, isAdmin, loading, signOut } = useAuth();
@@ -24,14 +69,7 @@ function AdminShell({ children }: { children: React.ReactNode }) {
 
   const isLoginPage = pathname === "/admin/login";
 
-  /* Redirect logic — role-aware ───────────────────────────────────────────
-     State machine:
-     1. loading  → hold, show loader
-     2. no user  → if on login page: show login; else redirect to login
-     3. user but NOT admin → show access denied (never redirect to dashboard)
-     4. user + admin + on login page → redirect to dashboard
-     5. user + admin + on protected page → render dashboard shell
-  ──────────────────────────────────────────────────────────────────────── */
+  /* Redirect logic — role-aware */
   useEffect(() => {
     if (loading) return;
 
@@ -65,53 +103,88 @@ function AdminShell({ children }: { children: React.ReactNode }) {
     return <AdminLoader label="Access granted. Redirecting..." />;
   }
 
+  const pageTitle =
+    NAV.find((item) => pathname.startsWith(item.href))?.label ||
+    (pathname.split("/").pop()?.replace(/[^a-zA-Z]/g, " ") || "Admin");
+
   return (
-    <div className="flex h-screen bg-[#050508] overflow-hidden text-white font-inter">
+    <div className="flex h-screen bg-[#f8fafc] text-[#0f172a] overflow-hidden font-inter selection:bg-[#7CFF4F] selection:text-[#0f172a]">
       {/* ── Sidebar (desktop) ──────────────────────────────────────── */}
-      <aside className="hidden lg:flex flex-col w-[240px] border-r border-white/[0.06] bg-[#08080d]">
-        {/* Logo */}
-        <div className="flex items-center gap-2.5 px-6 h-16 border-b border-white/[0.06]">
-          <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center shadow-[0_0_16px_rgba(37,99,235,0.4)]">
-            <Zap className="w-3.5 h-3.5 text-white" fill="white" />
-          </div>
-          <span className="font-sora font-bold text-sm text-white">
-            Alis<span className="text-blue-400">Tech</span>
-          </span>
-          <span className="ml-auto text-[10px] font-semibold uppercase tracking-wider text-white/25 border border-white/10 px-1.5 py-0.5 rounded">
-            Admin
-          </span>
+      <aside className="hidden lg:flex flex-col w-[260px] border-r border-[#e2e8f0] bg-white flex-shrink-0 z-30">
+        {/* Logo Header */}
+        <div className="flex items-center justify-between px-6 h-16 border-b border-[#e2e8f0]">
+          <Link href="/admin/dashboard" className="flex items-center gap-2.5">
+            <LogoMark size={32} />
+            <Wordmark />
+          </Link>
         </div>
 
         {/* Nav links */}
-        <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
+        <nav data-admin-nav className="flex-1 px-3 py-5 flex flex-col gap-1 overflow-y-auto">
+          <div className="px-3 pb-2 text-[11px] font-bold uppercase tracking-wider text-[#94a3b8]">
+            Management
+          </div>
           {NAV.map(({ label, href, icon: Icon }) => {
             const active = pathname.startsWith(href);
             return (
               <Link
                 key={href}
                 href={href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
                   active
-                    ? "text-white bg-white/[0.07] border border-white/[0.08]"
-                    : "text-white/40 hover:text-white/70 hover:bg-white/[0.03] border border-transparent"
+                    ? "text-[#0f172a] bg-[#f1f5f9] font-semibold border border-[#e2e8f0] shadow-2xs"
+                    : "text-[#64748b] hover:text-[#0f172a] hover:bg-[#f8fafc]"
                 }`}
               >
-                <Icon className="w-4 h-4" />
-                {label}
+                <div className="flex items-center gap-3">
+                  <Icon
+                    className={`w-4 h-4 transition-colors ${
+                      active ? "text-[#0f172a]" : "text-[#64748b]"
+                    }`}
+                  />
+                  <span>{label}</span>
+                </div>
+                {active && (
+                  <span className="w-1.5 h-4 rounded-full bg-[#7CFF4F]" aria-hidden="true" />
+                )}
               </Link>
             );
           })}
         </nav>
 
-        {/* Logout */}
-        <div className="px-3 py-4 border-t border-white/[0.06]">
-          <button
-            onClick={() => signOut()}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/30 hover:text-red-400 hover:bg-red-500/[0.06] transition-all duration-150 w-full border border-transparent"
+        {/* Sidebar Footer with Account & Logout */}
+        <div className="p-3 border-t border-[#e2e8f0] bg-[#f8fafc]/50 space-y-2">
+          <Link
+            href="/"
+            target="_blank"
+            className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-[#64748b] hover:text-[#0f172a] hover:bg-white transition-colors"
           >
-            <LogOut className="w-4 h-4" />
-            Logout
-          </button>
+            <span className="flex items-center gap-2">
+              <ExternalLink className="w-3.5 h-3.5 text-[#94a3b8]" />
+              <span>Public Website</span>
+            </span>
+            <span className="text-[10px] text-[#94a3b8]">↗</span>
+          </Link>
+
+          <div className="flex items-center justify-between px-2 pt-2 border-t border-[#e2e8f0]">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-full bg-[#0f172a] text-[#7CFF4F] font-sora font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs">
+                {user?.email ? user.email[0].toUpperCase() : "A"}
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-semibold text-[#0f172a] truncate">Admin</p>
+                <p className="text-[11px] text-[#64748b] truncate">{user?.email}</p>
+              </div>
+            </div>
+            <button
+              onClick={() => signOut()}
+              title="Sign Out"
+              className="p-1.5 rounded-lg text-[#64748b] hover:text-red-600 hover:bg-red-50 transition-colors"
+              aria-label="Sign out"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </aside>
 
@@ -119,27 +192,27 @@ function AdminShell({ children }: { children: React.ReactNode }) {
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-[#0f172a]/40 backdrop-blur-xs"
             onClick={() => setSidebarOpen(false)}
           />
-          <aside className="relative w-[260px] h-full flex flex-col bg-[#08080d] border-r border-white/[0.06]">
-            <div className="flex items-center justify-between px-5 h-16 border-b border-white/[0.06]">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
-                  <Zap className="w-3.5 h-3.5 text-white" fill="white" />
-                </div>
-                <span className="font-sora font-bold text-sm text-white">
-                  Alis<span className="text-blue-400">Tech</span>
-                </span>
+          <aside className="relative w-[270px] h-full flex flex-col bg-white border-r border-[#e2e8f0] shadow-xl">
+            <div className="flex items-center justify-between px-5 h-16 border-b border-[#e2e8f0]">
+              <div className="flex items-center gap-2.5">
+                <LogoMark size={32} />
+                <Wordmark />
               </div>
               <button
                 onClick={() => setSidebarOpen(false)}
-                className="text-white/40 hover:text-white p-1"
+                className="text-[#64748b] hover:text-[#0f172a] p-1.5 rounded-lg hover:bg-[#f1f5f9]"
+                aria-label="Close sidebar"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
+            <nav data-admin-nav className="flex-1 px-3 py-4 flex flex-col gap-1 overflow-y-auto">
+              <div className="px-3 pb-2 text-[11px] font-bold uppercase tracking-wider text-[#94a3b8]">
+                Management
+              </div>
               {NAV.map(({ label, href, icon: Icon }) => {
                 const active = pathname.startsWith(href);
                 return (
@@ -147,25 +220,28 @@ function AdminShell({ children }: { children: React.ReactNode }) {
                     key={href}
                     href={href}
                     onClick={() => setSidebarOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+                    className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
                       active
-                        ? "text-white bg-white/[0.07]"
-                        : "text-white/40 hover:text-white/70 hover:bg-white/[0.03]"
+                        ? "text-[#0f172a] bg-[#f1f5f9] font-semibold border border-[#e2e8f0]"
+                        : "text-[#64748b] hover:text-[#0f172a] hover:bg-[#f8fafc]"
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
-                    {label}
+                    <div className="flex items-center gap-3">
+                      <Icon className="w-4 h-4 text-[#0f172a]" />
+                      <span>{label}</span>
+                    </div>
+                    {active && <span className="w-1.5 h-4 rounded-full bg-[#7CFF4F]" />}
                   </Link>
                 );
               })}
             </nav>
-            <div className="px-3 py-4 border-t border-white/[0.06]">
+            <div className="p-4 border-t border-[#e2e8f0] bg-[#f8fafc]/50">
               <button
                 onClick={() => signOut()}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/30 hover:text-red-400 hover:bg-red-500/[0.06] transition-all w-full"
+                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 transition-all w-full"
               >
                 <LogOut className="w-4 h-4" />
-                Logout
+                <span>Logout</span>
               </button>
             </div>
           </aside>
@@ -173,27 +249,54 @@ function AdminShell({ children }: { children: React.ReactNode }) {
       )}
 
       {/* ── Main area ──────────────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Topbar */}
-        <header className="flex items-center h-16 px-6 border-b border-white/[0.06] bg-[#08080d]/80 backdrop-blur-xl flex-shrink-0">
-          <button
-            className="lg:hidden text-white/50 hover:text-white mr-4 p-1"
-            onClick={() => setSidebarOpen(true)}
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-          <h1 className="font-sora font-semibold text-sm text-white/80 capitalize">
-            {pathname.split("/").pop()?.replace(/[^a-zA-Z]/g, " ") || "Admin"}
-          </h1>
-          <div className="ml-auto flex items-center gap-3">
-            <div className="w-7 h-7 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-[11px] font-bold text-blue-400">
-              A
+        <header className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8 border-b border-[#e2e8f0] bg-white/90 backdrop-blur-md flex-shrink-0 z-20">
+          <div className="flex items-center gap-3">
+            <button
+              className="lg:hidden text-[#64748b] hover:text-[#0f172a] p-1.5 rounded-lg hover:bg-[#f1f5f9] transition-colors"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="Open sidebar"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+            <h1 className="font-sora font-bold text-base sm:text-lg text-[#0f172a] capitalize tracking-tight">
+              {pageTitle}
+            </h1>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>CMS Active</span>
+            </div>
+            <Link
+              href="/"
+              target="_blank"
+              className="hidden md:inline-flex items-center gap-1.5 text-xs font-medium text-[#64748b] hover:text-[#0f172a] px-3 py-1.5 rounded-lg hover:bg-[#f1f5f9] transition-colors"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span>Live Site</span>
+            </Link>
+            <div className="h-5 w-px bg-[#e2e8f0] hidden sm:block" />
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-[#0f172a] text-[#7CFF4F] font-sora font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs">
+                {user?.email ? user.email[0].toUpperCase() : "A"}
+              </div>
+              <div className="hidden sm:block text-left">
+                <p className="text-xs font-semibold text-[#0f172a] leading-tight">
+                  {user?.email?.split("@")[0] || "Admin"}
+                </p>
+                <span className="text-[10px] text-[#64748b]">Authorized</span>
+              </div>
             </div>
           </div>
         </header>
 
-        {/* Content */}
-        <main className="flex-1 overflow-y-auto p-6 lg:p-8">{children}</main>
+        {/* Content Viewport */}
+        <main className="flex-1 overflow-y-auto bg-[#f8fafc] p-4 sm:p-6 lg:p-8">
+          {children}
+        </main>
       </div>
     </div>
   );
@@ -208,68 +311,54 @@ function AccessDenied({
   email: string;
 }) {
   return (
-    <div className="h-screen w-full flex items-center justify-center bg-[#050508] relative overflow-hidden">
-      <div className="absolute inset-0 grid-bg opacity-30" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[200px] rounded-full bg-red-600/5 blur-[80px] pointer-events-none" />
-
-      <div className="relative z-10 flex flex-col items-center gap-5 text-center px-6 max-w-sm">
-        {/* Icon */}
-        <div className="w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-          <Zap className="w-6 h-6 text-red-400" />
+    <div className="h-screen w-full flex items-center justify-center bg-[#f8fafc] text-[#0f172a] p-6 font-inter">
+      <div className="w-full max-w-md bg-white border border-[#e2e8f0] rounded-2xl p-8 shadow-sm text-center flex flex-col items-center gap-5">
+        <div className="w-14 h-14 rounded-2xl bg-red-50 border border-red-200 flex items-center justify-center">
+          <ShieldAlert className="w-7 h-7 text-red-600" />
         </div>
-
         <div>
-          <h1 className="font-sora font-bold text-lg text-white mb-2">
-            Access Denied
-          </h1>
-          <p className="text-sm text-white/40 leading-relaxed">
-            <span className="text-white/60">{email}</span> does not have admin
-            permissions. Contact the system administrator.
+          <h1 className="font-sora font-bold text-xl text-[#0f172a] mb-2">Access Denied</h1>
+          <p className="text-sm text-[#64748b] leading-relaxed">
+            <span className="font-semibold text-[#0f172a]">{email}</span> does not have admin permissions in Firestore.
           </p>
         </div>
-
+        <div className="w-full p-3.5 bg-[#f8fafc] border border-[#e2e8f0] rounded-xl text-xs text-[#64748b] text-left">
+          <p className="font-semibold text-[#0f172a] mb-1">Authorization required:</p>
+          <p>
+            Please configure your authenticated account UID in Firestore under the <code className="bg-[#e2e8f0] px-1 py-0.5 rounded text-[11px] text-[#0f172a]">users</code> collection with <code className="bg-[#e2e8f0] px-1 py-0.5 rounded text-[11px] text-[#0f172a]">role: &quot;admin&quot;</code>.
+          </p>
+        </div>
         <button
           onClick={onSignOut}
-          className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white/60 border border-white/[0.08] hover:text-white hover:bg-white/[0.05] transition-all"
+          className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs bg-[#0f172a] text-white hover:bg-[#1e293b] transition-colors"
         >
           Sign Out
         </button>
-
-        <p className="text-[10px] text-white/15 uppercase tracking-widest">
-          AlisTech Internal · Restricted
-        </p>
       </div>
     </div>
   );
 }
 
-/* ── Premium Vercel/Supabase-style minimal loader ────────────────────────── */
+/* ── Minimal Light Loader ────────────────────────────────────────────────── */
 function AdminLoader({ label = "Loading dashboard..." }: { label?: string }) {
   return (
-    <div className="h-screen w-full flex items-center justify-center bg-[#050508] relative overflow-hidden">
-      {/* Background glow overlay */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-blue-600/5 blur-[90px] pointer-events-none" />
-      <div className="absolute inset-0 grid-bg opacity-30" />
-
+    <div className="h-screen w-full flex items-center justify-center bg-[#f8fafc] relative overflow-hidden font-inter">
       <div className="flex flex-col items-center gap-5 relative z-10">
-        {/* Logo and breathing animation wrapper */}
-        <div className="relative flex items-center justify-center w-16 h-16">
-          {/* Animated Pulsing Outer Glow Ring */}
-          <div className="absolute inset-0 rounded-2xl bg-blue-600/10 border border-blue-500/30 animate-ping opacity-75 scale-90" style={{ animationDuration: "2s" }} />
-          
-          {/* Main Logo Container */}
-          <div className="relative w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.45)] border border-blue-400/20">
-            <Zap className="w-5 h-5 text-white" fill="white" />
-          </div>
+        <div className="w-14 h-14 rounded-2xl overflow-hidden border border-[#e2e8f0] shadow-xs bg-white p-2 flex items-center justify-center">
+          <Image
+            src="/alistech-official-logo.jpg"
+            alt="AlisTech"
+            width={48}
+            height={48}
+            className="object-contain w-full h-full"
+            priority
+          />
         </div>
-
-        {/* Minimal loading text with subtle shimmer/pulse effect */}
-        <div className="flex flex-col items-center gap-1.5">
-          <p className="text-white/70 text-xs font-medium tracking-wide animate-pulse">
-            {label}
-          </p>
-          <span className="text-[10px] text-white/20 uppercase tracking-widest font-semibold font-sora">
-            AlisTech Internal
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-5 h-5 border-2 border-[#0f172a]/20 border-t-[#0f172a] rounded-full animate-spin" />
+          <p className="text-[#0f172a] text-xs font-semibold tracking-wide">{label}</p>
+          <span className="text-[10px] text-[#94a3b8] uppercase tracking-widest font-semibold font-sora">
+            AlisTech CMS
           </span>
         </div>
       </div>

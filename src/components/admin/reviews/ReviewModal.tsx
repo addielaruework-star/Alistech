@@ -62,9 +62,15 @@ export default function ReviewModal({
       setExistingAvatarUrl(review.image);
       setAvatarPreview(review.image);
     } else {
-      setName(""); setCompany(""); setRole(""); setReviewText("");
-      setRating(5); setFeatured(false); setApproved(false);
-      setExistingAvatarUrl(""); setAvatarPreview("");
+      setName("");
+      setCompany("");
+      setRole("");
+      setReviewText("");
+      setRating(5);
+      setFeatured(false);
+      setApproved(false);
+      setExistingAvatarUrl("");
+      setAvatarPreview("");
     }
     setAvatarFile(null);
     setError(null);
@@ -87,13 +93,12 @@ export default function ReviewModal({
       let finalAvatarUrl = existingAvatarUrl;
 
       if (avatarFile) {
-        setUploadStatus("Uploading avatar image...");
-        // Use a temp ID for new reviews, review.id for edits
+        setUploadStatus("Uploading client avatar to Cloudinary...");
         const uploadId = review?.id || `temp-${Date.now()}`;
         finalAvatarUrl = await uploadReviewAvatar(uploadId, avatarFile);
       }
 
-      setUploadStatus("Saving review...");
+      setUploadStatus("Saving testimonial document...");
 
       await onSave({
         name: name.trim(),
@@ -101,19 +106,35 @@ export default function ReviewModal({
         role: role.trim(),
         review: reviewText.trim(),
         rating,
-        image: finalAvatarUrl,
         featured,
         approved,
+        image: finalAvatarUrl,
       });
 
       setSuccess(true);
-      setTimeout(() => onClose(), 1500);
+      setTimeout(() => {
+        onClose();
+      }, 700);
     } catch (err: any) {
-      setError(err?.message || "Failed to save review. Please try again.");
+      console.error(err);
+      setError(err?.message || "Failed to save review.");
     } finally {
       setLoading(false);
       setUploadStatus("");
     }
+  };
+
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setAvatarFile(file);
+    setAvatarPreview(URL.createObjectURL(file));
+  };
+
+  const handleRemoveAvatar = () => {
+    setAvatarFile(null);
+    setAvatarPreview("");
+    setExistingAvatarUrl("");
   };
 
   if (!isOpen) return null;
@@ -121,93 +142,82 @@ export default function ReviewModal({
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
-        {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={() => !loading && onClose()}
-          className="fixed inset-0 bg-black/80 backdrop-blur-md"
+          className="fixed inset-0 bg-[#0f172a]/50 backdrop-blur-xs"
         />
 
-        {/* Modal */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 12 }}
+          initial={{ opacity: 0, scale: 0.98, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 12 }}
-          transition={{ duration: 0.25 }}
-          className="relative w-full max-w-xl rounded-2xl border border-white/[0.08] bg-[#09090e] p-6 lg:p-8 max-h-[90vh] overflow-y-auto z-10 shadow-2xl"
+          exit={{ opacity: 0, scale: 0.98, y: 12 }}
+          transition={{ duration: 0.2 }}
+          className="relative w-full max-w-xl rounded-2xl border border-[#e2e8f0] bg-white p-6 sm:p-8 max-h-[90vh] overflow-y-auto z-10 shadow-2xl text-[#0f172a]"
         >
           {/* Header */}
-          <div className="flex items-center justify-between pb-5 border-b border-white/[0.06] mb-6">
+          <div className="flex items-center justify-between pb-5 border-b border-[#f1f5f9] mb-5">
             <div>
-              <h2 className="font-sora font-bold text-base text-white flex items-center gap-2">
-                <Star className="w-4 h-4 text-amber-400" fill="currentColor" />
-                {isEdit ? "Edit Review" : "Add Review"}
+              <h2 className="font-sora font-bold text-xl text-[#0f172a]">
+                {isEdit ? "Edit Testimonial" : "Add Client Testimonial"}
               </h2>
-              <p className="text-xs text-white/30 mt-1">
-                New reviews require manual approval before going public.
+              <p className="text-xs text-[#64748b] mt-1">
+                Configure feedback, rating, and avatar to build client credibility.
               </p>
             </div>
             <button
               onClick={onClose}
               disabled={loading}
-              className="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/[0.05] transition-colors"
+              className="p-1.5 rounded-lg text-[#94a3b8] hover:text-[#0f172a] hover:bg-[#f1f5f9] transition-colors disabled:opacity-40"
+              aria-label="Close modal"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Avatar upload */}
-            <div className="flex items-start gap-5">
-              <div className="flex-shrink-0">
-                <label className="block text-[10px] font-semibold uppercase tracking-widest text-white/35 mb-2">
-                  Photo
+          <form onSubmit={handleSubmit} className="space-y-4.5">
+            {/* Avatar & Name Row */}
+            <div className="flex items-start gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-[#0f172a] mb-1.5">
+                  Avatar
                 </label>
-                <div className="relative w-16 h-16">
+                <div className="relative w-14 h-14 rounded-full overflow-hidden bg-[#f8fafc] border border-[#cbd5e1] flex items-center justify-center shrink-0 shadow-2xs">
                   {avatarPreview ? (
-                    <div className="relative w-16 h-16 rounded-full overflow-hidden border border-white/[0.1] group">
+                    <>
                       <img
                         src={avatarPreview}
-                        alt="Avatar Preview"
+                        alt="Avatar preview"
                         className="w-full h-full object-cover"
                       />
                       <button
                         type="button"
-                        onClick={() => {
-                          setAvatarFile(null);
-                          setAvatarPreview("");
-                          setExistingAvatarUrl("");
-                        }}
-                        className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"
+                        onClick={handleRemoveAvatar}
+                        className="absolute inset-0 bg-red-600/80 text-white flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"
+                        title="Remove photo"
                       >
-                        <Trash2 className="w-4 h-4 text-red-400" />
+                        <Trash2 className="w-4 h-4" />
                       </button>
-                    </div>
+                    </>
                   ) : (
-                    <div className="relative w-16 h-16 rounded-full border border-dashed border-white/[0.15] bg-white/[0.02] hover:border-white/30 transition-colors cursor-pointer flex items-center justify-center">
+                    <div className="relative w-full h-full flex items-center justify-center cursor-pointer hover:bg-[#f1f5f9] transition-colors">
                       <input
                         type="file"
                         accept="image/*"
-                        onChange={(e) => {
-                          const f = e.target.files?.[0];
-                          if (f) {
-                            setAvatarFile(f);
-                            setAvatarPreview(URL.createObjectURL(f));
-                          }
-                        }}
+                        onChange={handleAvatarChange}
                         className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
                       />
-                      <User className="w-5 h-5 text-white/20" />
+                      <User className="w-5 h-5 text-[#94a3b8]" />
                     </div>
                   )}
                 </div>
               </div>
 
-              <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-white/35 mb-1.5">
+                  <label className="block text-xs font-semibold text-[#0f172a] mb-1.5">
                     Client Name *
                   </label>
                   <input
@@ -215,20 +225,20 @@ export default function ReviewModal({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    placeholder="John Smith"
-                    className="w-full px-3.5 py-2.5 rounded-xl text-sm text-white bg-white/[0.03] border border-white/[0.08] focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-white/20"
+                    placeholder="e.g. Sarah Jenkins"
+                    className="w-full px-3.5 py-2.5 rounded-xl text-sm text-[#0f172a] bg-[#f8fafc] border border-[#cbd5e1] focus:bg-white focus:outline-none focus:border-[#0f172a] focus:ring-2 focus:ring-[#7CFF4F]/50 transition-all placeholder:text-[#94a3b8]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-white/35 mb-1.5">
-                    Company
+                  <label className="block text-xs font-semibold text-[#0f172a] mb-1.5">
+                    Company / Organization
                   </label>
                   <input
                     type="text"
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
-                    placeholder="Acme Corp"
-                    className="w-full px-3.5 py-2.5 rounded-xl text-sm text-white bg-white/[0.03] border border-white/[0.08] focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-white/20"
+                    placeholder="e.g. Acme Health"
+                    className="w-full px-3.5 py-2.5 rounded-xl text-sm text-[#0f172a] bg-[#f8fafc] border border-[#cbd5e1] focus:bg-white focus:outline-none focus:border-[#0f172a] focus:ring-2 focus:ring-[#7CFF4F]/50 transition-all placeholder:text-[#94a3b8]"
                   />
                 </div>
               </div>
@@ -236,99 +246,84 @@ export default function ReviewModal({
 
             {/* Role */}
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-white/35 mb-1.5">
+              <label className="block text-xs font-semibold text-[#0f172a] mb-1.5">
                 Role / Title
               </label>
               <input
                 type="text"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                placeholder="CEO, Founder, Marketing Director..."
-                className="w-full px-3.5 py-2.5 rounded-xl text-sm text-white bg-white/[0.03] border border-white/[0.08] focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-white/20"
+                placeholder="e.g. Chief Operating Officer"
+                className="w-full px-3.5 py-2.5 rounded-xl text-sm text-[#0f172a] bg-[#f8fafc] border border-[#cbd5e1] focus:bg-white focus:outline-none focus:border-[#0f172a] focus:ring-2 focus:ring-[#7CFF4F]/50 transition-all placeholder:text-[#94a3b8]"
               />
             </div>
 
-            {/* Rating */}
+            {/* Star Rating Picker */}
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-white/35 mb-2">
-                Rating
+              <label className="block text-xs font-semibold text-[#0f172a] mb-1.5">
+                Star Rating ({rating} of 5)
               </label>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1.5 p-2 bg-[#f8fafc] rounded-xl border border-[#cbd5e1] w-fit">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
                     type="button"
                     onClick={() => setRating(star)}
-                    className="transition-transform hover:scale-110"
+                    className="p-1 hover:scale-110 transition-transform"
+                    aria-label={`Select ${star} stars`}
                   >
                     <Star
-                      className={`w-6 h-6 transition-colors ${
+                      className={`w-5 h-5 ${
                         star <= rating
-                          ? "text-amber-400"
-                          : "text-white/15"
+                          ? "text-amber-400 fill-amber-400"
+                          : "text-[#cbd5e1]"
                       }`}
-                      fill={star <= rating ? "currentColor" : "none"}
                     />
                   </button>
                 ))}
-                <span className="ml-2 text-xs text-white/30">
-                  {rating}/5 stars
-                </span>
               </div>
             </div>
 
             {/* Review text */}
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-white/35 mb-1.5">
-                Review Text *
+              <label className="block text-xs font-semibold text-[#0f172a] mb-1.5">
+                Testimonial Content *
               </label>
               <textarea
                 value={reviewText}
                 onChange={(e) => setReviewText(e.target.value)}
                 required
                 rows={4}
-                placeholder="What the client said about working with AlisTech..."
-                className="w-full px-3.5 py-2.5 rounded-xl text-sm text-white bg-white/[0.03] border border-white/[0.08] focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-white/20 resize-y"
+                placeholder="What did the client say about partnering with AlisTech?"
+                className="w-full px-3.5 py-2.5 rounded-xl text-sm text-[#0f172a] bg-[#f8fafc] border border-[#cbd5e1] focus:bg-white focus:outline-none focus:border-[#0f172a] focus:ring-2 focus:ring-[#7CFF4F]/50 transition-all placeholder:text-[#94a3b8] resize-y"
               />
             </div>
 
-            {/* Toggles */}
-            <div className="flex flex-wrap gap-5 pt-1">
+            {/* Checkboxes */}
+            <div className="flex flex-wrap gap-6 pt-1">
               <label className="flex items-center gap-2.5 cursor-pointer select-none">
-                <div
-                  onClick={() => setApproved(!approved)}
-                  className={`w-9 h-5 rounded-full flex items-center transition-colors cursor-pointer ${
-                    approved ? "bg-green-500" : "bg-white/[0.1]"
-                  }`}
-                >
-                  <div
-                    className={`w-4 h-4 rounded-full bg-white shadow transition-transform ml-0.5 ${
-                      approved ? "translate-x-4" : "translate-x-0"
-                    }`}
-                  />
-                </div>
+                <input
+                  type="checkbox"
+                  checked={approved}
+                  onChange={(e) => setApproved(e.target.checked)}
+                  className="w-4 h-4 rounded border-[#cbd5e1] text-[#0f172a] focus:ring-[#7CFF4F]"
+                />
                 <div>
-                  <span className="text-xs text-white font-medium">Approved</span>
-                  <p className="text-[10px] text-white/25">Show publicly on website</p>
+                  <span className="text-xs font-semibold text-[#0f172a]">Approved (Live)</span>
+                  <p className="text-[11px] text-[#64748b]">Display on public website</p>
                 </div>
               </label>
 
               <label className="flex items-center gap-2.5 cursor-pointer select-none">
-                <div
-                  onClick={() => setFeatured(!featured)}
-                  className={`w-9 h-5 rounded-full flex items-center transition-colors cursor-pointer ${
-                    featured ? "bg-blue-600" : "bg-white/[0.1]"
-                  }`}
-                >
-                  <div
-                    className={`w-4 h-4 rounded-full bg-white shadow transition-transform ml-0.5 ${
-                      featured ? "translate-x-4" : "translate-x-0"
-                    }`}
-                  />
-                </div>
+                <input
+                  type="checkbox"
+                  checked={featured}
+                  onChange={(e) => setFeatured(e.target.checked)}
+                  className="w-4 h-4 rounded border-[#cbd5e1] text-[#0f172a] focus:ring-[#7CFF4F]"
+                />
                 <div>
-                  <span className="text-xs text-white font-medium">Featured</span>
-                  <p className="text-[10px] text-white/25">Show on homepage</p>
+                  <span className="text-xs font-semibold text-[#0f172a]">Featured</span>
+                  <p className="text-[11px] text-[#64748b]">Show on landing page</p>
                 </div>
               </label>
             </div>
@@ -338,27 +333,28 @@ export default function ReviewModal({
               <motion.div
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2.5 px-4 py-3 rounded-xl border border-red-500/20 bg-red-500/[0.04] text-red-400 text-xs"
+                className="flex items-center gap-2.5 px-4 py-3 rounded-xl border border-red-200 bg-red-50 text-red-700 text-xs shadow-2xs"
               >
-                <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                {error}
+                <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-500" />
+                <span>{error}</span>
               </motion.div>
             )}
+
             {success && (
               <motion.div
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2.5 px-4 py-3 rounded-xl border border-green-500/20 bg-green-500/[0.04] text-green-400 text-xs"
+                className="flex items-center gap-2.5 px-4 py-3 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-800 text-xs shadow-2xs"
               >
-                <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-                Review saved successfully!
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-emerald-600" />
+                <span>Testimonial saved successfully!</span>
               </motion.div>
             )}
 
             {/* Footer */}
-            <div className="flex items-center justify-end gap-3 pt-5 border-t border-white/[0.05] mt-2">
+            <div className="flex items-center justify-end gap-3 pt-5 border-t border-[#f1f5f9] mt-3">
               {uploadStatus && (
-                <span className="text-xs text-blue-400 animate-pulse mr-auto">
+                <span className="text-xs text-blue-600 font-medium animate-pulse mr-auto">
                   {uploadStatus}
                 </span>
               )}
@@ -366,19 +362,22 @@ export default function ReviewModal({
                 type="button"
                 onClick={onClose}
                 disabled={loading}
-                className="px-4 py-2.5 rounded-xl text-xs font-semibold text-white/50 border border-white/[0.08] hover:text-white hover:bg-white/[0.04] transition-all disabled:opacity-40"
+                className="px-4 py-2.5 rounded-xl text-xs font-semibold text-[#64748b] border border-[#cbd5e1] hover:text-[#0f172a] hover:bg-[#f8fafc] transition-colors disabled:opacity-40"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 transition-all flex items-center gap-2 disabled:opacity-45"
+                className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-[#0f172a] hover:bg-[#1e293b] transition-all flex items-center gap-2 disabled:opacity-50 shadow-2xs"
               >
                 {loading ? (
-                  <><div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Saving...</>
+                  <>
+                    <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>Saving...</span>
+                  </>
                 ) : (
-                  "Save Review"
+                  <span>Save Testimonial</span>
                 )}
               </button>
             </div>

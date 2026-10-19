@@ -11,6 +11,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
+  sendPasswordResetEmail,
   type User,
 } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
@@ -23,6 +24,7 @@ interface AuthState {
   loading: boolean;          // ← true until both auth AND role are resolved
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
 }
 
 /* ── Context ──────────────────────────────────────────────────────────────── */
@@ -72,8 +74,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsAdmin(false);
   };
 
+  const resetPassword = async (email: string) => {
+    await sendPasswordResetEmail(auth, email);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isAdmin, loading, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, isAdmin, loading, signIn, signOut, resetPassword }}>
       {children}
     </AuthContext.Provider>
   );
