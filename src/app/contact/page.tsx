@@ -7,13 +7,13 @@ import {
   Mail,
   MessageCircle,
   Clock,
-  Globe,
   ChevronDown,
   CheckCircle,
+  CheckCircle2,
   ArrowRight,
   Phone,
 } from "lucide-react";
-import { WHATSAPP_URL, WHO_WE_WORK_WITH, PHONE_NUMBER, EMAIL_ADDRESS } from "@/lib/constants";
+import { WHATSAPP_URL, PHONE_NUMBER, EMAIL_ADDRESS } from "@/lib/constants";
 
 const CONTACT_INFO = [
   {
@@ -37,7 +37,7 @@ const CONTACT_INFO = [
   {
     icon: Clock,
     label: "Response Time",
-    value: "Usually responds within a few hours",
+    value: "Within a few hours",
     href: "#",
   },
 ];
@@ -78,22 +78,20 @@ const fieldBase =
   "bg-white " +
   "border border-[#dde4ec] " +
   "placeholder:text-[#94a3b8] " +
-  "caret-[#84cc16] " +
+  "caret-[#2d6a0a] " +
   "transition-all duration-200 " +
   "focus:outline-none " +
-  "focus:border-[#334155] " +
+  "focus:border-[#0f172a] " +
   "focus:bg-white " +
-  "focus:shadow-[0_0_0_4px_rgba(132,204,22,0.18)] " +
-  "hover:border-[#334155]";
+  "focus:shadow-[0_0_0_3px_rgba(124,255,79,0.35)] " +
+  "hover:border-[#cbd5e1]";
 
 const fieldError =
-  "border-red-500/50 focus:border-red-500/70 focus:shadow-[0_0_0_4px_rgba(239,68,68,0.12)]";
+  "border-red-500 focus:border-red-500 focus:shadow-[0_0_0_3px_rgba(239,68,68,0.2)]";
 
 const labelBase =
-  "block text-[10.5px] font-semibold uppercase tracking-widest " +
-  "text-[#475569] mb-1.5";
+  "block text-[11px] font-bold uppercase tracking-wider text-[#475569] mb-1.5";
 
-/* ── Page ────────────────────────────────────────────────────────────────── */
 export default function ContactPage() {
   const [form, setForm] = useState(INITIAL_FORM);
   const [submitted, setSubmitted] = useState(false);
@@ -153,7 +151,7 @@ export default function ContactPage() {
     } catch (err) {
       console.error("Firestore write failed:", err);
       setError(
-        "Something went wrong sending your message. Please try again or reach us on WhatsApp."
+        "Something went wrong sending your message. Please try again or reach us directly on WhatsApp."
       );
     } finally {
       setLoading(false);
@@ -162,134 +160,168 @@ export default function ContactPage() {
 
   return (
     <>
-      {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="relative pt-36 pb-10 bg-bg-primary overflow-hidden">
-        <div className="absolute inset-0 grid-bg opacity-100" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[340px] rounded-full bg-[#bef264]/15 blur-[110px] pointer-events-none" />
-
-        <div className="relative z-10 max-w-[860px] mx-auto px-6 text-center">
+      {/* ── 1. Hero ──────────────────────────────────────────────────────────── */}
+      <section className="relative pt-32 pb-12 md:pt-40 md:pb-16 bg-white overflow-hidden border-b border-[#f1f5f9]">
+        <div className="section-container relative z-10 text-center max-w-3xl mx-auto">
           {/* Eyebrow pill */}
-          <motion.span
+          <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 mb-7 rounded-full border border-[#dde4ec] bg-white text-[#3f6212] text-xs font-semibold tracking-widest uppercase shadow-sm"
+            transition={{ duration: 0.4 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-6 rounded-full border border-[#dde4ec] bg-[#f8fafc] text-[#0f172a] text-xs font-semibold tracking-wide shadow-xs"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#84cc16]" />
-            Get In Touch
-          </motion.span>
+            <span className="w-2 h-2 rounded-full bg-[#7CFF4F] shadow-[0_0_8px_#7CFF4F]" />
+            <span>Get In Touch • Hyderabad, India</span>
+          </motion.div>
 
           {/* Main heading */}
           <motion.h1
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.08 }}
-            className="font-sora font-extrabold text-4xl md:text-5xl text-[#0f172a] leading-tight tracking-tight mb-4"
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="font-sora font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#0f172a] tracking-tight leading-[1.15] mb-4 text-balance"
           >
             Let&apos;s Build Something{" "}
-            <span className="gradient-text">Great</span>
+            <span className="text-[#0f172a] relative inline-block">
+              Useful.
+              <span className="absolute bottom-1 left-0 right-0 h-2.5 bg-[#7CFF4F]/50 -z-10 rounded-full" />
+            </span>
           </motion.h1>
 
           {/* Supporting line */}
           <motion.p
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.16 }}
-            className="text-[#475569] text-base leading-relaxed max-w-xl mx-auto"
+            transition={{ duration: 0.45, delay: 0.12 }}
+            className="text-[#475569] text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
           >
-            We work with startups, businesses, and creators building modern
-            digital products.
+            Tell us what you need. Let&apos;s discuss a practical solution that works for you.
           </motion.p>
         </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-bg-primary to-transparent" />
       </section>
 
-      {/* ── Main content ──────────────────────────────────────────────────── */}
-      <section className="py-10 pb-28 bg-bg-primary">
-        <div className="max-w-[860px] mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
-            {/* ── Left — info sidebar ─────────────────────────────────── */}
-            <div className="lg:col-span-2 flex flex-col gap-5 lg:sticky lg:top-28">
+      {/* ── 2. Main Content ──────────────────────────────────────────────────── */}
+      <section className="py-14 sm:py-20 bg-[#f8fafc] border-b border-[#e2e8f0]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+            {/* ── Left Column: Contact Cards + New 'We Work With' Section ───────── */}
+            <div className="lg:col-span-5 flex flex-col gap-6">
+              {/* Contact Information Intro */}
               <div>
-                <h2 className="font-sora font-semibold text-[#0f172a] text-base mb-1.5">
+                <h2 className="font-sora font-bold text-[#0f172a] text-xl mb-1.5">
                   Contact Information
                 </h2>
-                <p className="text-[#475569] text-sm leading-relaxed">
-                  We&apos;re fully remote. Drop us a message and we&apos;ll
-                  respond within one business day.
+                <p className="text-[#475569] text-xs sm:text-sm leading-relaxed">
+                  We&apos;re fully remote and based in Hyderabad, India. Reach out directly or send us an inquiry below.
                 </p>
               </div>
 
-              <div className="flex flex-col gap-2.5">
-                {CONTACT_INFO.map(({ icon: Icon, label, value, href }, i) => {
-                  const isSlate = i % 2 === 1;
+              {/* Contact Cards (Phone, Email, WhatsApp, Response Time) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {CONTACT_INFO.map(({ icon: Icon, label, value, href }) => {
+                  const isExternal = href.startsWith("http");
                   return (
-                    <motion.a
+                    <a
                       key={label}
                       href={href}
-                      initial={{ opacity: 0, x: -14 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.32, delay: i * 0.06 }}
-                      className="flex items-center gap-3.5 p-3.5 rounded-2xl border border-[#dde4ec] bg-white hover:border-[#334155] shadow-sm transition-all duration-200 group"
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                      className="flex items-center gap-3 p-3.5 rounded-2xl border border-[#dde4ec] bg-white hover:border-[#7CFF4F] shadow-xs hover:shadow-sm transition-all duration-200 group"
                     >
-                      <div className={`gem ${isSlate ? "teal" : ""}`} style={{ width: 42, height: 42 }} aria-hidden="true">
-                        <Icon style={{ width: 20, height: 20 }} />
+                      <div className="w-10 h-10 rounded-xl bg-[#f8fafc] border border-[#e2e8f0] flex items-center justify-center text-[#2d6a0a] shrink-0 group-hover:bg-[#ecfccb] transition-colors">
+                        <Icon className="w-4 h-4" />
                       </div>
-                      <div>
-                        <div className="text-[9.5px] text-[#64748b] uppercase tracking-widest mb-0.5 font-semibold">
+                      <div className="min-w-0">
+                        <div className="text-[10px] text-[#64748b] uppercase tracking-wider font-semibold">
                           {label}
                         </div>
-                        <div className="text-[#0f172a] text-xs font-semibold leading-snug">
+                        <div className="text-[#0f172a] text-xs font-bold truncate">
                           {value}
                         </div>
                       </div>
-                    </motion.a>
+                    </a>
                   );
                 })}
               </div>
 
-              {/* Who we work with */}
-              <div className="rounded-2xl p-5 border border-[#dde4ec] bg-white shadow-sm">
-                <h3 className="font-sora font-semibold text-[#0f172a] mb-3 flex items-center gap-2 text-xs">
-                  <Globe className="w-3.5 h-3.5 text-[#3f6212]" />
-                  We Work With
-                </h3>
-                <ul className="flex flex-col gap-2 list-none p-0">
-                  {WHO_WE_WORK_WITH.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-center gap-2 text-[#475569] text-xs font-medium"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#84cc16] flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
+              {/* ── Solutions for Real Business Needs Content Section ── */}
+              <div className="pt-6 border-t border-[#e2e8f0] flex flex-col gap-4">
+                <div>
+                  <h3 className="font-sora font-bold text-base sm:text-lg text-[#0f172a] mb-1.5">
+                    Solutions for Real Business Needs
+                  </h3>
+
+                  <p className="text-[#475569] text-xs sm:text-sm leading-relaxed">
+                    Whether you are starting a new business, improving an existing process, or exploring AI, AlisTech helps you find a practical digital solution.
+                  </p>
+                </div>
+
+                {/* Four Concise Points */}
+                <ul className="space-y-3 list-none p-0 m-0">
+                  <li className="flex items-start gap-2.5 text-xs sm:text-sm text-[#475569]">
+                    <CheckCircle2 className="w-4 h-4 text-[#2d6a0a] shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">
+                      <strong className="font-bold text-[#0f172a]">Build Something New</strong> — Websites, apps and digital products designed around your goals.
+                    </span>
+                  </li>
+
+                  <li className="flex items-start gap-2.5 text-xs sm:text-sm text-[#475569]">
+                    <CheckCircle2 className="w-4 h-4 text-[#2d6a0a] shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">
+                      <strong className="font-bold text-[#0f172a]">Save Time</strong> — Automate repetitive tasks, customer enquiries and everyday workflows.
+                    </span>
+                  </li>
+
+                  <li className="flex items-start gap-2.5 text-xs sm:text-sm text-[#475569]">
+                    <CheckCircle2 className="w-4 h-4 text-[#2d6a0a] shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">
+                      <strong className="font-bold text-[#0f172a]">Serve Customers Better</strong> — Use websites, WhatsApp automation and AI assistants to respond more efficiently.
+                    </span>
+                  </li>
+
+                  <li className="flex items-start gap-2.5 text-xs sm:text-sm text-[#475569]">
+                    <CheckCircle2 className="w-4 h-4 text-[#2d6a0a] shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">
+                      <strong className="font-bold text-[#0f172a]">Make Better Decisions</strong> — Turn business data into useful reports, insights and dashboards.
+                    </span>
+                  </li>
                 </ul>
+
+                {/* Finishing Reassurance Sentence Box */}
+                <div className="p-3.5 rounded-xl bg-white border border-[#e2e8f0] shadow-2xs">
+                  <p className="text-xs text-[#475569] leading-relaxed">
+                    Not sure what you need? Tell us your challenge. We&apos;ll discuss the options and help you identify a suitable next step.
+                  </p>
+                </div>
+
+                {/* Chat With Us on WhatsApp Button Link */}
+                <div className="pt-1">
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-bold bg-[#7CFF4F] hover:bg-[#6be042] text-[#0f172a] shadow-[0_4px_14px_rgba(124,255,79,0.45)] transition-all w-full sm:w-auto"
+                  >
+                    <MessageCircle className="w-4 h-4 text-[#0f172a]" />
+                    <span>Chat With Us on WhatsApp</span>
+                  </a>
+                </div>
               </div>
             </div>
 
-            {/* ── Right — form card ───────────────────────────────────── */}
-            <div className="lg:col-span-3">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.48 }}
-                className="card-v2 overflow-hidden"
-              >
+            {/* ── Right Column: Interactive Form Card ─────────────────────────── */}
+            <div className="lg:col-span-7">
+              <div className="rounded-2xl border border-[#dde4ec] bg-white shadow-sm overflow-hidden">
                 {/* Card header */}
-                <div className="px-7 pt-6 pb-5 border-b border-[#dde4ec]">
+                <div className="px-6 sm:px-7 pt-6 pb-5 border-b border-[#dde4ec] bg-white">
                   <div className="flex items-center gap-2 mb-1">
-                    <div className="w-2 h-2 rounded-full bg-[#84cc16]" />
-                    <h2 className="font-sora font-bold text-[#0f172a] text-lg">
+                    <span className="w-2 h-2 rounded-full bg-[#7CFF4F] shadow-[0_0_8px_#7CFF4F]" />
+                    <h2 className="font-sora font-bold text-[#0f172a] text-lg sm:text-xl">
                       Tell Us About Your Project
                     </h2>
                   </div>
                   <p className="text-[#64748b] text-xs leading-relaxed pl-4">
-                    Fields marked * are required. Every message is read
-                    personally.
+                    Fields marked * are required. Every message is reviewed personally.
                   </p>
                 </div>
 
@@ -300,8 +332,8 @@ export default function ContactPage() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0, y: -6 }}
-                      transition={{ duration: 0.28 }}
-                      className="px-7 py-6"
+                      transition={{ duration: 0.25 }}
+                      className="px-6 sm:px-7 py-6"
                     >
                       <form
                         onSubmit={handleSubmit}
@@ -321,13 +353,9 @@ export default function ContactPage() {
                               className={`${fieldBase} ${fieldErrors.name ? fieldError : ""}`}
                             />
                             {fieldErrors.name && (
-                              <motion.p
-                                initial={{ opacity: 0, y: -4 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="text-red-500 text-[11px] mt-1.5 pl-1"
-                              >
+                              <p className="text-red-500 text-[11px] mt-1.5 pl-1 font-medium">
                                 {fieldErrors.name}
-                              </motion.p>
+                              </p>
                             )}
                           </div>
                           <div>
@@ -342,13 +370,9 @@ export default function ContactPage() {
                               className={`${fieldBase} ${fieldErrors.email ? fieldError : ""}`}
                             />
                             {fieldErrors.email && (
-                              <motion.p
-                                initial={{ opacity: 0, y: -4 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="text-red-500 text-[11px] mt-1.5 pl-1"
-                              >
+                              <p className="text-red-500 text-[11px] mt-1.5 pl-1 font-medium">
                                 {fieldErrors.email}
-                              </motion.p>
+                              </p>
                             )}
                           </div>
                         </div>
@@ -414,13 +438,9 @@ export default function ContactPage() {
                             className={`${fieldBase} resize-none leading-relaxed ${fieldErrors.message ? fieldError : ""}`}
                           />
                           {fieldErrors.message && (
-                            <motion.p
-                              initial={{ opacity: 0, y: -4 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              className="text-red-500 text-[11px] mt-1.5 pl-1"
-                            >
+                            <p className="text-red-500 text-[11px] mt-1.5 pl-1 font-medium">
                               {fieldErrors.message}
-                            </motion.p>
+                            </p>
                           )}
                         </div>
 
@@ -431,34 +451,32 @@ export default function ContactPage() {
                               initial={{ opacity: 0, y: -6 }}
                               animate={{ opacity: 1, y: 0 }}
                               exit={{ opacity: 0, y: -6 }}
-                              className="flex items-start gap-3 px-4 py-3 rounded-xl border border-red-500/30 bg-red-500/8 text-red-600 text-xs leading-relaxed"
+                              className="flex items-start gap-3 px-4 py-3 rounded-xl border border-red-500/30 bg-red-50 text-red-600 text-xs leading-relaxed"
                             >
-                              <span className="mt-0.5 w-3.5 h-3.5 flex-shrink-0 rounded-full border border-red-500 flex items-center justify-center text-[9px] font-bold">!</span>
-                              {error}
+                              <span className="mt-0.5 w-3.5 h-3.5 shrink-0 rounded-full border border-red-500 flex items-center justify-center text-[9px] font-bold">!</span>
+                              <span>{error}</span>
                             </motion.div>
                           )}
                         </AnimatePresence>
 
-                        {/* Primary CTA */}
-                        <motion.button
+                        {/* Primary Submit CTA */}
+                        <button
                           type="submit"
-                          whileHover={{ scale: loading ? 1 : 1.01 }}
-                          whileTap={{ scale: loading ? 1 : 0.99 }}
                           disabled={loading}
-                          className="w-full py-3.5 rounded-full font-bold text-sm text-[#1a2e05] flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-55 disabled:cursor-not-allowed mt-1 bg-gradient-to-r from-[#bef264] to-[#84cc16] shadow-[0_12px_28px_-12px_rgba(132,204,22,0.7)] hover:shadow-[0_16px_32px_-12px_rgba(132,204,22,0.85)]"
+                          className="w-full py-3.5 rounded-full font-bold text-sm text-[#0f172a] flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-55 disabled:cursor-not-allowed mt-1 bg-[#7CFF4F] hover:bg-[#6be042] shadow-[0_8px_20px_-6px_rgba(124,255,79,0.55)] cursor-pointer"
                         >
                           {loading ? (
                             <>
-                              <div className="w-4 h-4 border-2 border-[#1a2e05]/30 border-t-[#1a2e05] rounded-full animate-spin" />
-                              Sending…
+                              <div className="w-4 h-4 border-2 border-[#0f172a]/30 border-t-[#0f172a] rounded-full animate-spin" />
+                              <span>Sending…</span>
                             </>
                           ) : (
                             <>
                               <ArrowRight className="w-4 h-4" />
-                              Discuss Your Project
+                              <span>Discuss Your Project</span>
                             </>
                           )}
-                        </motion.button>
+                        </button>
 
                         {/* WhatsApp secondary CTA */}
                         <p className="text-center text-xs text-[#64748b] leading-relaxed">
@@ -467,64 +485,51 @@ export default function ContactPage() {
                             href={WHATSAPP_URL}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[#3f6212] font-semibold underline underline-offset-2 hover:text-[#1a2e05] transition-all duration-200"
+                            className="text-[#2d6a0a] font-bold underline underline-offset-2 hover:text-[#0f172a] transition-colors"
                           >
                             Chat with us directly.
                           </a>
                         </p>
 
                         <p className="text-[#94a3b8] text-[11px] text-center">
-                          No spam — ever. We take your privacy seriously.
+                          No spam — ever. We respect your privacy and never share your details.
                         </p>
                       </form>
                     </motion.div>
                   ) : (
                     <motion.div
                       key="success"
-                      initial={{ opacity: 0, scale: 0.94 }}
+                      initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.94 }}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.35, ease: "easeOut" }}
                       className="px-7 py-16 flex flex-col items-center text-center gap-5"
                     >
-                      <motion.div
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{
-                          delay: 0.14,
-                          type: "spring",
-                          stiffness: 210,
-                        }}
-                        className="w-14 h-14 rounded-full bg-[#ecfccb] border border-[#bef264] flex items-center justify-center"
-                      >
-                        <CheckCircle className="w-7 h-7 text-[#3f6212]" />
-                      </motion.div>
+                      <div className="w-14 h-14 rounded-full bg-[#ecfccb] border border-[#7CFF4F] flex items-center justify-center">
+                        <CheckCircle className="w-7 h-7 text-[#2d6a0a]" />
+                      </div>
                       <div>
                         <h3 className="font-sora font-bold text-[#0f172a] text-lg mb-1.5">
                           Message Received
                         </h3>
                         <p className="text-[#475569] text-sm leading-relaxed max-w-xs mx-auto">
-                          We&apos;ll review your project details and follow up
-                          personally within one business day.
+                          We&apos;ll review your project details and follow up personally within one business day.
                         </p>
                       </div>
 
-                      <motion.button
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.5 }}
+                      <button
                         onClick={() => {
                           setSubmitted(false);
                           setForm(INITIAL_FORM);
                         }}
-                        className="text-xs text-[#3f6212] font-semibold hover:underline underline-offset-2 transition-all duration-200 mt-1"
+                        className="text-xs text-[#2d6a0a] font-bold hover:underline underline-offset-2 transition-all mt-1"
                       >
                         Send another message
-                      </motion.button>
+                      </button>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>

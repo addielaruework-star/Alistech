@@ -1,6 +1,7 @@
 "use client";
 
 import { Zap, Instagram, Linkedin, Mail, Phone, MessageCircle } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   NAV_LINKS,
@@ -33,9 +34,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1 flex flex-col gap-5">
-            <Link href="/" className="flex items-center gap-2 group w-fit">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#bef264] to-[#84cc16] flex items-center justify-center shadow-[0_0_20px_rgba(132,204,22,0.4)]">
-                <Zap className="w-4 h-4 text-[#1a2e05]" fill="#1a2e05" />
+            <Link href="/" className="flex items-center gap-2.5 group w-fit" aria-label="AlisTech Home">
+              <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center bg-white border border-white/20 shadow-[0_0_14px_rgba(124,255,79,0.25)] shrink-0">
+                <Image
+                  src="/alistech-official-logo.jpg"
+                  alt="AlisTech Logo"
+                  width={32}
+                  height={32}
+                  className="object-contain w-full h-full rounded-md"
+                />
               </div>
               <span className="font-sora font-bold text-xl text-white">
                 Alis<span className="gradient-text font-extrabold">Tech</span>

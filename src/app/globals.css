@@ -60,8 +60,8 @@
   }
 
   /* Hide public chrome on admin routes (set by BodyScopeProvider client component) */
-  body[data-admin] nav,
-  body[data-admin] footer,
+  body[data-admin] nav:not([data-admin-nav]),
+  body[data-admin] footer:not([data-admin-footer]),
   body[data-admin] > a[href*="whatsapp"],
   body[data-admin] > a[aria-label*="WhatsApp"] {
     display: none !important;

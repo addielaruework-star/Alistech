@@ -4,8 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X, Zap } from "lucide-react";
 import { NAV_LINKS } from "@/lib/constants";
-import Button from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import Button from "@/components/ui/Button";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -28,6 +29,11 @@ export default function Navbar() {
     setMenuOpen(false);
   }, [pathname]);
 
+  // Do not render public marketing navbar on admin routes
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <>
       {/*
@@ -45,9 +51,16 @@ export default function Navbar() {
       >
         <div className="section-container flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#bef264] to-[#84cc16] flex items-center justify-center shadow-[0_0_16px_rgba(132,204,22,0.4)] group-hover:shadow-[0_0_24px_rgba(132,204,22,0.65)] transition-all duration-300">
-              <Zap className="w-4 h-4 text-[#1a2e05]" fill="#1a2e05" />
+          <Link href="/" className="flex items-center gap-2.5 group shrink-0" aria-label="AlisTech Home">
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center bg-transparent shrink-0">
+              <Image
+                src="/alistech-official-logo.jpg"
+                alt="AlisTech Logo"
+                width={32}
+                height={32}
+                className="object-contain w-full h-full rounded-md"
+                priority
+              />
             </div>
             <span className="font-sora font-bold text-xl text-[#0f172a]">
               Alis<span className="gradient-text font-extrabold">Tech</span>

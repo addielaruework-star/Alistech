@@ -1,16 +1,21 @@
 export default function AdminLoading() {
   return (
-    <div className="max-w-5xl mx-auto space-y-6 p-6">
-      <div className="h-6 w-40 rounded bg-white/[0.05] animate-pulse" />
-      <div className="h-4 w-64 rounded bg-white/[0.03] animate-pulse" />
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+    <div className="max-w-6xl mx-auto space-y-8 p-2 sm:p-4">
+      <div className="space-y-2">
+        <div className="h-7 w-48 rounded-xl bg-[#e2e8f0] animate-pulse" />
+        <div className="h-4 w-80 rounded-lg bg-[#e2e8f0]/60 animate-pulse" />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="rounded-xl border border-white/[0.05] bg-white/[0.02] p-5 h-[110px] animate-pulse" />
+          <div
+            key={i}
+            className="rounded-2xl border border-[#e2e8f0] bg-white p-6 h-[124px] animate-pulse shadow-xs"
+          />
         ))}
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 mt-6">
-        <div className="lg:col-span-2 rounded-xl border border-white/[0.06] bg-white/[0.015] p-5 h-64 animate-pulse" />
-        <div className="lg:col-span-3 rounded-xl border border-white/[0.06] bg-white/[0.015] p-5 h-64 animate-pulse" />
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div className="lg:col-span-2 rounded-2xl border border-[#e2e8f0] bg-white p-6 h-72 animate-pulse shadow-xs" />
+        <div className="lg:col-span-3 rounded-2xl border border-[#e2e8f0] bg-white p-6 h-72 animate-pulse shadow-xs" />
       </div>
     </div>
   );
