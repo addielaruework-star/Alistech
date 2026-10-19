@@ -10,8 +10,6 @@ import {
   PHONE_NUMBER,
   PHONE_NUMBER_2,
   EMAIL_ADDRESS,
-  INSTAGRAM_URL,
-  LINKEDIN_URL,
 } from "@/lib/constants";
 
 const SERVICES = [
@@ -23,8 +21,16 @@ const SERVICES = [
 ];
 
 const SOCIALS = [
-  { icon: Instagram, href: INSTAGRAM_URL, label: "Instagram" },
-  { icon: Linkedin, href: LINKEDIN_URL, label: "LinkedIn" },
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/alistech.agency?psln=MW01cjBicnUyMzYwag==",
+    label: "Instagram",
+  },
+  {
+    icon: Linkedin,
+    href: "https://www.linkedin.com/company/alistechh/",
+    label: "LinkedIn",
+  },
 ];
 
 export default function Footer() {
